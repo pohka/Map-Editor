@@ -16,7 +16,7 @@ window.onload = () => {
   palette = new PaletteViewport("palette", 512, 512);
 
   //find all the images and preload them
-  walk("./res/", loadImages);
+  walk("./projects/"+Store.projectName+"/res/", loadImages);
 }
 
 //finds all the files in a directory

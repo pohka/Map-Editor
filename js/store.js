@@ -1,6 +1,7 @@
 //gloabl storage of variables
 //also helps find the variables
 const Store = {
+  projectName : "test",
   palettes : [],
   chunks : [],
   imgObjs : [],
@@ -15,7 +16,8 @@ Store.findImgObj = function(path){
   let loc = window.location.href.split("/");
   loc.splice(-1,1);
   let rootpath = loc.join("/");
-  let fullpath  = rootpath + "/res/" + path;
+  let fullpath  = rootpath + "/projects/" + Store.projectName + "/res/" + path;
+
 
   for(let i=0; i<Store.imgObjs.length; i++){
     if(Store.imgObjs[i].src == fullpath){
@@ -29,7 +31,6 @@ Store.findImgObj = function(path){
 //returns a chunk with a matching chunk coordinate
 //returns null if no match is found
 Store.findChunkByChunkCoor = function(x, y){
-  //let chunkPos = Chunk.worldPosToChunkPos(worldX, worldY);
   for(let i=0; i<Store.chunks.length; i++){
     if(Store.chunks[i].position.x == x && Store.chunks[i].position.y == y){
       return Store.chunks[i];

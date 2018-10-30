@@ -1,6 +1,7 @@
 
 function exportProject(){
   let data = {
+    projectName : Store.projectName,
     chunkSize : Chunk.size,
     tileSize : Chunk.tileSize,
     imgs : [],
@@ -10,15 +11,13 @@ function exportProject(){
 
   let loc = window.location.href.split("/");
   loc.splice(-1,1);
-  let rootpath = loc.join("/") + "/res/";
+  let rootpath = loc.join("/") + "/projects/" + Store.projectName + "/res/";
 
   for(let i=0; i<Store.imgObjs.length; i++){
     data.imgs.push(Store.imgObjs[i].src.replace(rootpath, ""));
   }
 
-  //for(let id in Store.tiles){
-    data.tiles = Store.tiles;
-  //}
+  data.tiles = Store.tiles;
 
   for(let i=0; i<Store.chunks.length; i++){
     data.chunks.push({
@@ -29,20 +28,29 @@ function exportProject(){
   }
 
   var fs = require('fs');
-  fs.writeFile("./output/test.json", JSON.stringify(data), function(err) {
+
+  let dir = "./projects/" + Store.projectName;
+
+  if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+  }
+  fs.writeFile(dir + "/data.json", JSON.stringify(data), function(err) {
       if(err) {
           return console.log(err);
       }
 
-      console.log("The file was saved!");
+      console.log("Saved: " + Store.projectName);
   });
 }
 
 function importProject(){
   var fs = require('fs');
 
-  fs.readFile('./output/test.json', 'utf8', function(err, contents) {
+  let path = "./projects/" + Store.projectName + "/data.json";
+  fs.readFile(path, 'utf8', function(err, contents) {
     let data = JSON.parse(contents);
+
+    Store.projectName = data.projectName;
 
     Chunk.size = data.chunkSize;
     Chunk.tileSize = data.tileSize;
@@ -61,9 +69,7 @@ function importProject(){
 
     editor.draw();
 
-    console.log("imported");
-    //todo
-    //loadImages(data.imgs);
+    console.log("imported: " + Store.projectName);
   });
 
 }
