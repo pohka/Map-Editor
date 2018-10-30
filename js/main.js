@@ -14,9 +14,36 @@ let editor, palette;
 window.onload = () => {
   editor = new EditorViewport("editor", 1100, 700);
   palette = new PaletteViewport("palette", 512, 512);
-  loadImages(["sample.png"]);
 
+  //find all the images and preload them
+  walk("./res/", loadImages);
 }
+
+//finds all the files in a directory
+var walk = function(dir, done) {
+  var fs = require('fs');
+  var path = require('path');
+  var results = [];
+  fs.readdir(dir, function(err, list) {
+    if (err) return done(err);
+    var pending = list.length;
+    if (!pending) return done(null, results);
+    list.forEach(function(file) {
+      file = path.resolve(dir, file);
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          walk(file, function(err, res) {
+            results = results.concat(res);
+            if (!--pending) done(null, results);
+          });
+        } else {
+          results.push(file);
+          if (!--pending) done(null, results);
+        }
+      });
+    });
+  });
+};
 
 //called once the images are loaded
 function ready(){
@@ -24,7 +51,7 @@ function ready(){
   let tileSize = 32;
   for(let i=0; i<4; i++){
     Store.tiles[i] = {
-      path : "sample.png",
+      path : "tilesets/sample.png",
       x : i*tileSize,
       y : 0,
       w : 32,
@@ -32,11 +59,9 @@ function ready(){
     };
   }
 
-
   sampleChunks();
   editor.draw();
-
-  palette.setImg("sample.png");
+  palette.setImg("tilesets/sample.png");
   palette.draw();
 }
 
@@ -64,18 +89,17 @@ function sampleChunks(){
 }
 
 //preload images
-function loadImages(imgPaths){
+function loadImages(err, files){
   let loadedCount = 0;
-  for(let i=0; i<imgPaths.length; i++){
+  for(let i=0; i<files.length; i++){
     let img = new Image();
     img.onload = function(){
-        img.src = this.src;
-        Store.imgObjs.push(this);
-        loadedCount++;
-        if(loadedCount == imgPaths.length){
-          ready();
-        }
-    };
-    img.src = "res/" + imgPaths[i];
+      loadedCount++;
+      Store.imgObjs.push(this);
+      if(loadedCount == files.length){
+        ready();
+      }
+    }
+    img.src = files[i];
   }
 }

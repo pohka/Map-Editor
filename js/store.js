@@ -12,15 +12,17 @@ const Store = {
 //find the image object with the matching path in /res/ folder
 //e.g. findImgObj("sample.png") will find image in /res/sample.png
 Store.findImgObj = function(path){
-  let fullpath = window.location.href.split("/");
-  fullpath.splice(-1,1);
-  fullpath = fullpath.join("/") + "/res/" + path;
+  let loc = window.location.href.split("/");
+  loc.splice(-1,1);
+  let rootpath = loc.join("/");
+  let fullpath  = rootpath + "/res/" + path;
 
   for(let i=0; i<Store.imgObjs.length; i++){
     if(Store.imgObjs[i].src == fullpath){
       return Store.imgObjs[i];
     }
   }
+  console.log("warning: img not found ", path);
   return null;
 }
 
