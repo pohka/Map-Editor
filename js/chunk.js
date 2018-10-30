@@ -13,7 +13,7 @@ class Chunk{
         if(colIndex > -1){
           let tile = Store.tiles[colIndex];
           if(tile != null){
-            let img = Store.findImgObj(tile.path);
+            let img = Store.findImgObj(tile.src);
             if(img != null){
               vp.ctx.drawImage(img,
                 tile.x, tile.y, tile.w, tile.h,

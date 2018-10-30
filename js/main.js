@@ -51,7 +51,7 @@ function ready(){
   let tileSize = 32;
   for(let i=0; i<4; i++){
     Store.tiles[i] = {
-      path : "tilesets/sample.png",
+      src : "tilesets/sample.png",
       x : i*tileSize,
       y : 0,
       w : 32,
@@ -63,6 +63,7 @@ function ready(){
   editor.draw();
   palette.setImg("tilesets/sample.png");
   palette.draw();
+  console.log("ready");
 }
 
 
