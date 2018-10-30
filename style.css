@@ -1,0 +1,51 @@
+
+
+html{
+  overflow-y: hidden;
+  background: #555;
+
+}
+
+html, h1, h2, h3{
+  font-family: Arial;
+  margin: 0;
+}
+
+.section{
+  margin-bottom: 10px;
+  background-color: #666;
+}
+
+.section h2{
+  font-size: 14px;
+  padding: 6px 15px;
+  background-color: #38a;
+  color: white;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: 250px  1100px auto;
+  grid-gap: 8px;
+  height: 100%;
+}
+
+.left-col{
+}
+
+.right-col{
+  height: 100%;
+}
+
+
+.layers-section{
+  height: 300px;
+}
+
+.palette-section{
+  height: 542px;
+}
+
+.tool-section{
+  height: 600px;
+}
