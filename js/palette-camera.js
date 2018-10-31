@@ -17,16 +17,36 @@ class PaletteCamera{
       //left mouse button
       if(e.button == 0){
         let rect = vp.canvas.getBoundingClientRect();
-        let palettePos = new Vector(
+        let vpPos = new Vector(
           e.clientX - rect.left,
           e.clientY - rect.top
         );
 
+        let tilePos = cam.findTileCoorAtCursor(vp, e);
 
-        Store.curTileID = Math.floor(palettePos.x/32);
+        let id = Store.findTileID(vp.imgsrc, tilePos.x, tilePos.y);
+        Store.curTileID = id;
+        console.log(id);
+
+        //Store.curTileID = Math.floor(palettePos.x/32);
       }
 
       vp.draw();
     });
+  }
+
+  findTileCoorAtCursor(vp, e){
+    //convert the cursor document coordinates to viewport coordinates
+    let rect = vp.canvas.getBoundingClientRect();
+    let vpPos = new Vector(
+      e.clientX - rect.left,
+      e.clientY - rect.top
+    );
+
+    //convert viewport coor to tile coor
+    return new Vector(
+        Math.floor(vpPos.x/Chunk.tileSize),
+        Math.floor(vpPos.y/Chunk.tileSize)
+      );
   }
 }

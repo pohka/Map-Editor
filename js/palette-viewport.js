@@ -3,12 +3,14 @@ class PaletteViewport extends Viewport{
   constructor(id, width, height){
     super(id, width, height, new PaletteRuler(32), "#777");
     this.img = null;
+    this.imgsrc = null;
     this.camera = new PaletteCamera(this);
   }
 
   //set the current image of the palette
   setImg(path){
     this.img = Store.findImgObj(path);
+    this.imgsrc = path;
   }
 
   draw(){

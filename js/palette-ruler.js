@@ -9,7 +9,7 @@ class PaletteRuler{
     let maxY = Math.ceil(vp.height / this.size);
 
     vp.ctx.lineWidth = 1;
-    vp.ctx.strokeStyle = '#efefef55';
+    vp.ctx.strokeStyle = '#efefefaa';
 
     //horizontal lines
     for(let y=1; y<maxY; y++){

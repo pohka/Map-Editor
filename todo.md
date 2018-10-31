@@ -1,4 +1,3 @@
--undo actions (tracking actions)
 -select palette
 -multiple tile layers
 -naming of tile layers

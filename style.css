@@ -11,6 +11,14 @@ html, h1, h2, h3{
   margin: 0;
 }
 
+select{
+  min-width: 300px;
+  font-size: 16px;
+  padding: 6px 4px;
+  margin: 4px 2px;
+}
+
+
 .section{
   margin-bottom: 10px;
   background-color: #666;

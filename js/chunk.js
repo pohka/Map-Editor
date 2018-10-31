@@ -16,7 +16,7 @@ class Chunk{
             let img = Store.findImgObj(tile.src);
             if(img != null){
               vp.ctx.drawImage(img,
-                tile.x, tile.y, tile.w, tile.h,
+                tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize,
                 camFocus.x + (j*Chunk.tileSize) + chunkOffset.x, //destination
                 camFocus.y + i*Chunk.tileSize + chunkOffset.y,
                 Chunk.tileSize, Chunk.tileSize

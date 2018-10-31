@@ -47,21 +47,9 @@ var walk = function(dir, done) {
 
 //called once the images are loaded
 function ready(){
-  //placeholder
-  let tileSize = 32;
-  for(let i=0; i<4; i++){
-    Store.tiles[i] = {
-      src : "tilesets/sample.png",
-      x : i*tileSize,
-      y : 0,
-      w : 32,
-      h : 32
-    };
-  }
-
+  setupPaletteAndTiles();
   sampleChunks();
   editor.draw();
-  palette.setImg("tilesets/sample.png");
   palette.draw();
   console.log("ready");
 }
@@ -91,8 +79,13 @@ function sampleChunks(){
 
 //preload images
 function loadImages(err, files){
+  setDefaultPaletteOption();
+
   let loadedCount = 0;
   for(let i=0; i<files.length; i++){
+    addPaletteOption(files[i]);
+
+
     let img = new Image();
     img.onload = function(){
       loadedCount++;
@@ -103,4 +96,53 @@ function loadImages(err, files){
     }
     img.src = files[i];
   }
+}
+
+//setup for the palette options
+function setDefaultPaletteOption(){
+  let select = document.getElementById("palette-select");
+  let option = document.createElement("option");
+  option.text = "Select Palette";
+  option.disabled = true;
+  option.selected = true;
+  select.add(option);
+  //new option selected
+  select.addEventListener("change", function(e){
+    palette.setImg(e.srcElement.value);
+    palette.draw();
+    Store.curTileID = -1;
+  });
+}
+
+function setupPaletteAndTiles(){
+  //create all the tiles
+  let select = document.getElementById("palette-select");
+  for(let i=0; i<select.options.length; i++){
+    let opt = select.options[i];
+    if(opt.disabled == false){
+      let img = Store.findImgObj(opt.text);
+      let maxX = img.width/Chunk.tileSize;
+      let maxY = img.height/Chunk.tileSize;
+
+      for(let y=0; y<maxY; y++){
+        for(let x=0; x<maxX; x++){
+          let id = Store.genTileID();
+          Store.tiles[id] = ({
+            src : opt.text,
+            x : x,
+            y : y
+          });
+        }
+      }
+    }
+  }
+}
+
+//add an image to the palette
+function addPaletteOption(filePath){
+  let path = filePath.split("\\res\\")[1].replace(/\\/g,"/");
+  let select = document.getElementById("palette-select");
+  let option = document.createElement("option");
+  option.text = path;
+  select.add(option);
 }
