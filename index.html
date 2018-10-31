@@ -17,6 +17,7 @@
     <script src="./js/palette-viewport.js"></script>
     <script src="./js/tools.js"></script>
     <script src="./js/file.js"></script>
+    <script src="./js/action.js"></script>
   </head>
   <body>
 
@@ -26,6 +27,8 @@
         <h2>Tools</h2>
         <button onclick="exportProject()">Export</button>
         <button onclick="importProject()">Import</button>
+        <button onclick="Action.undo()">Undo</button>
+        <button onclick="Action.redo()">Redo</button>
       </div>
     </div>
     <div class="col middle-col">
