@@ -10,10 +10,11 @@ class Tools{
 
       let tilePos = chunk.findTileCoorAtWorldPos(mousePos.x, mousePos.y);
       if(tilePos != null){
-        let curTileID = chunk.map[tilePos.y][tilePos.x];
+        let layer = chunk.layers[Store.curLayer];
+        let curTileID = layer[tilePos.y][tilePos.x];
         //don't do any action if the tileID doesn't change
         if(curTileID != tileID){
-          let action = Action.newSetTileAction(chunk, tilePos, curTileID, tileID);
+          let action = Action.newSetTileAction(chunk, tilePos, curTileID, tileID, Store.curLayer);
           Action.executeAction(action);
         }
         return true;

@@ -69,7 +69,7 @@ function sampleChunks(){
         }
          map.push(row);
       }
-      let chunk = new Chunk(map, x, y);
+      let chunk = new Chunk(x, y);
       Store.chunks.push(chunk);
     }
   }

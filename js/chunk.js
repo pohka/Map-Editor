@@ -1,17 +1,37 @@
 //a section of the enite tile map
 class Chunk{
-  constructor(map, x, y){
-    this.map = map; //2d array of tileIDs
+  constructor(x, y){
+    this.layers = {};
     this.position = new Vector(x,y); //position is in chunk coordinates
+    this.layers["default"] = Chunk.getEmptyLayer();
+  }
+
+  static getEmptyLayer(name){
+    let map = [];
+    for(let a=0; a<Chunk.size; a++){
+      let row = [];
+      for(let b=0; b<Chunk.size; b++){
+        row.push(-1);
+      }
+       map.push(row);
+    }
+    return map;
   }
 
   draw(vp, camFocus){
     let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
-    for(let i=0; i<this.map.length; i++){
-      for(let j=0; j<this.map[i].length; j++){
-        let colIndex = this.map[i][j];
-        if(colIndex > -1){
-          let tile = Store.tiles[colIndex];
+    for(let i in this.layers){
+      console.log("drawing layer");
+      this.drawLayer(this.layers[i], chunkOffset, camFocus, vp);
+    }
+  }
+
+  drawLayer(map, chunkOffset, camFocus, vp){
+    for(let i=0; i<map.length; i++){
+      for(let j=0; j<map[i].length; j++){
+        let tileID = map[i][j];
+        if(tileID > -1){
+          let tile = Store.tiles[tileID];
           if(tile != null){
             let img = Store.findImgObj(tile.src);
             if(img != null){

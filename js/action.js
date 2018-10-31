@@ -1,12 +1,13 @@
 class Action{
   //creates a new set tile action
-  static newSetTileAction(chunk, tilePos, oldTileID, newTileID){
+  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layer){
     return ({
       type : "setTile",
       chunkX : chunk.position.x,
       chunkY : chunk.position.y,
       tileX : tilePos.x,
       tileY : tilePos.y,
+      layer : layer,
       oldTileID : oldTileID,
       newTileID : newTileID
     });
@@ -39,7 +40,7 @@ class Action{
   static executeAction(a, isPoppedAction){
     if(a.type == "setTile"){
       let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      chunk.map[a.tileY][a.tileX] = a.newTileID;
+      chunk.layers[a.layer][a.tileY][a.tileX] = a.newTileID;
     }
 
     Action.stack.push(a);
@@ -57,7 +58,7 @@ class Action{
   static undoAction(a){
     if(a.type == "setTile"){
       let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      chunk.map[a.tileY][a.tileX] = a.oldTileID;
+      chunk.layers[a.layer][a.tileY][a.tileX] = a.oldTileID;
     }
   }
 
