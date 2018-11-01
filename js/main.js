@@ -223,3 +223,19 @@ function updateLayerListDOM(){
     list.appendChild(el);
   }
 }
+
+//only accessable from console, cannot be undone
+function deleteLayer(layerName){
+  let index = Store.layerOrder.indexOf(layerName);
+  if(index > -1){
+    Store.layerOrder.splice(index, 1);
+    for(let i=0; i<Store.chunks.length; i++){
+      delete Store.chunks[i].layers[layerName]
+    }
+  }
+  if(Store.layerOrder.length > 0){
+    Store.selectedLayer = Store.layerOrder[0];
+  }
+  updateLayerListDOM();
+  editor.draw();
+}

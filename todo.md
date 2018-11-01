@@ -1,4 +1,3 @@
--delete tile layer
 -tile collision
 -notifications (saved and imported);
 -icons
