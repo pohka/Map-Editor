@@ -212,6 +212,14 @@ function updateLayerListDOM(){
     if(Store.selectedLayer == layerName){
       el.className+=" active";
     }
+    else{
+      el.addEventListener("click", function(e){
+        if(e.button == 0){
+          Store.selectedLayer = layerName;
+          updateLayerListDOM();
+        }
+      });
+    }
     list.appendChild(el);
   }
 }

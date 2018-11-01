@@ -20,9 +20,10 @@ class Chunk{
 
   draw(vp, camFocus){
     let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
-    for(let i in this.layers){
+    for(let i=Store.layerOrder.length-1; i >= 0; i--){
       console.log("drawing layer");
-      this.drawLayer(this.layers[i], chunkOffset, camFocus, vp);
+      let layerName = Store.layerOrder[i];
+      this.drawLayer(this.layers[layerName], chunkOffset, camFocus, vp);
     }
   }
 
