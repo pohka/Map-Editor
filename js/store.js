@@ -7,9 +7,9 @@ const Store = {
   imgObjs : [],
   tiles : {},
   currentPalette : null,
-  curTileID : -1,
+  selectedTileID : -1,
   tileCount : -1,
-  curLayer : "",
+  selectedLayer : "",
   layerOrder : [],
 };
 

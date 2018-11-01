@@ -24,7 +24,7 @@ class EditorCamera{
       //left mouse button
       if(e.button == 0){
           cam.isPainting = true;
-          Tools.setTileAtCursor(e, vp, Store.curTileID);
+          Tools.setTileAtCursor(e, vp, Store.selectedTileID);
       }
 
       vp.draw();
@@ -48,7 +48,7 @@ class EditorCamera{
         cam.panLastPos.y = e.y;
       }
       else if(cam.isPainting && isOverViewport){
-        Tools.setTileAtCursor(e, vp, Store.curTileID);
+        Tools.setTileAtCursor(e, vp, Store.selectedTileID);
       }
 
       vp.draw();

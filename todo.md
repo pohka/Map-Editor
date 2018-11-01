@@ -1,6 +1,4 @@
--multiple tile layers
--naming of tile layers
--order layers
+-selecting a layer
 -delete tile layer
 -tile collision
 -notifications (saved and imported);

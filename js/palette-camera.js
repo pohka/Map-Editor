@@ -25,10 +25,8 @@ class PaletteCamera{
         let tilePos = cam.findTileCoorAtCursor(vp, e);
 
         let id = Store.findTileID(vp.imgsrc, tilePos.x, tilePos.y);
-        Store.curTileID = id;
+        Store.selectedTileID = id;
         console.log(id);
-
-        //Store.curTileID = Math.floor(palettePos.x/32);
       }
 
       vp.draw();

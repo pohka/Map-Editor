@@ -75,7 +75,17 @@ hr{
 }
 
 .layer-item{
-  background: #efefef;
+  background: #efefefaa;
   padding: 12px 10px;
   margin: 4px 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.layer-item.active{
+  border-color: #3dd;
+  background: #fafafa;
+}
+
+.layer-item button{
+  float: right;
 }

@@ -110,7 +110,7 @@ function setDefaultPaletteOption(){
   select.addEventListener("change", function(e){
     palette.setImg(e.srcElement.value);
     palette.draw();
-    Store.curTileID = -1;
+    Store.selectedTileID = -1;
   });
 }
 
@@ -162,7 +162,7 @@ function addLayer(name){
 
 
   if(Store.layerOrder.length == 0){
-    Store.curLayer = layerName;
+    Store.selectedLayer = layerName;
   }
 
   if(Store.layerOrder.indexOf(layerName) == -1){
@@ -205,9 +205,13 @@ function updateLayerListDOM(){
     let layerName = Store.layerOrder[i];
     el.setAttribute("layer", layerName);
     el.innerHTML = "<span>"+layerName+"</span>"+
-                    "<button dir='up' name='"+layerName+"' onclick='moveLayer(this)'>↑</button>"+
-                    "<button dir='down' name='"+layerName+"' onclick='moveLayer(this)'>↓</button>";
+                  "<button dir='down' name='"+layerName+"' onclick='moveLayer(this)'>↓</button>"+
+                    "<button dir='up' name='"+layerName+"' onclick='moveLayer(this)'>↑</button>";
+
     el.className = "layer-item";
+    if(Store.selectedLayer == layerName){
+      el.className+=" active";
+    }
     list.appendChild(el);
   }
 }
