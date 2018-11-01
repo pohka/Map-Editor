@@ -9,7 +9,8 @@ const Store = {
   currentPalette : null,
   curTileID : -1,
   tileCount : -1,
-  curLayer : "default",
+  curLayer : "",
+  layerOrder : [],
 };
 
 Store.genTileID = function(){

@@ -3,7 +3,7 @@ class Chunk{
   constructor(x, y){
     this.layers = {};
     this.position = new Vector(x,y); //position is in chunk coordinates
-    this.layers["default"] = Chunk.getEmptyLayer();
+  //  this.layers["default"] = Chunk.getEmptyLayer();
   }
 
   static getEmptyLayer(name){

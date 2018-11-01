@@ -18,6 +18,17 @@ select{
   margin: 4px 2px;
 }
 
+input[type="text"]{
+  min-width: 300px;
+  font-size: 16px;
+  padding: 6px 4px;
+  margin: 4px 2px;
+}
+
+hr{
+  margin-top: 0px;
+}
+
 
 .section{
   margin-bottom: 10px;
@@ -56,4 +67,15 @@ select{
 
 .tool-section{
   height: 600px;
+}
+
+#layer-list{
+  height: 210px;
+  overflow-y: scroll;
+}
+
+.layer-item{
+  background: #efefef;
+  padding: 12px 10px;
+  margin: 4px 4px;
 }

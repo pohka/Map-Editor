@@ -1,9 +1,18 @@
 -multiple tile layers
 -naming of tile layers
+-order layers
 -delete tile layer
 -tile collision
 -notifications (saved and imported);
+-icons
 -object layer
+
+
+-create new project
+  -project name
+  -no. of chunks (w and h)
+  -add image
+  -
 
 
 Tools
