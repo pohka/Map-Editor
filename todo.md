@@ -13,8 +13,7 @@
 
 Tools
 -eraser
--rect select
--fill
+-brush size
 
 
 

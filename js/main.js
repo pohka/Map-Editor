@@ -51,7 +51,7 @@ function ready(){
   sampleChunks();
   editor.draw();
   palette.draw();
-  console.log("ready");
+  Notification.add("Ready");
 }
 
 

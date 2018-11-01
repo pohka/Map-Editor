@@ -19,6 +19,7 @@
     <script src="./js/file.js"></script>
     <script src="./js/action.js"></script>
     <script src="./js/section-layer.js"></script>
+    <script src="./js/notification.js"></script>
   </head>
   <body>
 
@@ -35,21 +36,22 @@
     <div class="col middle-col">
       <canvas id="editor"></canvas>
     </div>
-  <div class="col right-col">
-    <div class="section layers-section">
-      <h2>Layers</h2>
-      <input type="text" placeholder="layer name" id="layer-name"></input>
-      <button onclick="SectionLayer.addLayer()">Add Layer</button>
-      <hr>
-      <div id="layer-list"></div>
-    </div>
-    <div class="section palette-section">
-      <h2>Palette</h2>
-      <select id="palette-select"></select>
-      <canvas id="palette"></canvas>
+    <div class="col right-col">
+      <div class="section layers-section">
+        <h2>Layers</h2>
+        <input type="text" placeholder="layer name" id="layer-name"></input>
+        <button onclick="SectionLayer.addLayer()">Add Layer</button>
+        <hr>
+        <div id="layer-list"></div>
+      </div>
+      <div class="section palette-section">
+        <h2>Palette</h2>
+        <select id="palette-select"></select>
+        <canvas id="palette"></canvas>
+      </div>
     </div>
 
-    <script>
-    </script>
+    <div class="notification-con"></div>
+
   </body>
 </html>

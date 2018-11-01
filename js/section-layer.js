@@ -23,6 +23,10 @@ class SectionLayer{
       }
 
       SectionLayer.updateLayerListDOM();
+      Notification.add("Added layer: '" + layerName + "'");
+    }
+    else{
+      Notification.add("Layer not created as '" + layerName + "' already exists", true);
     }
   }
 
@@ -42,6 +46,7 @@ class SectionLayer{
 
     //update the DOM
     SectionLayer.updateLayerListDOM();
+    Notification.add("Moved layer '" + layerName + "'" + direction);
   }
 
   //updates the layer section DOM
@@ -89,5 +94,6 @@ class SectionLayer{
     }
     SectionLayer.updateLayerListDOM();
     editor.draw();
+    Notification.add("Deleted layer '" + layerName + "'");
   }
 }

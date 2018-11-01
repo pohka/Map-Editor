@@ -23,6 +23,8 @@ class Action{
     Action.undoAction(lastAction);
     Action.popped.push(lastAction);
 
+    Notification.add("Undo: " + lastAction.type);
+
     editor.draw();
   }
 
@@ -33,6 +35,7 @@ class Action{
     }
     let lastUndo = Action.popped.pop();
     Action.executeAction(lastUndo, true);
+    Notification.add("Redo: " + lastUndo.type);
     editor.draw();
   }
 
@@ -61,8 +64,6 @@ class Action{
       chunk.layers[a.layer][a.tileY][a.tileX] = a.oldTileID;
     }
   }
-
-
 }
 
 //maximum number of actions to track

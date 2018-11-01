@@ -89,3 +89,25 @@ hr{
 .layer-item button{
   float: right;
 }
+
+.notification-con{
+  position: fixed;
+  bottom: 0;
+  left: 25;
+  height: auto;
+}
+
+.notification{
+  background: #333;
+  min-width: 250px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 18px;
+  border: 2px solid #3aa;
+}
+
+.notification-err{
+  background: #e33;
+  border-color: black;
+}
