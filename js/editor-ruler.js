@@ -24,6 +24,7 @@ class EditorRuler{
     }
 
 
+
     //horizontal lines
     let maxLinesY= vpSize.y/this.size;
     let maxY = parseInt((maxLinesY/2) + 1);

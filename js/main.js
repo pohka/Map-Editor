@@ -48,6 +48,7 @@ var walk = function(dir, done) {
 //called once the images are loaded
 function ready(){
   setupPaletteAndTiles();
+  setupCollision();
   sampleChunks();
   editor.draw();
   palette.draw();
@@ -130,7 +131,8 @@ function setupPaletteAndTiles(){
           Store.tiles[id] = ({
             src : opt.text,
             x : x,
-            y : y
+            y : y,
+            hasCollision : x%2==0,
           });
         }
       }
@@ -145,4 +147,18 @@ function addPaletteOption(filePath){
   let option = document.createElement("option");
   option.text = path;
   select.add(option);
+}
+
+function setupCollision(){
+  let showCollision = document.getElementById("show-collision");
+  showCollision.addEventListener("click", function(e){
+      Store.isCollisionVisible = showCollision.checked;
+      editor.draw();
+  });
+
+  let showRulers = document.getElementById("show-ruler");
+  showRulers.addEventListener("click", function(e){
+    Store.isRulersVisible = showRulers.checked;
+    editor.draw();
+  })
 }

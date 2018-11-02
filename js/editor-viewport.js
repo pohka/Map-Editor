@@ -15,10 +15,11 @@ class EditorViewport extends Viewport{
 
   draw(){
     super.draw();
-
     this.drawChunks();
-    this.ruler.draw(this);
-    this.drawChunkPositions();
+    if(Store.isRulersVisible){
+      this.ruler.draw(this);
+      this.drawChunkPositions();
+    }
     this.drawHUD();
   }
 
@@ -75,7 +76,8 @@ class EditorViewport extends Viewport{
       let y = -tileWorldPos.y + camFocus.y;
       this.ctx.fillStyle = "#ccc6";
       this.ctx.fillRect(x, y, Chunk.tileSize, Chunk.tileSize);
-      this.ctx.strokeStyle="#3ff";
+      this.ctx.strokeStyle="#fff";
+      this.ctx.beginPath();;
       this.ctx.rect(x,y, Chunk.tileSize, Chunk.tileSize);
       this.ctx.stroke();
     }

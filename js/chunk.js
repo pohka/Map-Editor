@@ -42,6 +42,19 @@ class Chunk{
                 camFocus.y + i*Chunk.tileSize + chunkOffset.y,
                 Chunk.tileSize, Chunk.tileSize
               );
+
+              //drawing collision
+              if(Store.isCollisionVisible && tile.hasCollision){
+                vp.ctx.beginPath();
+                vp.ctx.strokeStyle="#0f0";
+                vp.ctx.lineWidth="1";
+                vp.ctx.rect(
+                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x, //destination
+                  camFocus.y + i*Chunk.tileSize + chunkOffset.y,
+                  Chunk.tileSize, Chunk.tileSize
+                );
+                vp.ctx.stroke();
+              }
             }
           }
         }

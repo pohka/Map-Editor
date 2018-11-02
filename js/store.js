@@ -11,6 +11,8 @@ const Store = {
   tileCount : -1,
   selectedLayer : "",
   layerOrder : [],
+  isCollisionVisible : false,
+  isRulersVisible : true,
 };
 
 Store.genTileID = function(){

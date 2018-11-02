@@ -10,7 +10,6 @@
 
 
 Tools
--eraser
 -brush size
 
 
