@@ -132,7 +132,7 @@ function setupPaletteAndTiles(){
             src : opt.text,
             x : x,
             y : y,
-            hasCollision : x%2==0,
+            hasCollision : false,
           });
         }
       }
@@ -160,5 +160,10 @@ function setupCollision(){
   showRulers.addEventListener("click", function(e){
     Store.isRulersVisible = showRulers.checked;
     editor.draw();
-  })
+  });
+
+  let editCollision = document.getElementById("edit-collision");
+  editCollision.addEventListener("click", function(e){
+    Store.isCollisionEditable = editCollision.checked;
+  });
 }

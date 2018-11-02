@@ -9,13 +9,11 @@ class PaletteCamera{
   //add input listeners
   addInput(vp){
     let cam = this;
-    document.addEventListener("mousemove", function(e){
-      cam.lastCursorPos.set(e.clientX, e.clientY);
-    });
 
     vp.canvas.addEventListener('mousedown',function(e){
       //left mouse button
       if(e.button == 0){
+        cam.isPainting = true;
         let rect = vp.canvas.getBoundingClientRect();
         let vpPos = new Vector(
           e.clientX - rect.left,
@@ -25,8 +23,14 @@ class PaletteCamera{
         let tilePos = cam.findTileCoorAtCursor(vp, e);
 
         let id = Store.findTileID(vp.imgsrc, tilePos.x, tilePos.y);
-        Store.selectedTileID = id;
-        console.log(id);
+
+        if(Store.isCollisionEditable){
+          Store.tiles[id].hasCollision = !Store.tiles[id].hasCollision;
+          editor.draw();
+        }
+        else{ //select tile
+          Store.selectedTileID = id;
+        }
       }
 
       vp.draw();

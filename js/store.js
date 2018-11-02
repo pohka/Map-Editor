@@ -13,6 +13,7 @@ const Store = {
   layerOrder : [],
   isCollisionVisible : false,
   isRulersVisible : true,
+  isCollisionEditable : false,
 };
 
 Store.genTileID = function(){

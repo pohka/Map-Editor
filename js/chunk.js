@@ -21,7 +21,6 @@ class Chunk{
   draw(vp, camFocus){
     let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
     for(let i=Store.layerOrder.length-1; i >= 0; i--){
-      console.log("drawing layer");
       let layerName = Store.layerOrder[i];
       this.drawLayer(this.layers[layerName], chunkOffset, camFocus, vp);
     }
@@ -45,14 +44,23 @@ class Chunk{
 
               //drawing collision
               if(Store.isCollisionVisible && tile.hasCollision){
-                vp.ctx.beginPath();
-                vp.ctx.strokeStyle="#0f0";
-                vp.ctx.lineWidth="1";
-                vp.ctx.rect(
-                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x, //destination
+                vp.ctx.fillStyle="#0F05";
+                vp.ctx.fillRect(
+                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x,
                   camFocus.y + i*Chunk.tileSize + chunkOffset.y,
                   Chunk.tileSize, Chunk.tileSize
                 );
+
+                vp.ctx.beginPath();
+                vp.ctx.strokeStyle="#0F0";
+
+                vp.ctx.lineWidth="1";
+                vp.ctx.rect(
+                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x,
+                  camFocus.y + i*Chunk.tileSize + chunkOffset.y,
+                  Chunk.tileSize, Chunk.tileSize
+                );
+
                 vp.ctx.stroke();
               }
             }
