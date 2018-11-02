@@ -33,6 +33,7 @@ class SectionLayer{
   static moveLayer(e){
     let curIndex = Store.layerOrder.indexOf(e.name);
     let direction = e.getAttribute("dir");
+    let hasChanged = true;
     if(direction == "up" && curIndex > 0){
       let tmp = Store.layerOrder[curIndex-1];
       Store.layerOrder[curIndex-1] = Store.layerOrder[curIndex];
@@ -42,11 +43,16 @@ class SectionLayer{
       let tmp = Store.layerOrder[curIndex+1];
       Store.layerOrder[curIndex+1] = Store.layerOrder[curIndex];
       Store.layerOrder[curIndex] = tmp;
+
+    }
+    else{
+      hasChanged = false;
     }
 
-    //update the DOM
-    SectionLayer.updateLayerListDOM();
-    Notification.add("Moved layer '" + layerName + "'" + direction);
+    if(hasChanged){
+      Notification.add("Moved layer '" + e.name + "' " + direction);
+      SectionLayer.updateLayerListDOM();
+    }
   }
 
   //updates the layer section DOM
@@ -61,8 +67,8 @@ class SectionLayer{
       let layerName = Store.layerOrder[i];
       el.setAttribute("layer", layerName);
       el.innerHTML = "<span>"+layerName+"</span>"+
-                    "<button dir='down' name='"+layerName+"' onclick='SectionLayer.moveLayer(this)'>↓</button>"+
-                      "<button dir='up' name='"+layerName+"' onclick='SectionLayer.moveLayer(this)'>↑</button>";
+                    "<button dir='down' name='"+layerName+"' onclick='SectionLayer.moveLayer(this)'><i class='fas fa-angle-down'></i></button>"+
+                      "<button dir='up' name='"+layerName+"' onclick='SectionLayer.moveLayer(this)'><i class='fas fa-angle-up'></i></button>";
 
       el.className = "layer-item";
       if(Store.selectedLayer == layerName){

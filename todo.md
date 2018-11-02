@@ -1,6 +1,4 @@
 -tile collision
--notifications (saved and imported);
--icons
 -object layer
 
 

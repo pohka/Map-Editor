@@ -9,8 +9,8 @@ class Tools{
     if(chunk != null){
 
       let tilePos = chunk.findTileCoorAtWorldPos(mousePos.x, mousePos.y);
-      if(tilePos != null){
-        let layer = chunk.layers[Store.selectedLayer];
+      let layer = chunk.layers[Store.selectedLayer];
+      if(tilePos != null && layer !== undefined){
         let curTileID = layer[tilePos.y][tilePos.x];
         //don't do any action if the tileID doesn't change
         if(curTileID != tileID){
@@ -49,4 +49,11 @@ class Tools{
     }
     return null;
   }
+
+  static selectTool(name){
+    Tools.selectedTool = name;
+  }
 }
+
+Tools.brushSize = 1;
+Tools.selectedTool = "brush";

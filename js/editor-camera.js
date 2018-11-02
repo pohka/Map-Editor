@@ -24,7 +24,12 @@ class EditorCamera{
       //left mouse button
       if(e.button == 0){
           cam.isPainting = true;
-          Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+          if(Tools.selectedTool == "brush"){
+            Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+          }
+          else if(Tools.selectedTool == "eraser"){
+            Tools.setTileAtCursor(e, vp, -1);
+          }
       }
 
       vp.draw();
@@ -48,7 +53,12 @@ class EditorCamera{
         cam.panLastPos.y = e.y;
       }
       else if(cam.isPainting && isOverViewport){
-        Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+        if(Tools.selectedTool == "brush"){
+          Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+        }
+        else if(Tools.selectedTool == "eraser"){
+          Tools.setTileAtCursor(e, vp, -1);
+        }
       }
 
       vp.draw();

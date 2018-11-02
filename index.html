@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Map Editor</title>
     <script src="./js/editor-ruler.js"></script>
@@ -31,6 +32,9 @@
         <button onclick="importProject()">Import</button>
         <button onclick="Action.undo()">Undo</button>
         <button onclick="Action.redo()">Redo</button>
+        <hr>
+        <button onclick="Tools.selectTool('brush')">Brush</button>
+        <button onclick="Tools.selectTool('eraser')">Eraser</button>
       </div>
     </div>
     <div class="col middle-col">
@@ -40,7 +44,7 @@
       <div class="section layers-section">
         <h2>Layers</h2>
         <input type="text" placeholder="layer name" id="layer-name"></input>
-        <button onclick="SectionLayer.addLayer()">Add Layer</button>
+        <button onclick="SectionLayer.addLayer()"><i class="fas fa-plus"></i> Layer</button>
         <hr>
         <div id="layer-list"></div>
       </div>
