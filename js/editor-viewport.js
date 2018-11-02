@@ -16,6 +16,9 @@ class EditorViewport extends Viewport{
   draw(){
     super.draw();
     this.drawChunks();
+    if(Store.isCollisionVisible){
+      this.drawCollision();
+    }
     if(Store.isRulersVisible){
       this.ruler.draw(this);
       this.drawChunkPositions();
@@ -39,6 +42,28 @@ class EditorViewport extends Viewport{
 
       if(isInVP){
         Store.chunks[i].draw(this, camFocus);
+      }
+    }
+    this.ctx.stroke();
+  }
+
+  //draw collision
+  drawCollision(){
+    //tile collision
+    let camFocus = this.getWorldFocus();
+    let vpSize = this.VPCoorToWorldCoor(this.width, this.height);
+    let vpWorldPos = new Vector(-this.camera.position.x - vpSize.x/2, -this.camera.position.y - vpSize.y/2);
+
+    for(let i=0; i<Store.chunks.length; i++){
+
+      let isInVP = this.isRectInViewPort(
+        Store.chunks[i].position.x * Chunk.totalSize,
+        Store.chunks[i].position.y * Chunk.totalSize,
+        Chunk.totalSize, Chunk.totalSize
+      );
+
+      if(isInVP){
+        Store.chunks[i].drawCollision(this, camFocus);
       }
     }
     this.ctx.stroke();

@@ -1,5 +1,6 @@
--tile collision
 -object layer
+-undo when painting
+-brush size
 
 
 -create new project
@@ -7,10 +8,6 @@
   -no. of chunks (w and h)
   -add image
   -
-
-
-Tools
--brush size
 
 
 

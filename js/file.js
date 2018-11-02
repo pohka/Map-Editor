@@ -6,7 +6,8 @@ function exportProject(){
     tileSize : Chunk.tileSize,
     imgs : [],
     tiles : [],
-    chunks : []
+    chunks : [],
+    layerOrder : Store.layerOrder
   };
 
   let loc = window.location.href.split("/");
@@ -21,7 +22,7 @@ function exportProject(){
 
   for(let i=0; i<Store.chunks.length; i++){
     data.chunks.push({
-      map : Store.chunks[i].map,
+      layers : Store.chunks[i].layers,
       x : Store.chunks[i].position.x,
       y : Store.chunks[i].position.y
     });

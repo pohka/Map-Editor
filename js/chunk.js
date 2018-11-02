@@ -26,6 +26,42 @@ class Chunk{
     }
   }
 
+  //drawing collision
+  drawCollision(vp, camFocus){
+    let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
+
+    //style
+    vp.ctx.fillStyle="#0F05";
+    vp.ctx.strokeStyle="#0F0";
+    vp.ctx.lineWidth="1";
+
+    for(let y=0; y<Chunk.size; y++){
+      for(let x=0; x<Chunk.size; x++){
+        for(let i in this.layers){
+          let tileID = this.layers[i][y][x];
+          if(tileID > -1){
+            let tile = Store.tiles[tileID];
+             if(tile !== undefined && tile.hasCollision){
+
+               let xx = camFocus.x + (x*Chunk.tileSize) + chunkOffset.x;
+               let yy = camFocus.y + (y*Chunk.tileSize) + chunkOffset.y;
+               let w = Chunk.tileSize;
+               let h = Chunk.tileSize;
+
+              vp.ctx.fillRect(xx, yy, w, h);
+
+              vp.ctx.beginPath();
+              vp.ctx.rect(xx, yy, w, h);
+              vp.ctx.stroke();
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //draws the tiles
   drawLayer(map, chunkOffset, camFocus, vp){
     for(let i=0; i<map.length; i++){
       for(let j=0; j<map[i].length; j++){
@@ -35,34 +71,15 @@ class Chunk{
           if(tile != null){
             let img = Store.findImgObj(tile.src);
             if(img != null){
+              let srcX = tile.x * Chunk.tileSize,
+                  srcY = tile.y * Chunk.tileSize,
+                  destX = camFocus.x + (j*Chunk.tileSize) + chunkOffset.x,
+                  destY = camFocus.y + i*Chunk.tileSize + chunkOffset.y;
+
               vp.ctx.drawImage(img,
-                tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize,
-                camFocus.x + (j*Chunk.tileSize) + chunkOffset.x, //destination
-                camFocus.y + i*Chunk.tileSize + chunkOffset.y,
-                Chunk.tileSize, Chunk.tileSize
+                srcX, srcY, Chunk.tileSize, Chunk.tileSize,
+                destX, destY, Chunk.tileSize, Chunk.tileSize
               );
-
-              //drawing collision
-              if(Store.isCollisionVisible && tile.hasCollision){
-                vp.ctx.fillStyle="#0F05";
-                vp.ctx.fillRect(
-                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x,
-                  camFocus.y + i*Chunk.tileSize + chunkOffset.y,
-                  Chunk.tileSize, Chunk.tileSize
-                );
-
-                vp.ctx.beginPath();
-                vp.ctx.strokeStyle="#0F0";
-
-                vp.ctx.lineWidth="1";
-                vp.ctx.rect(
-                  camFocus.x + (j*Chunk.tileSize) + chunkOffset.x,
-                  camFocus.y + i*Chunk.tileSize + chunkOffset.y,
-                  Chunk.tileSize, Chunk.tileSize
-                );
-
-                vp.ctx.stroke();
-              }
             }
           }
         }

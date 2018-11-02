@@ -11,7 +11,6 @@ class SectionLayer{
     }
 
 
-
     if(Store.layerOrder.length == 0){
       Store.selectedLayer = layerName;
     }
@@ -52,6 +51,7 @@ class SectionLayer{
     if(hasChanged){
       Notification.add("Moved layer '" + e.name + "' " + direction);
       SectionLayer.updateLayerListDOM();
+      editor.draw();
     }
   }
 
