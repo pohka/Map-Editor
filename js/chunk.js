@@ -19,7 +19,7 @@ class Chunk{
   }
 
   draw(vp, camFocus){
-    let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
+    let chunkOffset = this.getChunkOffset(); //new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
     for(let i=Store.layerOrder.length-1; i >= 0; i--){
       let layerName = Store.layerOrder[i];
       this.drawLayer(this.layers[layerName], chunkOffset, camFocus, vp);
@@ -28,7 +28,7 @@ class Chunk{
 
   //drawing collision
   drawCollision(vp, camFocus){
-    let chunkOffset = new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
+    let chunkOffset = this.getChunkOffset(); //new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
 
     //style
     vp.ctx.fillStyle="#0F05";
@@ -85,6 +85,10 @@ class Chunk{
         }
       }
     }
+  }
+
+  getChunkOffset(){
+    return new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
   }
 
   //converts world coordinates to map indexes
