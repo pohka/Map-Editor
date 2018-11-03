@@ -10,6 +10,11 @@ class SectionLayer{
       layerName = name;
     }
 
+    if(layerName.length < 1){
+      Notification.add("No name entered for layer", true);
+      return;
+    }
+
 
     if(Store.layerOrder.length == 0){
       Store.selectedLayer = layerName;

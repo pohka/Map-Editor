@@ -13,4 +13,3 @@
 
 Bugs
 -painting skips blocks with fast moving cursor
--can add layer with no name
