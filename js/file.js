@@ -44,7 +44,11 @@ function exportProject(){
   });
 }
 
-var imported;
+var importReady = function(){
+  palette.draw();
+  editor.draw();
+}
+
 function importProject(){
   var fs = require('fs');
 
@@ -52,7 +56,6 @@ function importProject(){
   fs.readFile(path, 'utf8', function(err, contents) {
     let data = JSON.parse(contents);
     console.log(data);
-    imported = data;
 
     Store.projectName = data.projectName;
 
@@ -74,11 +77,16 @@ function importProject(){
     Store.imgObjs = [];
     var pathModule = require('path');
     let appRoot = pathModule.resolve(__dirname);
+
+    let loc = window.location.href.split("/");
+    loc.splice(-1,1);
+    let rootpath = loc.join("/");
+
+    Store.palettes =  [];
     for(let i in data.imgs){
-      data.imgs[i] = appRoot + "/projects/" + data.projectName + "/res/" + data.imgs[i];
-      data.imgs[i] = data.imgs[i].replace(/\//g, "\\");
+      data.imgs[i] = rootpath + "/projects/" + data.projectName + "/res/" + data.imgs[i];
     }
-    loadImages(null, data.imgs, false);
+    loadImages(null, data.imgs, importReady);
     Store.tiles = data.tiles;
     Store.layerOrder = data.layerOrder;
     Store.tileCount = data.tileCount;
@@ -106,9 +114,6 @@ function importProject(){
     SectionLayer.updateLayerListDOM();
     Tools.selectTool("brush");
 
-
-
-    editor.draw();
 
 
     Notification.add("Loaded Project: " + Store.projectName);

@@ -7,9 +7,10 @@ const Store = {
   tiles : {},
   layerOrder : [],
   tileCount : -1,
+  palettes : [],
 
   //ui based variables
-  currentPalette : null,
+  selectedPalette : null,
   selectedTileID : -1,
   selectedLayer : "",
   isCollisionVisible : false,

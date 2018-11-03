@@ -3,14 +3,12 @@ class PaletteViewport extends Viewport{
   constructor(id, width, height){
     super(id, width, height, new PaletteRuler(32), "#777");
     this.img = null;
-    this.imgsrc = null;
     this.camera = new PaletteCamera(this);
   }
 
   //set the current image of the palette
-  setImg(path){
-    this.img = Store.findImgObj(path);
-    this.imgsrc = path;
+  setImg(){
+    this.img = Store.findImgObj(Store.selectedPalette);
   }
 
   draw(){
@@ -24,7 +22,7 @@ class PaletteViewport extends Viewport{
     //draw collision for palette
     for(let i in Store.tiles){
       let tile = Store.tiles[i];
-      if(tile.hasCollision && tile.src == this.imgsrc){
+      if(tile.hasCollision && tile.src == Store.selectedPalette){
         this.ctx.beginPath();
         this.ctx.strokeStyle="#0F0";
         this.ctx.lineWidth="2";

@@ -22,7 +22,7 @@ class PaletteCamera{
 
         let tilePos = cam.findTileCoorAtCursor(vp, e);
 
-        let id = Store.findTileID(vp.imgsrc, tilePos.x, tilePos.y);
+        let id = Store.findTileID(Store.selectedPalette, tilePos.x, tilePos.y);
 
         if(Store.isCollisionEditable){
           Store.tiles[id].hasCollision = !Store.tiles[id].hasCollision;

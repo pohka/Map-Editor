@@ -19,6 +19,18 @@ window.onload = () => {
   walk("./projects/"+Store.projectName+"/res/", loadImages);
 }
 
+
+
+//called once the images are loaded
+var readyFunc = function ready(){
+  setupPaletteAndTiles();
+  setupCollision();
+  sampleChunks();
+  editor.draw();
+  palette.draw();
+  Notification.add("Ready");
+}
+
 //finds all the files in a directory
 var walk = function(dir, done) {
   var fs = require('fs');
@@ -27,33 +39,23 @@ var walk = function(dir, done) {
   fs.readdir(dir, function(err, list) {
     if (err) return done(err);
     var pending = list.length;
-    if (!pending) return done(null, results);
+    if (!pending) return done(null, results, readyFunc);
     list.forEach(function(file) {
       file = path.resolve(dir, file);
       fs.stat(file, function(err, stat) {
         if (stat && stat.isDirectory()) {
           walk(file, function(err, res) {
             results = results.concat(res);
-            if (!--pending) done(null, results);
+            if (!--pending) done(null, results, readyFunc);
           });
         } else {
           results.push(file);
-          if (!--pending) done(null, results);
+          if (!--pending) done(null, results, readyFunc);
         }
       });
     });
   });
 };
-
-//called once the images are loaded
-function ready(){
-  setupPaletteAndTiles();
-  setupCollision();
-  sampleChunks();
-  editor.draw();
-  palette.draw();
-  Notification.add("Ready");
-}
 
 
 //placeholder
@@ -74,12 +76,11 @@ function sampleChunks(){
       Store.chunks.push(chunk);
     }
   }
-
-
 }
 
+
 //preload images
-function loadImages(err, files, callReady){
+function loadImages(err, files, completed){
   setDefaultPaletteOption();
 
   let loadedCount = 0;
@@ -91,8 +92,8 @@ function loadImages(err, files, callReady){
     img.onload = function(){
       loadedCount++;
       Store.imgObjs.push(this);
-      if(loadedCount == files.length && callReady === undefined){
-        ready();
+      if(loadedCount == files.length){
+        completed();
       }
     }
     img.src = files[i];
@@ -109,32 +110,30 @@ function setDefaultPaletteOption(){
   select.add(option);
   //new option selected
   select.addEventListener("change", function(e){
-    palette.setImg(e.srcElement.value);
-    palette.draw();
+    Store.selectedPalette = e.srcElement.value;
+    palette.setImg();
     Store.selectedTileID = -1;
+    palette.draw();
   });
 }
 
 function setupPaletteAndTiles(){
   //create all the tiles
-  let select = document.getElementById("palette-select");
-  for(let i=0; i<select.options.length; i++){
-    let opt = select.options[i];
-    if(opt.disabled == false){
-      let img = Store.findImgObj(opt.text);
-      let maxX = img.width/Chunk.tileSize;
-      let maxY = img.height/Chunk.tileSize;
+  //let select = document.getElementById("palette-select");
+  for(let i=0; i<Store.palettes.length; i++){
+    let img = Store.findImgObj(Store.palettes[i]);
+    let maxX = img.width/Chunk.tileSize;
+    let maxY = img.height/Chunk.tileSize;
 
-      for(let y=0; y<maxY; y++){
-        for(let x=0; x<maxX; x++){
-          let id = Store.genTileID();
-          Store.tiles[id] = ({
-            src : opt.text,
-            x : x,
-            y : y,
-            hasCollision : false,
-          });
-        }
+    for(let y=0; y<maxY; y++){
+      for(let x=0; x<maxX; x++){
+        let id = Store.genTileID();
+        Store.tiles[id] = ({
+          src : Store.palettes[i],
+          x : x,
+          y : y,
+          hasCollision : false,
+        });
       }
     }
   }
@@ -142,20 +141,38 @@ function setupPaletteAndTiles(){
 
 //add an image to the palette
 function addPaletteOption(filePath){
-  console.log(filePath);
-  let els = filePath.split("\\res\\");
+  filePath = filePath.replace(/\\/g, "/");
+  let els = filePath.split("/res/");
   let path;
   if(els.length > 1){
-    path = filePath.split("\\res\\")[1].replace(/\\/g,"/");
+    path = els[1];
   }
   else{
     path = filePath;
   }
+  Store.palettes.push(path);
+  updatePaletteOptionDOM();
+}
 
+function updatePaletteOptionDOM(){
   let select = document.getElementById("palette-select");
-  let option = document.createElement("option");
-  option.text = path;
-  select.add(option);
+  while (select.firstChild) {
+    select.removeChild(select.firstChild);
+  }
+
+  let placeholder = document.createElement("option");
+  placeholder.text = "Select Palette";
+  placeholder.disabled = true;
+  if(Store.selectedPalette == null){
+    placeholder.selected = true;
+  }
+  select.add(placeholder);
+
+  for(let i in Store.palettes){
+    let option = document.createElement("option");
+    option.text = Store.palettes[i];
+    select.add(option);
+  }
 }
 
 function setupCollision(){
