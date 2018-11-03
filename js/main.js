@@ -222,6 +222,7 @@ function setupDOMs(){
   showCollision.addEventListener("click", function(e){
       Store.isCollisionVisible = showCollision.checked;
       editor.draw();
+      palette.draw();
   });
 
   let showRulers = document.getElementById("show-ruler");

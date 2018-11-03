@@ -7,9 +7,9 @@ class EditorCamera{
     this.addInput(vp);
     this.lastCursorPos = new Vector(0,0); //cursor position in document coordinates
     this.lastZoomTime = Date.now();
-    this.zoomMax = 1.5;
+    this.zoomMax = 4;
     this.zoomMin = 0.5;
-    this.zoomRate = 0.25;
+    this.zoomRate = 0.5;
   }
 
   //adds input listeners

@@ -121,6 +121,7 @@ function importProject(){
 
 }
 
+//checks to see if they files in /res/ have changed
 //loadedImgs is array of file paths e.g. "tilesets/cave.png"
 function refreshFiles(loadedImgs){
   walk("./projects/"+Store.projectName+"/res/", loadImages, function(files){

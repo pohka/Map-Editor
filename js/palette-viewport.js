@@ -20,17 +20,19 @@ class PaletteViewport extends Viewport{
     this.ruler.draw(this);
 
     //draw collision for palette
-    for(let i in Store.tiles){
-      let tile = Store.tiles[i];
-      if(tile.hasCollision && tile.src == Store.selectedPalette){
-        this.ctx.beginPath();
-        this.ctx.strokeStyle="#0F0";
-        this.ctx.lineWidth="2";
-        this.ctx.fillStyle="#0F05";
-        this.ctx.fillRect(tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize);
-        this.ctx.rect(tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize);
+    if(Store.isCollisionVisible){
+      for(let i in Store.tiles){
+        let tile = Store.tiles[i];
+        if(tile.hasCollision && tile.src == Store.selectedPalette){
+          this.ctx.beginPath();
+          this.ctx.strokeStyle="#0F0";
+          this.ctx.lineWidth="2";
+          this.ctx.fillStyle="#0F05";
+          this.ctx.fillRect(tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize);
+          this.ctx.rect(tile.x * Chunk.tileSize, tile.y * Chunk.tileSize, Chunk.tileSize, Chunk.tileSize);
 
-        this.ctx.stroke();
+          this.ctx.stroke();
+        }
       }
     }
 
