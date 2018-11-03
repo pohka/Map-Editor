@@ -79,7 +79,7 @@ function sampleChunks(){
 }
 
 //preload images
-function loadImages(err, files){
+function loadImages(err, files, callReady){
   setDefaultPaletteOption();
 
   let loadedCount = 0;
@@ -91,7 +91,7 @@ function loadImages(err, files){
     img.onload = function(){
       loadedCount++;
       Store.imgObjs.push(this);
-      if(loadedCount == files.length){
+      if(loadedCount == files.length && callReady === undefined){
         ready();
       }
     }
@@ -142,7 +142,16 @@ function setupPaletteAndTiles(){
 
 //add an image to the palette
 function addPaletteOption(filePath){
-  let path = filePath.split("\\res\\")[1].replace(/\\/g,"/");
+  console.log(filePath);
+  let els = filePath.split("\\res\\");
+  let path;
+  if(els.length > 1){
+    path = filePath.split("\\res\\")[1].replace(/\\/g,"/");
+  }
+  else{
+    path = filePath;
+  }
+
   let select = document.getElementById("palette-select");
   let option = document.createElement("option");
   option.text = path;

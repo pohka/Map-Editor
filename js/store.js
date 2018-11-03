@@ -2,15 +2,16 @@
 //also helps find the variables
 const Store = {
   projectName : "test",
-  palettes : [],
   chunks : [],
   imgObjs : [],
   tiles : {},
+  layerOrder : [],
+  tileCount : -1,
+
+  //ui based variables
   currentPalette : null,
   selectedTileID : -1,
-  tileCount : -1,
   selectedLayer : "",
-  layerOrder : [],
   isCollisionVisible : false,
   isRulersVisible : true,
   isCollisionEditable : false,

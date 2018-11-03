@@ -1,7 +1,12 @@
 //a section of the enite tile map
 class Chunk{
-  constructor(x, y){
-    this.layers = {};
+  constructor(x, y, layers){
+    if(layers !== undefined){
+      this.layers = layers;
+    }
+    else{
+      this.layers = {};
+    }
     this.position = new Vector(x,y); //position is in chunk coordinates
   //  this.layers["default"] = Chunk.getEmptyLayer();
   }

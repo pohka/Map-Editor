@@ -47,6 +47,7 @@ class EditorViewport extends Viewport{
     }
   }
 
+  //returns true if a chunk is within the viewport
   isChunkInViewPort(chunk){
     return this.isRectInViewPort(
       chunk.position.x * Chunk.totalSize,
