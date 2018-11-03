@@ -5,9 +5,9 @@
 
 -create new project
   -project name
-  -no. of chunks (w and h)
-  -add image
-  -
+  -intialization variables (projectName, chunkSize, tileSize)
+  -refresh resourses - button to walk /res/ folder
+-load project by name
 
 
 

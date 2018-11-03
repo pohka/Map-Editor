@@ -1,7 +1,7 @@
 //gloabl storage of variables
 //also helps find the variables
 const Store = {
-  projectName : "test",
+  projectName : null,
   chunks : [],
   imgObjs : [],
   tiles : {},

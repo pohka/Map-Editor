@@ -14,22 +14,23 @@ let editor, palette;
 window.onload = () => {
   editor = new EditorViewport("editor", 1100, 700);
   palette = new PaletteViewport("palette", 512, 512);
+  setupDOMs();
 
   //find all the images and preload them
-  walk("./projects/"+Store.projectName+"/res/", loadImages);
+  //walk("./projects/"+Store.projectName+"/res/", loadImages);
 }
 
-
-
-//called once the images are loaded
-var readyFunc = function ready(){
-  setupPaletteAndTiles();
-  setupCollision();
+function createProject(){
+  Store.projectName = "test_" + Math.floor(Math.random() * 100000);
+  Chunk.size = 16;
+  Chunk.tileSize = 32;
+  Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
   editor.draw();
   palette.draw();
-  Notification.add("Ready");
+  Notification.add("Created Project: " + Store.projectName);
 }
+
 
 //finds all the files in a directory
 var walk = function(dir, done) {
@@ -39,18 +40,18 @@ var walk = function(dir, done) {
   fs.readdir(dir, function(err, list) {
     if (err) return done(err);
     var pending = list.length;
-    if (!pending) return done(null, results, readyFunc);
+    if (!pending) return done(null, results);
     list.forEach(function(file) {
       file = path.resolve(dir, file);
       fs.stat(file, function(err, stat) {
         if (stat && stat.isDirectory()) {
           walk(file, function(err, res) {
             results = results.concat(res);
-            if (!--pending) done(null, results, readyFunc);
+            if (!--pending) done(null, results);
           });
         } else {
           results.push(file);
-          if (!--pending) done(null, results, readyFunc);
+          if (!--pending) done(null, results);
         }
       });
     });
@@ -81,8 +82,6 @@ function sampleChunks(){
 
 //preload images
 function loadImages(err, files, completed){
-  setDefaultPaletteOption();
-
   let loadedCount = 0;
   for(let i=0; i<files.length; i++){
     addPaletteOption(files[i]);
@@ -100,26 +99,11 @@ function loadImages(err, files, completed){
   }
 }
 
-//setup for the palette options
-function setDefaultPaletteOption(){
-  let select = document.getElementById("palette-select");
-  let option = document.createElement("option");
-  option.text = "Select Palette";
-  option.disabled = true;
-  option.selected = true;
-  select.add(option);
-  //new option selected
-  select.addEventListener("change", function(e){
-    Store.selectedPalette = e.srcElement.value;
-    palette.setImg();
-    Store.selectedTileID = -1;
-    palette.draw();
-  });
-}
+//todo move to section-palette.js
+//------------------------------
 
+//creates the tiles when the palette is added for the first time
 function setupPaletteAndTiles(){
-  //create all the tiles
-  //let select = document.getElementById("palette-select");
   for(let i=0; i<Store.palettes.length; i++){
     let img = Store.findImgObj(Store.palettes[i]);
     let maxX = img.width/Chunk.tileSize;
@@ -154,6 +138,7 @@ function addPaletteOption(filePath){
   updatePaletteOptionDOM();
 }
 
+//updates the palette option
 function updatePaletteOptionDOM(){
   let select = document.getElementById("palette-select");
   while (select.firstChild) {
@@ -175,7 +160,10 @@ function updatePaletteOptionDOM(){
   }
 }
 
-function setupCollision(){
+//------------------------------
+
+//sets up the DOM events for some of the UI
+function setupDOMs(){
   let showCollision = document.getElementById("show-collision");
   showCollision.addEventListener("click", function(e){
       Store.isCollisionVisible = showCollision.checked;
