@@ -10,14 +10,14 @@ class EditorRuler{
 
 
     //vertical lines
-    let maxLinesX = vpSize.x/this.size; //number of lines needed from left to right
+    let maxLinesX = vpSize.x/Chunk.tileSize; //number of lines needed from left to right
     let maxX = parseInt((maxLinesX/2) + 1); //number of lines half of the screen
-    let offsetX = parseInt(vp.camera.position.x / this.size); //camera offset for lines
+    let offsetX = parseInt(vp.camera.position.x / Chunk.tileSize); //camera offset for lines
 
     for(let i = -maxX-offsetX; i <= maxX-offsetX; i++){
       vp.ctx.beginPath();
       this.setRulerStyle(i, vp);
-      let x = camFocus.x + (i*this.size);
+      let x = camFocus.x + (i*Chunk.tileSize);
       vp.ctx.moveTo(x, 0);
       vp.ctx.lineTo(x, vpSize.y);
       vp.ctx.stroke();
@@ -26,15 +26,15 @@ class EditorRuler{
 
 
     //horizontal lines
-    let maxLinesY= vpSize.y/this.size;
+    let maxLinesY= vpSize.y/Chunk.tileSize;
     let maxY = parseInt((maxLinesY/2) + 1);
-    let offsetY = parseInt(vp.camera.position.y / this.size);
+    let offsetY = parseInt(vp.camera.position.y / Chunk.tileSize);
 
     for(let i = -maxY-offsetY; i <= maxX-offsetY; i++){
       vp.ctx.beginPath();
       this.setRulerStyle(i, vp);
       vp.ctx.beginPath();
-      let y = camFocus.y + (i*this.size);
+      let y = camFocus.y + (i*Chunk.tileSize);
       vp.ctx.moveTo(0, y);
       vp.ctx.lineTo(vpSize.x, y);
       vp.ctx.stroke();

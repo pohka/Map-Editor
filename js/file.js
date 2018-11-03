@@ -44,11 +44,6 @@ function exportProject(){
   });
 }
 
-var importReady = function(){
-  palette.draw();
-  editor.draw();
-}
-
 function importProject(){
   var fs = require('fs');
 
@@ -83,13 +78,11 @@ function importProject(){
     let rootpath = loc.join("/");
 
     Store.palettes =  [];
-    for(let i in data.imgs){
-      data.imgs[i] = rootpath + "/projects/" + data.projectName + "/res/" + data.imgs[i];
-    }
-    loadImages(null, data.imgs, importReady);
     Store.tiles = data.tiles;
     Store.layerOrder = data.layerOrder;
     Store.tileCount = data.tileCount;
+
+    refreshFiles(data.imgs);
 
     //reset UI variables
     Store.currentPalette = null;
@@ -103,6 +96,12 @@ function importProject(){
     Store.isCollisionEditable = false;
     let showCollisionDOM = document.getElementById("show-collision");
     showCollisionDOM.checked = false;
+
+    let paletteSelect = document.getElementById("palette-select");
+    paletteSelect.selectedIndex = "0";
+    Store.selectedPalette = null;
+    palette.setImg();
+    palette.draw();
 
     if(data.layerOrder.length > 0){
       Store.selectedLayer = data.layerOrder[0];
@@ -120,4 +119,33 @@ function importProject(){
     console.log("imported: " + Store.projectName);
   });
 
+}
+
+//loadedImgs is array of file paths e.g. "tilesets/cave.png"
+function refreshFiles(loadedImgs){
+  walk("./projects/"+Store.projectName+"/res/", loadImages, function(files){
+    //check if there is any image files missing
+    for(let i in loadedImgs){
+      let img = Store.findImgObj(loadedImgs[i])
+      if(img == null){
+        console.log("Image not found:" + loadedImgs[i]);
+        Notification.add("Image file not found: " + loadedImgs[i], true);
+      }
+    }
+
+    //check if there is any new image files
+    for(let i in files){
+      let file = files[i].split("\\res\\")[1].replace(/\\/g, "/");
+      //if newly added file
+      if(loadedImgs.indexOf(file) == -1){
+        Notification.add("New image loaded: " + file);
+        if(file.indexOf("tilesets/") == 0){
+          genTilesFromNewFile(file);
+        }
+      }
+    }
+
+    palette.draw();
+    editor.draw();
+  });
 }

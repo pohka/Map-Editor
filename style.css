@@ -18,11 +18,11 @@ select{
   margin: 4px 2px;
 }
 
-input[type="text"]{
-  min-width: 300px;
+input[type="text"], input[type="number"]{
+  width: 300px;
   font-size: 16px;
   padding: 6px 4px;
-  margin: 4px 2px;
+  margin: 3px 2px;
 }
 
 hr{
@@ -110,4 +110,66 @@ hr{
 .notification-err{
   background: #e33;
   border-color: black;
+}
+
+.new-project-modal{
+  position: absolute;
+  top:0;
+  left: 0;
+  background: #777;
+  color: white;
+  padding: 40px 60px;
+  padding-top: 60px
+  border: 2px solid #38c;
+  display: none;
+}
+
+.new-project-modal div{
+  padding: 4px 10px;
+}
+
+.new-project-modal label{
+  display: inline-block;
+  width: 150px;
+}
+
+.new-project-modal input{
+  margin: 0 0;
+  width: 200px;
+}
+
+input[type="submit"]{
+  font-size: 16px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.new-project-modal input[type="submit"]{
+  margin-top: 30px;
+  float: right;
+}
+
+.close-modal{
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 30px;
+}
+
+.close-modal:hover{
+  color: red;
+  cursor: pointer;
+}
+
+.load-project-modal{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 40px 60px;
+  padding-top: 60px;
+  color: white;
+  background: #777;
+  border: 2px solid #38c;
+  display: none;
 }

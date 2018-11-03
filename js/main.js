@@ -20,38 +20,86 @@ window.onload = () => {
   //walk("./projects/"+Store.projectName+"/res/", loadImages);
 }
 
+function toggleModal(sel, hide){
+  let modal = document.querySelector(sel);
+
+  if(hide !== undefined){
+    if(!hide){
+      modal.style.display = "block";
+    }
+    else{
+      modal.style.display = "none";
+    }
+  }
+  else if (modal.style.display == ""  || modal.style.display === "none" ) {
+        modal.style.display = "block";
+  }
+  else {
+      modal.style.display = "none";
+  }
+}
+
+
 function createProject(){
-  Store.projectName = "test_" + Math.floor(Math.random() * 100000);
-  Chunk.size = 16;
-  Chunk.tileSize = 32;
+  let projectName = document.querySelector("#new-project-name").value;
+  let tileSize = document.querySelector("#new-project-tile").value;
+  let chunkSize = document.querySelector("#new-project-chunk").value;
+
+  if(projectName.length > 0){
+    projectName = projectName.trim().replace(/\s+/g, "-");
+  }
+
+  //validate input
+  if(projectName.length == 0 || tileSize <= 0 || chunkSize <= 0){
+    Notification.add("Input not valid", true);
+    return;
+  }
+
+  Store.projectName = projectName
+  Chunk.size = chunkSize;
+  Chunk.tileSize = tileSize;
   Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
   editor.draw();
   palette.draw();
   Notification.add("Created Project: " + Store.projectName);
+
+
+  toggleModal(".new-project-modal", true);
+}
+
+function loadProject(){
+  let projectName = document.querySelector("#load-project-name").value;
+  projectName = projectName.trim();
+  if(projectName.length > 0){
+    Store.projectName = projectName;
+    importProject();
+    toggleModal(".load-project-modal", true);
+
+  }
 }
 
 
 //finds all the files in a directory
-var walk = function(dir, done) {
+var walk = function(dir, done, params) {
   var fs = require('fs');
   var path = require('path');
   var results = [];
   fs.readdir(dir, function(err, list) {
     if (err) return done(err);
     var pending = list.length;
-    if (!pending) return done(null, results);
+    if (!pending) return done(null, results, params);
     list.forEach(function(file) {
       file = path.resolve(dir, file);
       fs.stat(file, function(err, stat) {
         if (stat && stat.isDirectory()) {
           walk(file, function(err, res) {
             results = results.concat(res);
-            if (!--pending) done(null, results);
+            if (!--pending) done(null, results, params);
           });
         } else {
           results.push(file);
-          if (!--pending) done(null, results);
+          if (!--pending) done(null, results, params);
         }
       });
     });
@@ -83,6 +131,7 @@ function sampleChunks(){
 //preload images
 function loadImages(err, files, completed){
   let loadedCount = 0;
+//  console.log(completed);
   for(let i=0; i<files.length; i++){
     addPaletteOption(files[i]);
 
@@ -92,7 +141,8 @@ function loadImages(err, files, completed){
       loadedCount++;
       Store.imgObjs.push(this);
       if(loadedCount == files.length){
-        completed();
+        completed(files);
+        //console.log("imgs all loaded");
       }
     }
     img.src = files[i];
@@ -103,22 +153,26 @@ function loadImages(err, files, completed){
 //------------------------------
 
 //creates the tiles when the palette is added for the first time
-function setupPaletteAndTiles(){
+function genTilesFromPalette(){
   for(let i=0; i<Store.palettes.length; i++){
-    let img = Store.findImgObj(Store.palettes[i]);
-    let maxX = img.width/Chunk.tileSize;
-    let maxY = img.height/Chunk.tileSize;
+    genTilesFromNewFile(Store.palettes[i]);
+  }
+}
 
-    for(let y=0; y<maxY; y++){
-      for(let x=0; x<maxX; x++){
-        let id = Store.genTileID();
-        Store.tiles[id] = ({
-          src : Store.palettes[i],
-          x : x,
-          y : y,
-          hasCollision : false,
-        });
-      }
+function genTilesFromNewFile(fileName){
+  let img = Store.findImgObj(fileName);
+  let maxX = img.width/Chunk.tileSize;
+  let maxY = img.height/Chunk.tileSize;
+
+  for(let y=0; y<maxY; y++){
+    for(let x=0; x<maxX; x++){
+      let id = Store.genTileID();
+      Store.tiles[id] = ({
+        src : fileName,
+        x : x,
+        y : y,
+        hasCollision : false,
+      });
     }
   }
 }
@@ -179,5 +233,12 @@ function setupDOMs(){
   let editCollision = document.getElementById("edit-collision");
   editCollision.addEventListener("click", function(e){
     Store.isCollisionEditable = editCollision.checked;
+  });
+
+  let paletteSelect = document.getElementById("palette-select");
+  paletteSelect.addEventListener("change", function(e){
+    Store.selectedPalette = paletteSelect.value;
+    palette.setImg();
+    palette.draw();
   });
 }
