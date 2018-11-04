@@ -16,6 +16,8 @@ const Store = {
   isCollisionVisible : false,
   isRulersVisible : true,
   isCollisionEditable : false,
+  editorViewOpts : ["scene", "palette", "object"],
+  selectedEditorView : "scene",
 };
 
 Store.genTileID = function(){

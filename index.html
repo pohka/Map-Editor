@@ -43,7 +43,14 @@
       </div>
     </div>
     <div class="col middle-col">
-      <canvas id="editor"></canvas>
+      <div class="view-menu">
+        <div id="view-menu-scene" class="active" onclick="setView('scene')">Scene</div>
+        <div id="view-menu-palette" onclick="setView('palette')">Palette</div>
+        <div id="view-menu-object" onclick="setView('object')">Object</div>
+      </div>
+      <canvas class="scene-editor" id="editor"></canvas>
+      <canvas class="palette-editor"></canvas>
+      <canvas class="object-editor"></canvas>
     </div>
     <div class="col right-col">
       <div class="section layers-section">

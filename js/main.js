@@ -12,7 +12,7 @@ order of coordinate systems:
 let editor, palette;
 
 window.onload = () => {
-  editor = new EditorViewport("editor", 1100, 700);
+  editor = new EditorViewport("editor", 1100, 600);
   palette = new PaletteViewport("palette", 512, 512);
   setupDOMs();
 
@@ -215,6 +215,26 @@ function updatePaletteOptionDOM(){
 }
 
 //------------------------------
+
+function setView(viewName){
+  let active = document.querySelector(".view-menu div.active");
+  active.className = "";
+  let opt = document.getElementById("view-menu-" + viewName);
+  opt.className="active";
+
+  let viewOpts = Store.editorViewOpts;
+  Store.selectedEditorView = viewName;
+
+  for(let i in viewOpts){
+    let el = document.getElementsByClassName(viewOpts[i]+"-editor")[0];
+    if(viewOpts[i] == viewName){
+      el.style.display = "block";
+    }
+    else{
+      el.style.display = "none";
+    }
+  }
+}
 
 //sets up the DOM events for some of the UI
 function setupDOMs(){
