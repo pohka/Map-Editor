@@ -14,7 +14,7 @@ let editor, palette, paletteEditor;
 window.onload = () => {
   editor = new EditorViewport("editor", 1100, 600);
   palette = new PaletteViewport("palette", 512, 512);
-  paletteEditor = new PaletteEditorViewport("palette-editor", 1100, 600);
+  paletteEditor = new BetterVP("palette-editor", 1100, 600);
   setupDOMs();
 
   //find all the images and preload them
