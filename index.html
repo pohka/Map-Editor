@@ -25,7 +25,7 @@
     <script src="./js/palette-editor-ruler.js"></script>
 
     <script src="./js/better-vp.js"></script>
-    <script src="./js/better-camera.js"></script>
+    <script src="./js/tileset-editor.js"></script>
     <script src="./js/better-ruler.js"></script>
   </head>
   <body>
@@ -51,11 +51,11 @@
     <div class="col middle-col">
       <div class="view-menu">
         <div id="view-menu-scene" class="active" onclick="setView('scene')">Scene</div>
-        <div id="view-menu-palette" onclick="setView('palette')">Palette</div>
+        <div id="view-menu-tileset" onclick="setView('tileset')">Tileset</div>
         <div id="view-menu-object" onclick="setView('object')">Object</div>
       </div>
       <canvas class="scene-editor" id="editor"></canvas>
-      <canvas class="palette-editor" id="palette-editor"></canvas>
+      <canvas class="tileset-editor" id="tileset-editor"></canvas>
       <canvas class="object-editor"></canvas>
     </div>
     <div class="col right-col">

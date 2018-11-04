@@ -16,7 +16,7 @@ const Store = {
   isCollisionVisible : false,
   isRulersVisible : true,
   isCollisionEditable : false,
-  editorViewOpts : ["scene", "palette", "object"],
+  editorViewOpts : ["scene", "tileset", "object"],
   selectedEditorView : "scene",
 };
 

@@ -9,12 +9,12 @@ order of coordinate systems:
 
 */
 
-let editor, palette, paletteEditor;
+let editor, palette, tilesetEditor;
 
 window.onload = () => {
   editor = new EditorViewport("editor", 1100, 600);
   palette = new PaletteViewport("palette", 512, 512);
-  paletteEditor = new BetterVP("palette-editor", 1100, 600);
+  tilesetEditor = new TilesetEditor("tileset-editor", 1100, 600);
   setupDOMs();
 
   //find all the images and preload them
@@ -237,7 +237,7 @@ function setView(viewName){
   }
 
   if(viewName == "palette"){
-    paletteEditor.draw();
+    tilesetEditor.draw();
   }
 }
 
@@ -266,6 +266,6 @@ function setupDOMs(){
     Store.selectedPalette = paletteSelect.value;
     palette.setImg();
     palette.draw();
-    paletteEditor.draw();
+    tilesetEditor.draw();
   });
 }

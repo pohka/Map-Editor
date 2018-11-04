@@ -9,15 +9,13 @@ class BetterVP{
     this.ctx = this.canvas.getContext("2d");
     this.zoom = 1;
     this.ruler = new BetterRuler();
-    //this.camera = new BetterCamera(this);
     this.fillStyle = "#777";
 
-
+    //used for input
     this.camPos = new Vector(0,0);
     this.isPanning = false;
     this.lastCursorPos = new Vector(0,0); //cursor position in document coordinates
     this.lastZoomTime = Date.now();
-
     this.zoomMax = 4;
     this.zoomMin = 0.5;
     this.zoomRate = 0.5;
@@ -52,15 +50,13 @@ class BetterVP{
     return mouseWorldPos;
   }
 
-  draw(){
+  clear(){
     //clears the canvas
     this.ctx.setTransform(1,0,0,1,0,0);
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = this.fillStyle;
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.scale(this.zoom, this.zoom);
-
-    this.ruler.draw(this);
   }
 
   //returns true if a world coordinate rect lies within the current view of the viewport
