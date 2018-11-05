@@ -50,25 +50,7 @@ class TileSelector extends Viewport{
   }
 
   drawHUD(camFocus){
-    //tile highlighter at cursor
-    let mousePos = this.getCursorWorldPos(this.lastCursorPos.x, this.lastCursorPos.y);
-
-    let tileCoor = new Vector(
-      Math.floor(mousePos.x/Chunk.tileSize),
-      -Math.ceil(mousePos.y/Chunk.tileSize),
-    );
-
-    this.ctx.fillStyle = "#ccc6";
-    this.ctx.strokeStyle="#fff";
-
-    let x = tileCoor.x * Chunk.tileSize + camFocus.x;
-    let y = tileCoor.y * Chunk.tileSize + camFocus.y;
-
-    this.ctx.fillRect(x, y, Chunk.tileSize, Chunk.tileSize);
-    this.ctx.beginPath();;
-    this.ctx.rect(x,y, Chunk.tileSize, Chunk.tileSize);
-    this.ctx.stroke();
-
+    this.drawTileHighligher(camFocus);
 
     //selected tile
     if(Store.selected.tileID > -1){

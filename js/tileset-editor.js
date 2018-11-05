@@ -32,6 +32,8 @@ class TilesetEditor extends Viewport{
     if(Store.isRulersVisible){
       this.ruler.draw(this);
     }
+
+    this.drawTileHighligher(camFocus);
   }
 
   drawCollision(camFocus, imgPos){

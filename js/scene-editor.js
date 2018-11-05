@@ -128,8 +128,9 @@ class SceneEditor extends Viewport{
       let x = tileWorldPos.x + camFocus.x;
       let y = -tileWorldPos.y + camFocus.y;
       this.ctx.fillStyle = "#ccc6";
-      this.ctx.fillRect(x, y, Chunk.tileSize, Chunk.tileSize);
       this.ctx.strokeStyle="#fff";
+
+      this.ctx.fillRect(x, y, Chunk.tileSize, Chunk.tileSize);
       this.ctx.beginPath();;
       this.ctx.rect(x,y, Chunk.tileSize, Chunk.tileSize);
       this.ctx.stroke();
