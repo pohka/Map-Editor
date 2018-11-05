@@ -51,14 +51,8 @@ class Chunk{
                let xx = camFocus.x + (x*Chunk.tileSize) + chunkOffset.x;
                let yy = camFocus.y + (y*Chunk.tileSize) + chunkOffset.y;
                let w = Chunk.tileSize;
-               let h = Chunk.tileSize;
 
-              vp.ctx.fillRect(xx, yy, w, h);
-
-              vp.ctx.beginPath();
-              vp.ctx.rect(xx, yy, w, h);
-              vp.ctx.stroke();
-              break;
+               vp.drawCollisionShape(tile.collision, xx, yy, w, w);
             }
           }
         }

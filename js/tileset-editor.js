@@ -71,13 +71,11 @@ class TilesetEditor extends Viewport{
         let tile = Store.tiles[id];
         let x = imgPos.x + tile.x * Chunk.tileSize + camFocus.x;
         let y = -imgPos.y + tile.y * Chunk.tileSize + camFocus.y;
-
-
-        this.ctx.beginPath();
-        this.ctx.fillRect(x, y, w, h);
-        this.ctx.rect(x, y, w, h);
-        this.ctx.stroke();
+        let w = Chunk.tileSize;
+        this.drawCollisionShape(Store.tiles[id].collision, x, y, w, w);
       }
     }
   }
+
+
 }

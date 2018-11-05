@@ -163,4 +163,73 @@ class Viewport{
     this.ctx.rect(x,y, Chunk.tileSize, Chunk.tileSize);
     this.ctx.stroke();
   }
+
+  //pass object with the x and y position of point a,b and c on the triangle
+  drawTriangle(points){
+    this.ctx.beginPath();
+    this.ctx.moveTo(points.ax, points.ay);
+    this.ctx.lineTo(points.bx, points.by);
+    this.ctx.lineTo(points.cx, points.cy);
+    this.ctx.lineTo(points.ax, points.ay);
+    this.ctx.stroke();
+    this.ctx.fill();
+  }
+
+  //draws collision in the viewport based on the collision type
+  drawCollisionShape(type, x, y, w, h){
+    if(type == CollisionType.box){
+      this.ctx.beginPath();
+      this.ctx.fillRect(x, y, w, h);
+      this.ctx.rect(x, y, w, h);
+      this.ctx.stroke();
+    }
+    else if(type == CollisionType.topLeft){
+      let points = {
+        ax : x,
+        ay : y,
+        bx : x + w,
+        by : y,
+        cx : x,
+        cy : y + h
+      };
+
+      this.drawTriangle(points);
+    }
+    else if(type == CollisionType.topRight){
+      let points = {
+        ax : x,
+        ay : y,
+        bx : x + w,
+        by : y,
+        cx : x + w,
+        cy : y + h
+      };
+
+      this.drawTriangle(points);
+    }
+    else if(type == CollisionType.bottomRight){
+      let points = {
+        ax : x + w,
+        ay : y,
+        bx : x + w,
+        by : y + h,
+        cx : x,
+        cy : y + h
+      };
+
+      this.drawTriangle(points);
+    }
+    else if(type == CollisionType.bottomLeft){
+      let points = {
+        ax : x + w,
+        ay : y + h,
+        bx : x,
+        by : y + h,
+        cx : x,
+        cy : y
+      };
+
+      this.drawTriangle(points);
+    }
+  }
 }
