@@ -7,7 +7,7 @@ class TilesetEditor extends Viewport{
   getTileIDsOfSelectedTileset(){
     let ids = [];
     for(let id in Store.tiles){
-      if(Store.tiles[id].src == Store.selectedPalette){
+      if(Store.tiles[id].src == Store.selected.palette){
         ids.push(id);
       }
     }
@@ -18,7 +18,7 @@ class TilesetEditor extends Viewport{
     super.clear();
     let camFocus = this.getWorldFocus();
 
-    let img = this.img = Store.findImgObj(Store.selectedPalette);
+    let img = this.img = Store.findImgObj(Store.selected.palette);
     if(img != null){
       let imgPos = new Vector(0, 0);
 

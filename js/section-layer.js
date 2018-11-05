@@ -17,7 +17,7 @@ class SectionLayer{
 
 
     if(Store.layerOrder.length == 0){
-      Store.selectedLayer = layerName;
+      Store.selected.layer = layerName;
     }
 
     if(Store.layerOrder.indexOf(layerName) == -1){
@@ -76,13 +76,13 @@ class SectionLayer{
                       "<button dir='up' name='"+layerName+"' onclick='SectionLayer.moveLayer(this)'><i class='fas fa-angle-up'></i></button>";
 
       el.className = "layer-item";
-      if(Store.selectedLayer == layerName){
+      if(Store.selected.layer == layerName){
         el.className+=" active";
       }
       else{
         el.addEventListener("click", function(e){
           if(e.button == 0){
-            Store.selectedLayer = layerName;
+            Store.selected.layer = layerName;
             SectionLayer.updateLayerListDOM();
           }
         });
@@ -101,7 +101,7 @@ class SectionLayer{
       }
     }
     if(Store.layerOrder.length > 0){
-      Store.selectedLayer = Store.layerOrder[0];
+      Store.selected.layer = Store.layerOrder[0];
     }
     SectionLayer.updateLayerListDOM();
     sceneEditor.draw();

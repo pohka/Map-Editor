@@ -86,7 +86,7 @@ function importProject(){
 
     //reset UI variables
     Store.currentPalette = null;
-    Store.selectedTileID = -1;
+    Store.selected.tileID = -1;
     Store.isCollisionVisible = false;
 
     Store.isRulersVisible = true;
@@ -103,10 +103,10 @@ function importProject(){
     tileSelector.draw();
 
     if(data.layerOrder.length > 0){
-      Store.selectedLayer = data.layerOrder[0];
+      Store.selected.layer = data.layerOrder[0];
     }
     else{
-      Store.selectedLayer = "";
+      Store.selected.layer = "";
     }
 
     SectionLayer.updateLayerListDOM();

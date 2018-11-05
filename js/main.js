@@ -203,7 +203,7 @@ function updatePaletteOptionDOM(){
   let placeholder = document.createElement("option");
   placeholder.text = "Select Palette";
   placeholder.disabled = true;
-  if(Store.selectedPalette == null){
+  if(Store.selected.palette == null){
     placeholder.selected = true;
   }
   select.add(placeholder);
@@ -224,7 +224,7 @@ function setView(viewName){
   opt.className="active";
 
   let viewOpts = Store.editorViewOpts;
-  Store.selectedEditorView = viewName;
+  Store.selected.editorView = viewName;
 
   for(let i in viewOpts){
     let el = document.getElementsByClassName(viewOpts[i]+"-editor")[0];
@@ -263,7 +263,8 @@ function setupDOMs(){
 
   let paletteSelect = document.getElementById("palette-select");
   paletteSelect.addEventListener("change", function(e){
-    Store.selectedPalette = paletteSelect.value;
+    Store.selected.palette = paletteSelect.value;
+    Store.selected.tileID = -1;
     tilesetEditor.draw();
     tilesetEditor.draw();
   });

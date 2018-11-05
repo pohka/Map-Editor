@@ -19,9 +19,9 @@ class TileSelector extends Viewport{
           -Math.ceil(mousePos.y/Chunk.tileSize),
         );
 
-        let tileID = Store.findTileID(Store.selectedPalette, tileCoor.x, tileCoor.y);
+        let tileID = Store.findTileID(Store.selected.palette, tileCoor.x, tileCoor.y);
         if(tileID > -1){
-          Store.selectedTileID = tileID;
+          Store.selected.tileID = tileID;
         }
       }
     });
@@ -35,7 +35,7 @@ class TileSelector extends Viewport{
   draw(){
     super.clear();
 
-    let img = this.img = Store.findImgObj(Store.selectedPalette);
+    let img = this.img = Store.findImgObj(Store.selected.palette);
     if(img != null){
       let camFocus = this.getWorldFocus();
       let imgPos = new Vector(0, 0);
@@ -71,10 +71,12 @@ class TileSelector extends Viewport{
 
 
     //selected tile
-    if(Store.selectedTileID > -1){
+    if(Store.selected.tileID > -1){
+      let tile = Store.tiles[Store.selected.tileID];
+
       this.ctx.fillStyle = "#f335";
       this.ctx.strokeStyle="#f00";
-      let tile = Store.tiles[Store.selectedTileID];
+
 
       let x = tile.x * Chunk.tileSize + camFocus.x;
       let y = tile.y * Chunk.tileSize + camFocus.y;

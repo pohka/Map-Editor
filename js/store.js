@@ -10,14 +10,18 @@ const Store = {
   palettes : [],
 
   //ui based variables
-  selectedPalette : null,
-  selectedTileID : -1,
-  selectedLayer : "",
   isCollisionVisible : false,
   isRulersVisible : true,
   isCollisionEditable : false,
   editorViewOpts : ["scene", "tileset", "object"],
-  selectedEditorView : "scene",
+
+  selected : {
+    palette : null,
+    tileID : null,
+    layer : "",
+    editorView : "scene",
+    tool : "brush"
+  }
 };
 
 Store.genTileID = function(){
@@ -31,7 +35,7 @@ Store.findImgObj = function(path){
   if(path == null){
     return null;
   }
-  
+
   let loc = window.location.href.split("/");
   loc.splice(-1,1);
   let rootpath = loc.join("/");

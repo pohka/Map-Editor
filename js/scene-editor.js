@@ -12,10 +12,10 @@ class SceneEditor extends Viewport{
       //left mouse button
       if(e.button == 0){
         vp.isPainting = true;
-        if(Tools.selectedTool == "brush"){
-          Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+        if(Store.selected.tool == "brush"){
+          Tools.setTileAtCursor(e, vp, Store.selected.tileID);
         }
-        else if(Tools.selectedTool == "eraser"){
+        else if(Store.selected.tool == "eraser"){
           Tools.setTileAtCursor(e, vp, -1);
         }
 
@@ -28,10 +28,10 @@ class SceneEditor extends Viewport{
       let isOverViewport = vp.isCursorOverViewport(e.clientX, e.clientY);
 
       if(vp.isPainting && isOverViewport){
-        if(Tools.selectedTool == "brush"){
-          Tools.setTileAtCursor(e, vp, Store.selectedTileID);
+        if(Store.selected.tool == "brush"){
+          Tools.setTileAtCursor(e, vp, Store.selected.tileID);
         }
-        else if(Tools.selectedTool == "eraser"){
+        else if(Store.selected.tool == "eraser"){
           Tools.setTileAtCursor(e, vp, -1);
         }
 
