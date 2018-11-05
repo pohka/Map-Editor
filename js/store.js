@@ -10,9 +10,8 @@ const Store = {
   palettes : [],
 
   //ui based variables
-  isCollisionVisible : false,
+  isCollisionVisible : true,
   isRulersVisible : true,
-  isCollisionEditable : false,
   editorViewOpts : ["scene", "tileset", "object"],
 
   selected : {
@@ -20,9 +19,11 @@ const Store = {
     tileID : null,
     layer : "",
     editorView : "scene",
-    tool : "brush"
+    tool : "brush",
+    collisionType : CollisionType.box
   }
 };
+
 
 Store.genTileID = function(){
   Store.tileCount++;

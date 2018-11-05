@@ -87,15 +87,11 @@ function importProject(){
     //reset UI variables
     Store.currentPalette = null;
     Store.selected.tileID = -1;
-    Store.isCollisionVisible = false;
+    Store.isCollisionVisible = true;
 
     Store.isRulersVisible = true;
     let showRulersDOM = document.getElementById("show-ruler");
     showRulersDOM.checked = true;
-
-    Store.isCollisionEditable = false;
-    let showCollisionDOM = document.getElementById("show-collision");
-    showCollisionDOM.checked = false;
 
     let paletteSelect = document.getElementById("palette-select");
     paletteSelect.selectedIndex = "0";

@@ -2,6 +2,27 @@
 class TilesetEditor extends Viewport{
   constructor(id, w, h){
     super(id, w, h);
+    this.addInput();
+  }
+
+  addInput(){
+    let vp = this;
+
+    vp.canvas.addEventListener("mousedown", function(e){
+      let mousePos = vp.getCursorWorldPos(e.clientX, e.clientY);
+      let tileCoor = new Vector(
+        Math.floor(mousePos.x/Chunk.tileSize),
+        -Math.ceil(mousePos.y/Chunk.tileSize),
+      );
+
+      let tileID = Store.findTileID(Store.selected.palette, tileCoor.x, tileCoor.y);
+      if(tileID > -1){
+        Store.tiles[tileID].collision = Store.selected.collisionType;
+      }
+
+      console.log(tileID, Store.selected.collisionType);
+
+    });
   }
 
   getTileIDsOfSelectedTileset(){
@@ -46,7 +67,7 @@ class TilesetEditor extends Viewport{
 
     for(let i=0; i<ids.length; i++){
       let id = ids[i];
-      if(Store.tiles[id].hasCollision){
+      if(Store.tiles[id].collision > 0){
         let tile = Store.tiles[id];
         let x = imgPos.x + tile.x * Chunk.tileSize + camFocus.x;
         let y = -imgPos.y + tile.y * Chunk.tileSize + camFocus.y;

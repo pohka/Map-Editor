@@ -11,6 +11,16 @@ order of coordinate systems:
 
 let sceneEditor, tileSelector, tilesetEditor;
 
+var CollisionType = {
+  none : 0,
+  box : 1,
+  topLeft : 2,
+  topRight : 3,
+  bottomRight : 4,
+  bottomLeft : 5
+};
+Object.freeze(CollisionType);
+
 window.onload = () => {
   sceneEditor = new SceneEditor("scene-editor", 1100, 600);
   tileSelector = new TileSelector("tile-selector", 512, 512);
@@ -172,7 +182,7 @@ function genTilesFromNewFile(fileName){
         src : fileName,
         x : x,
         y : y,
-        hasCollision : false,
+        collision : 0,
       });
     }
   }
@@ -256,16 +266,24 @@ function setupDOMs(){
     sceneEditor.draw();
   });
 
-  let editCollision = document.getElementById("edit-collision");
-  editCollision.addEventListener("click", function(e){
-    Store.isCollisionEditable = editCollision.checked;
-  });
 
   let paletteSelect = document.getElementById("palette-select");
   paletteSelect.addEventListener("change", function(e){
     Store.selected.palette = paletteSelect.value;
     Store.selected.tileID = -1;
+    tileSelector.draw();
     tilesetEditor.draw();
-    tilesetEditor.draw();
+  });
+
+  let collisionSelect = document.getElementById("collision-type-select");
+  for(let i in CollisionType){
+    let option = document.createElement("option");
+    option.value = CollisionType[i];
+    option.text = i;
+    collisionSelect.add(option)
+  }
+  collisionSelect.value = CollisionType.box;
+  collisionSelect.addEventListener("change", function(e){
+    Store.selected.collisionType = collisionSelect.value;
   });
 }

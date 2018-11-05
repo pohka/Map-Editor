@@ -46,7 +46,7 @@ class Chunk{
           let tileID = this.layers[i][y][x];
           if(tileID > -1){
             let tile = Store.tiles[tileID];
-             if(tile !== undefined && tile.hasCollision){
+             if(tile !== undefined && tile.collision > 0){
 
                let xx = camFocus.x + (x*Chunk.tileSize) + chunkOffset.x;
                let yy = camFocus.y + (y*Chunk.tileSize) + chunkOffset.y;
