@@ -13,7 +13,8 @@ let sceneEditor, palette, tilesetEditor;
 
 window.onload = () => {
   sceneEditor = new SceneEditor("scene-editor", 1100, 600);
-  palette = new PaletteViewport("palette", 512, 512);
+  //palette = new PaletteViewport("palette", 512, 512);
+  palette = new TileSelector("palette", 512, 512);
   tilesetEditor = new TilesetEditor("tileset-editor", 1100, 600);
   setupDOMs();
 
@@ -264,7 +265,6 @@ function setupDOMs(){
   let paletteSelect = document.getElementById("palette-select");
   paletteSelect.addEventListener("change", function(e){
     Store.selectedPalette = paletteSelect.value;
-    palette.setImg();
     palette.draw();
     tilesetEditor.draw();
   });

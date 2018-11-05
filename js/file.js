@@ -100,7 +100,6 @@ function importProject(){
     let paletteSelect = document.getElementById("palette-select");
     paletteSelect.selectedIndex = "0";
     Store.selectedPalette = null;
-    palette.setImg();
     palette.draw();
 
     if(data.layerOrder.length > 0){
