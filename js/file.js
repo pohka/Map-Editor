@@ -100,7 +100,7 @@ function importProject(){
     let paletteSelect = document.getElementById("palette-select");
     paletteSelect.selectedIndex = "0";
     Store.selectedPalette = null;
-    palette.draw();
+    tileSelector.draw();
 
     if(data.layerOrder.length > 0){
       Store.selectedLayer = data.layerOrder[0];
@@ -145,7 +145,7 @@ function refreshFiles(loadedImgs){
       }
     }
 
-    palette.draw();
+    tileSelector.draw();
     sceneEditor.draw();
   });
 }
