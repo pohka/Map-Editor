@@ -1,5 +1,5 @@
 //ruler lines for the editor viewport
-class BetterRuler{
+class Ruler{
   constructor(){
 
   }

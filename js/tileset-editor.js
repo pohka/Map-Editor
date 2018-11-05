@@ -1,5 +1,5 @@
 
-class TilesetEditor extends BetterVP{
+class TilesetEditor extends Viewport{
   constructor(id, w, h){
     super(id, w, h);
   }

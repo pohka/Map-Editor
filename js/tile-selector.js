@@ -1,5 +1,5 @@
 
-class TileSelector extends BetterVP{
+class TileSelector extends Viewport{
   constructor(id, w, h){
     super(id, w, h);
     let camOffset = this.VPCoorToWorldCoor(this.width/2, this.height/2);

@@ -1,5 +1,5 @@
 
-class SceneEditor extends BetterVP{
+class SceneEditor extends Viewport{
   constructor(id, w, h){
     super(id, w, h);
     this.isPainting = false;
@@ -35,7 +35,7 @@ class SceneEditor extends BetterVP{
           Tools.setTileAtCursor(e, vp, -1);
         }
 
-        
+
       }
     });
 
