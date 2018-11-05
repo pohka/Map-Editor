@@ -9,10 +9,10 @@ order of coordinate systems:
 
 */
 
-let editor, palette, tilesetEditor;
+let sceneEditor, palette, tilesetEditor;
 
 window.onload = () => {
-  editor = new EditorViewport("editor", 1100, 600);
+  sceneEditor = new SceneEditor("scene-editor", 1100, 600);
   palette = new PaletteViewport("palette", 512, 512);
   tilesetEditor = new TilesetEditor("tileset-editor", 1100, 600);
   setupDOMs();
@@ -61,7 +61,7 @@ function createProject(){
   Chunk.tileSize = tileSize;
   Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
-  editor.draw();
+  sceneEditor.draw();
   palette.draw();
   Notification.add("Created Project: " + Store.projectName);
 
@@ -246,14 +246,14 @@ function setupDOMs(){
   let showCollision = document.getElementById("show-collision");
   showCollision.addEventListener("click", function(e){
       Store.isCollisionVisible = showCollision.checked;
-      editor.draw();
+      sceneEditor.draw();
       palette.draw();
   });
 
   let showRulers = document.getElementById("show-ruler");
   showRulers.addEventListener("click", function(e){
     Store.isRulersVisible = showRulers.checked;
-    editor.draw();
+    sceneEditor.draw();
   });
 
   let editCollision = document.getElementById("edit-collision");

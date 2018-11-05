@@ -28,6 +28,10 @@ Store.genTileID = function(){
 //find the image object with the matching path in /res/ folder
 //e.g. findImgObj("sample.png") will find image in /res/sample.png
 Store.findImgObj = function(path){
+  if(path == null){
+    return null;
+  }
+  
   let loc = window.location.href.split("/");
   loc.splice(-1,1);
   let rootpath = loc.join("/");

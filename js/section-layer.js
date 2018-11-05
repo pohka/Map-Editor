@@ -56,7 +56,7 @@ class SectionLayer{
     if(hasChanged){
       Notification.add("Moved layer '" + e.name + "' " + direction);
       SectionLayer.updateLayerListDOM();
-      editor.draw();
+      sceneEditor.draw();
     }
   }
 
@@ -104,7 +104,7 @@ class SectionLayer{
       Store.selectedLayer = Store.layerOrder[0];
     }
     SectionLayer.updateLayerListDOM();
-    editor.draw();
+    sceneEditor.draw();
     Notification.add("Deleted layer '" + layerName + "'");
   }
 }

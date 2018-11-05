@@ -19,7 +19,7 @@ class BetterVP{
     this.zoomMax = 4;
     this.zoomMin = 0.5;
     this.zoomRate = 0.5;
-    this.addInput();
+    this.addCameraInput();
   }
 
   //converts viewport coordinates to world coordinates
@@ -85,15 +85,14 @@ class BetterVP{
   }
 
   //zooming and panning input
-  addInput(){
+  addCameraInput(){
     let vp = this;
     vp.canvas.addEventListener('mousedown',function(e){
       if(e.button == 1){ //middle mouse button
         vp.isPanning=true;
         vp.panLastPos = new Vector(e.x,e.y);
+        vp.draw();
       }
-
-      vp.draw();
     });
 
 

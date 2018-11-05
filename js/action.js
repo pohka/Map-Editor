@@ -25,7 +25,7 @@ class Action{
 
     Notification.add("Undo: " + lastAction.type);
 
-    editor.draw();
+    sceneEditor.draw();
   }
 
   //revert the last undo
@@ -36,7 +36,7 @@ class Action{
     let lastUndo = Action.popped.pop();
     Action.executeAction(lastUndo, true);
     Notification.add("Redo: " + lastUndo.type);
-    editor.draw();
+    sceneEditor.draw();
   }
 
   //executes an action

@@ -147,6 +147,6 @@ function refreshFiles(loadedImgs){
     }
 
     palette.draw();
-    editor.draw();
+    sceneEditor.draw();
   });
 }
