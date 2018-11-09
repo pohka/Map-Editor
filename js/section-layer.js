@@ -23,7 +23,7 @@ class SectionLayer{
     if(Store.layerOrder.indexOf(layerName) == -1){
       Store.layerOrder.splice(0, 0, layerName);
       for(let i=0; i<Store.chunks.length; i++){
-          Store.chunks[i].layers[layerName] = Chunk.getEmptyLayer();
+          Store.chunks[i].layers.push(Chunk.getEmptyLayer(layerName));
       }
 
       SectionLayer.updateLayerListDOM();
@@ -97,7 +97,14 @@ class SectionLayer{
     if(index > -1){
       Store.layerOrder.splice(index, 1);
       for(let i=0; i<Store.chunks.length; i++){
-        delete Store.chunks[i].layers[layerName]
+        let found = false;
+        for(let a=0; a<Store.chunks[i].layers.length && !found; a++){
+          if(Store.chunks[i].layers[a].name == layerName){
+            Store.chunks[i].layers[a].splice(a, 1);
+            found = true;
+          }
+        }
+
       }
     }
     if(Store.layerOrder.length > 0){

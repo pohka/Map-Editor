@@ -54,7 +54,7 @@ class TileSelector extends Viewport{
 
     //selected tile
     if(Store.selected.tileID > -1){
-      let tile = Store.tiles[Store.selected.tileID];
+      let tile = Store.getTileByID(Store.selected.tileID);
 
       this.ctx.fillStyle = "#f335";
       this.ctx.strokeStyle="#f00";

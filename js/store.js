@@ -4,7 +4,7 @@ const Store = {
   projectName : null,
   chunks : [],
   imgObjs : [],
-  tiles : {},
+  tiles : [],
   layerOrder : [],
   tileCount : -1,
   palettes : [],
@@ -28,6 +28,15 @@ const Store = {
 Store.genTileID = function(){
   Store.tileCount++;
   return Store.tileCount;
+}
+
+Store.getTileByID = function(id){
+  for(let i=0; i<Store.tiles.length; i++){
+    if(Store.tiles[i].id == id){
+      return Store.tiles[i];
+    }
+  }
+  return null;
 }
 
 //find the image object with the matching path in /res/ folder
@@ -74,9 +83,9 @@ Store.findChunkAtWorldPos = function(vp, worldX, worldY){
 //find a tile with the matching coordintates and src img
 //returns -1 if not found
 Store.findTileID = function(src, x, y){
-  for(let id in Store.tiles){
-    if(Store.tiles[id].x == x && Store.tiles[id].y == y && Store.tiles[id].src == src){
-      return id;
+  for(let i in Store.tiles){
+    if(Store.tiles[i].x == x && Store.tiles[i].y == y && Store.tiles[i].src == src){
+      return Store.tiles[i].id;
     }
   }
   return -1;

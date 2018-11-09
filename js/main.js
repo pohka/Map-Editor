@@ -67,8 +67,8 @@ function createProject(){
   }
 
   Store.projectName = projectName
-  Chunk.size = chunkSize;
-  Chunk.tileSize = tileSize;
+  Chunk.size = parseInt(chunkSize);
+  Chunk.tileSize = parseInt(tileSize);
   Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
   sceneEditor.draw();
@@ -178,11 +178,12 @@ function genTilesFromNewFile(fileName){
   for(let y=0; y<maxY; y++){
     for(let x=0; x<maxX; x++){
       let id = Store.genTileID();
-      Store.tiles[id] = ({
+      Store.tiles.push({
         src : fileName,
         x : x,
         y : y,
         collision : 0,
+        id : id
       });
     }
   }
@@ -226,6 +227,31 @@ function updatePaletteOptionDOM(){
 }
 
 //------------------------------
+
+//find any new files in /res/ folder and adds them
+function refreshImages(){
+  walk("./projects/"+Store.projectName+"/res/", function(err, files){
+    for(let i in files){
+      let file = files[i].replace(/\\/g, "/").split("/res/")[1];
+      let existingImg = Store.findImgObj(file);
+      if(existingImg == null){
+
+        let img = new Image();
+        img.onload = function(){
+          Store.imgObjs.push(this);
+          console.log(file);
+          if(file.indexOf("tilesets/") == 0){
+            addPaletteOption("/res/" + file);
+            genTilesFromNewFile(file);
+          }
+          Notification.add("New image loaded: " + file);
+        }
+        img.src = "./projects/" + Store.projectName + "/res/" + file;
+      }
+    }
+
+  });
+}
 
 function setView(viewName){
   let active = document.querySelector(".view-menu div.active");
@@ -284,6 +310,6 @@ function setupDOMs(){
   }
   collisionSelect.value = CollisionType.box;
   collisionSelect.addEventListener("change", function(e){
-    Store.selected.collisionType = collisionSelect.value;
+    Store.selected.collisionType = parseInt(collisionSelect.value);
   });
 }

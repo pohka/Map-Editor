@@ -54,8 +54,8 @@ function importProject(){
 
     Store.projectName = data.projectName;
 
-    Chunk.size = data.chunkSize;
-    Chunk.tileSize = data.tileSize;
+    Chunk.size = parseInt(data.chunkSize);
+    Chunk.tileSize = parseInt(data.tileSize);
     Chunk.totalSize = Chunk.size * Chunk.tileSize;
 
     Store.tiles = data.tiles;

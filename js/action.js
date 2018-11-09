@@ -43,7 +43,8 @@ class Action{
   static executeAction(a, isPoppedAction){
     if(a.type == "setTile"){
       let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      chunk.layers[a.layer][a.tileY][a.tileX] = a.newTileID;
+      let layer = chunk.getLayerByName(a.layer);
+      layer.map[a.tileY][a.tileX] = a.newTileID;
     }
 
     Action.stack.push(a);
@@ -61,7 +62,8 @@ class Action{
   static undoAction(a){
     if(a.type == "setTile"){
       let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      chunk.layers[a.layer][a.tileY][a.tileX] = a.oldTileID;
+      let layer = chunk.getLayerByName(a.layer);
+      layer.map[a.tileY][a.tileX] = a.oldTileID;
     }
   }
 }

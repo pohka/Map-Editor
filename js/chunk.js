@@ -5,10 +5,19 @@ class Chunk{
       this.layers = layers;
     }
     else{
-      this.layers = {};
+      this.layers = [];
     }
     this.position = new Vector(x,y); //position is in chunk coordinates
   //  this.layers["default"] = Chunk.getEmptyLayer();
+  }
+
+  getLayerByName(name){
+    for(let i=0; i<this.layers.length; i++){
+      if(this.layers[i].name == name){
+        return this.layers[i];
+      }
+    }
+    return null;
   }
 
   static getEmptyLayer(name){
@@ -20,14 +29,18 @@ class Chunk{
       }
        map.push(row);
     }
-    return map;
+    return {
+      name : name,
+      map : map
+    };
   }
 
   draw(vp, camFocus){
     let chunkOffset = this.getChunkOffset(); //new Vector(this.position.x * Chunk.totalSize, -this.position.y * Chunk.totalSize);
     for(let i=Store.layerOrder.length-1; i >= 0; i--){
       let layerName = Store.layerOrder[i];
-      this.drawLayer(this.layers[layerName], chunkOffset, camFocus, vp);
+      let layer = this.getLayerByName(layerName);
+      this.drawMap(layer.map, chunkOffset, camFocus, vp);
     }
   }
 
@@ -43,9 +56,10 @@ class Chunk{
     for(let y=0; y<Chunk.size; y++){
       for(let x=0; x<Chunk.size; x++){
         for(let i in this.layers){
-          let tileID = this.layers[i][y][x];
+          let map = this.layers[i].map;
+          let tileID = map[y][x];
           if(tileID > -1){
-            let tile = Store.tiles[tileID];
+            let tile = Store.getTileByID(tileID);
              if(tile !== undefined && tile.collision > 0){
 
                let xx = camFocus.x + (x*Chunk.tileSize) + chunkOffset.x;
@@ -61,12 +75,12 @@ class Chunk{
   }
 
   //draws the tiles
-  drawLayer(map, chunkOffset, camFocus, vp){
+  drawMap(map, chunkOffset, camFocus, vp){
     for(let i=0; i<map.length; i++){
       for(let j=0; j<map[i].length; j++){
         let tileID = map[i][j];
         if(tileID > -1){
-          let tile = Store.tiles[tileID];
+          let tile = Store.getTileByID(tileID);
           if(tile != null){
             let img = Store.findImgObj(tile.src);
             if(img != null){
