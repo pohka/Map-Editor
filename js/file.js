@@ -145,3 +145,114 @@ function refreshFiles(loadedImgs){
     sceneEditor.draw();
   });
 }
+
+function exportToXML(){
+
+
+  let data = {
+    projectName : Store.projectName,
+    chunkSize : Chunk.size,
+    tileSize : Chunk.tileSize,
+    imgs : [],
+    tiles : Store.tiles,
+    chunks : [],
+    layerOrder : Store.layerOrder,
+    tileCount : Store.tileCount
+  };
+
+  let loc = window.location.href.split("/");
+  loc.splice(-1,1);
+  let rootpath = loc.join("/") + "/projects/" + Store.projectName + "/res/";
+
+  for(let i=0; i<Store.imgObjs.length; i++){
+    data.imgs.push(Store.imgObjs[i].src.replace(rootpath, ""));
+  }
+
+  for(let i=0; i<Store.chunks.length; i++){
+    data.chunks.push({
+      x : Store.chunks[i].position.x,
+      y : Store.chunks[i].position.y,
+      layers : Store.chunks[i].layers
+    });
+  }
+
+  let str = "<map>\n";
+  str += toXML(data, 1);
+  str += "</map>";
+  //console.log(str);
+
+  var fs = require('fs');
+  let dir = "./projects/" + Store.projectName;
+
+  if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+  }
+  fs.writeFile(dir + "/map.xml", str, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+
+      Notification.add("Exported Project");
+  });
+}
+
+function toXML(obj, depth){
+  let str = "";
+  for(let i in obj){
+    let val = obj[i];
+    if(val.constructor === Array){
+      str += tabs(depth) + "<" + i +">\n";
+      depth++;
+      if(val.length > 0){
+        //array of strings
+        if(val[0].constructor == String){
+          for(let b=0; b<val.length; b++){
+            str += tabs(depth) + "<value>" + val[b] + "</value>\n";
+          }
+        }
+        else if(Number.isInteger(val[0])){
+
+
+        }
+        //array of objects
+        if(typeof val[0] == "object"){
+          if(i == "map"){
+            let rows = "";
+            for(let b=0; b<val.length; b++){
+              rows += tabs(depth) + "<row>" + val[b] + "</row>\n";
+            }
+            str += rows;
+          }
+          else{
+            let objName = i.slice(0, -1);
+            for(let b=0; b<val.length; b++){
+              str +=  tabs(depth) + "<" + objName + ">\n" +
+                      toXML(val[b], depth + 1) +
+                      tabs(depth) + "</" + objName + ">\n";
+            }
+          }
+        }
+
+      }
+      depth--;
+      str += tabs(depth) + "</" + i + ">\n";
+    }
+    // else if(typeof val == "object"){
+    //   //toXML(val, depth);
+    // }
+
+    else{
+      str += tabs(depth) + "<" + i + ">" + val + "</" + i + ">\n";
+    }
+  }
+
+  return str;
+}
+
+function tabs(depth){
+  let str = "";
+  for(let a=0; a<depth; a++){
+    str += "  ";
+  }
+  return str;
+}

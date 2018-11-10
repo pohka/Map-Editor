@@ -31,8 +31,9 @@
         <input type="submit" id="new-project" onclick="toggleModal('.new-project-modal', false)" value="New Project">
         <input type="button" id="load-project" onclick="toggleModal('.load-project-modal', false)" value="Load Project">
         <hr><br>
-        <button onclick="exportProject()">Export</button>
+        <button onclick="exportProject()">Save</button>
         <button onclick="importProject()">Import</button>
+        <button onclick="exportToXML()">Export</button>
         <button onclick="Action.undo()">Undo</button>
         <button onclick="Action.redo()">Redo</button>
         <hr>
