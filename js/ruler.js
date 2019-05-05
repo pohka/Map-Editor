@@ -1,7 +1,9 @@
 //ruler lines for the editor viewport
 class Ruler{
-  constructor()
-  {}
+  constructor(useThickLines )
+  {
+    this.useThickLines = true;
+  }
 
   draw(vp)
   {
@@ -17,7 +19,12 @@ class Ruler{
     for(let i = -maxX-offsetX; i <= maxX-offsetX; i++)
     {
       vp.ctx.beginPath();
-      this.setRulerStyle(i, vp);
+      if(this.useThickLines){
+        this.setRulerStyle(i, vp);
+      }
+      else {
+        this.setRulerStyle(-1, vp);
+      }
       let x = camFocus.x + (i*MapData.tile_size);
       vp.ctx.moveTo(x, 0);
       vp.ctx.lineTo(x, vpSize.y);
@@ -34,7 +41,12 @@ class Ruler{
     for(let i = -maxY-offsetY; i <= maxX-offsetY; i++)
     {
       vp.ctx.beginPath();
-      this.setRulerStyle(i, vp);
+      if(this.useThickLines){
+        this.setRulerStyle(i, vp);
+      }
+      else {
+        this.setRulerStyle(-1, vp);
+      }
       vp.ctx.beginPath();
       let y = camFocus.y + (i*MapData.tile_size);
       vp.ctx.moveTo(0, y);

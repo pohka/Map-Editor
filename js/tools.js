@@ -26,10 +26,6 @@ class Tools
       console.log("layer or tile not found", layer);
       console.log(chunk);
     }
-    else
-    {
-      console.log("chunk not found");
-    }
 
     return false;
   }
@@ -41,9 +37,11 @@ class Tools
     let chunkCoor = vp.worldCoorToChunkCoor(mousePos.x, mousePos.y);
     let chunk = MapQuery.findChunkByChunkCoor(chunkCoor.x, chunkCoor.y);
 
-    if(chunk != null){
+    if(chunk != null)
+    {
       //tile in map coordinate
-      let tilePos = MapQuery.findTileCoorAtWorldPos(mousePos.x, mousePos.y);
+
+      let tilePos = MapQuery.findTileCoorAtWorldPos(chunk, mousePos.x, mousePos.y);
       if(tilePos != null)
       {
         let chunkWorldPos = new Vector(
@@ -55,7 +53,7 @@ class Tools
           chunkWorldPos.x + (tilePos.x * MapData.tile_size),
           chunkWorldPos.y - (tilePos.y * MapData.tile_size)
         );
-
+        
         return tileWorldPos;
       }
     }

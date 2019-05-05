@@ -17,7 +17,7 @@ class Viewport
     this.canvas.height = this.height;
 
     this.ctx = this.canvas.getContext("2d");
-    this.zoom = 1;
+    this.zoom = 1.5;
     this.ruler = new Ruler();
     this.fillStyle = "#777";
 

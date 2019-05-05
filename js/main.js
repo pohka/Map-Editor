@@ -7,7 +7,7 @@ order of coordinate systems:
 -tile
 */
 
-let mapView;
+let mapViewport, tileSelector;
 
 var CollisionType =
 {
@@ -22,6 +22,7 @@ Object.freeze(CollisionType);
 
 window.onload = () => {
   mapViewport = new MapViewport("map-viewport");
+  tileSelector = new TileSelector("tile-selector");
 
   //find all the images and preload them
   //walk("./projects/"+Store.projectName+"/res/", loadImages);
@@ -75,8 +76,10 @@ function createProject()
 //  Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
   refreshImages();
+  States.current.tileset = "tilesets/cave.png";
   //SectionLayer.addLayer("abc");
   mapViewport.draw();
+  tileSelector.draw();
   //todo, uncomment: only draw the current visible canvas
   //tilesetEditor.draw();
   Notification.add("Created Project: " + MapData.projectName);

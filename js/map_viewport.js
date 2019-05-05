@@ -223,5 +223,8 @@ class MapViewport extends Viewport
       this.ctx.rect(x,y, MapData.tile_size, MapData.tile_size);
       this.ctx.stroke();
     }
+    else {
+      //console.log("no tile found in at cursors position");
+    }
   }
 }

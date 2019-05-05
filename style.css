@@ -45,7 +45,7 @@ body
 .grid-container
 {
   display: grid;
-  grid-template-columns: 300px auto 450px;
+  grid-template-columns: 300px auto 550px;
   grid-template-rows: 26px 1000px;
   grid-gap: 50px;
   grid-row-gap: 0px;
@@ -298,6 +298,12 @@ input[type="submit"]:hover
   border-color: black;
 }
 
+
+#tile-selector
+{
+  padding: 6px 6px;
+  height: 450px;
+}
 /*
 old
 -----------------------------------
