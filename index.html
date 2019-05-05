@@ -5,26 +5,20 @@
     <link defer rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Map Editor</title>
-    <script src="./js/main.js"></script>
-    <script src="./js/vector.js"></script>
-    <script src="./js/chunk.js"></script>
-    <script src="./js/store.js"></script>
-
-    <script src="./js/tools.js"></script>
-    <script src="./js/file.js"></script>
-    <script src="./js/action.js"></script>
-    <script src="./js/section-layer.js"></script>
-    <script src="./js/notification.js"></script>
-
-    <script src="./js/viewport.js"></script>
-    <script src="./js/tileset-editor.js"></script>
-    <script src="./js/ruler.js"></script>
-    <script src="./js/scene-editor.js"></script>
-    <script src="./js/tile-selector.js"></script>
   </head>
   <body>
 
-    <div class="grid">
+    <div class="grid-container">
+      <div class="grid-header">
+          <div class="menu header-menu">
+            <div class="menu-item" id="header-menu-file-new" onclick="toggleModal('.new-project-modal', false)">New</div>
+            <div class="menu-item" id="header-menu-file-load">Load</div>
+            <div class="menu-item" id="header-menu-file-save">Save</div>
+            <div class="menu-item" id="header-menu-file-save-as">Save as</div>
+          </div>
+      </div>
+
+      <!--
     <div class="col left-col">
       <div class="section tool-section">
         <h2>Tools</h2>
@@ -49,6 +43,18 @@
 
       </div>
     </div>
+  -->
+
+  <!--left section-->
+  <div class="grid-left">
+    <div class="menu section-menu">
+      <div class="menu-item" active="true">Scene</div>
+    </div>
+    <div class="section-con section-con-left"></div>
+  </div>
+
+
+  <!--
     <div class="col middle-col">
       <div class="view-menu">
         <div id="view-menu-scene" class="active" onclick="setView('scene')">Scene</div>
@@ -59,6 +65,25 @@
       <canvas class="tileset-editor" id="tileset-editor"></canvas>
       <canvas class="object-editor"></canvas>
     </div>
+  -->
+
+  <!--middle section-->
+  <div class="grid-middle">
+    <div class="menu section-menu">
+      <div class="menu-item" active="true">Map</div>
+      <div class="menu-item">Object</div>
+      <div class="menu-item">Palette</div>
+    </div>
+    <div class="section-con section-con-middle">
+        <canvas id="map-viewport"></canvas>
+        <!--
+        <canvas id="tileset-editor"></canvas>
+        <canvas id="object-editor"></canvas>
+      -->
+    </div>
+  </div>
+
+  <!--
     <div class="col right-col">
       <div class="section layers-section">
         <h2>Layers</h2>
@@ -73,10 +98,35 @@
         <canvas id="tile-selector"></canvas>
       </div>
     </div>
+  -->
+  <!--right section-->
+  <div class="grid-right">
+      <div class="menu section-menu">
+          <div class="menu-item" active="true">Inspector</div>
+        </div>
+      <div class="section-con section-con-right"></div>
+  </div>
+</div>
 
     <div class="notification-con"></div>
 
+    <div class="new-project-modal">
+      <div>
+      <label>Tile Pixel Size:</label>
+      <input type="number" id="new-project-tile"  value="16">
+      </div>
+      <div>
+        <label>Chunk Size:</label>
+        <input type="number" id="new-project-chunk" value="32">
+      </div>
+      <input type="submit" onclick="createProject()">
+
+      <div class="close-modal" onclick="toggleModal(.new-project-modal', true)">
+        <i class="fas fa-window-close"></i>
+      </div>
+    </div>
     <!--New Project Modal-->
+    <!--
     <div class="new-project-modal">
       <div>
         <label>Project Name:</label>
@@ -110,6 +160,23 @@
         <input type="submit" onclick="loadProject()">
       </div>
     </div>
-
+  -->
   </body>
+
+<script src="./js/main.js"></script>
+  <script src="./js/states.js"></script>
+  <script src="./js/map_data.js"></script>
+  <script src="./js/vector.js"></script>
+
+
+  <script src="./js/tools.js"></script>
+  <script src="./js/action.js"></script>
+  <script src="./js/notification.js"></script>
+
+  <script src="./js/viewport.js"></script>
+  <script src="./js/ruler.js"></script>
+  <script src="./js/map_viewport.js"></script>
+
+
+  <!-- <script src="./js/store.js"></script> -->
 </html>

@@ -1,15 +1,306 @@
+:root
+{
+  --primary : rgb(40, 177, 219);
+  --border : rgb(117, 117, 117);
+  --background : rgb(35, 35, 35); /* section background */
 
+  /* fonts */
+  --font : rgb(241, 241, 241);
+  --font_inactive : rgba(238, 238, 238, 0.5);
 
-html{
-  overflow-y: hidden;
-  background: #555;
+  /* menus */
+  --menu_item: rgb(45, 45, 45);
+  --menu_item_active: rgb(20, 20, 20);
+  --menu_background: rgb(37, 37, 38);
+  --menu_item_hover: rgb(34, 34, 34);
 
+  --header_menu: rgb(58, 58, 58);
 }
 
-html, h1, h2, h3{
+*
+{
+  box-sizing: border-box;
+}
+
+html
+{
+  overflow-y: hidden;
+  background: #555;
+  color: var(--font);
+}
+
+html, h1, h2, h3
+{
   font-family: Arial;
   margin: 0;
 }
+
+body
+{
+  margin: 0px 0px;
+  overflow: hidden;
+}
+
+/* main grid */
+.grid-container
+{
+  display: grid;
+  grid-template-columns: 300px auto 450px;
+  grid-template-rows: 26px 1000px;
+  grid-gap: 50px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
+}
+
+.grid-header
+{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  height: 100%;
+}
+
+.grid-left
+{
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.grid-middle
+{
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.grid-right
+{
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.menu
+{
+  width: 100%;
+  background: var(--menu_background);
+  display: flex;
+}
+
+.menu-item
+{
+  background: var(--menu_item);
+  width: fit-content;
+  min-width: 120px;
+  padding: 0px 15px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--font_inactive);
+}
+
+.menu-item[active="true"]
+{
+  background: var(--menu_item_active);
+  border-bottom: 3px solid var(--primary);
+  color: var(--font);
+}
+
+.menu-item:hover
+{
+  background: var(--menu_item_hover);
+  color: var(--font);
+}
+
+/* window title */
+.section-menu
+{
+  height: 35px;
+}
+
+.section-menu .menu-item
+{
+  height: 35px;
+  line-height: 35px;
+}
+
+
+.header-menu
+{
+  height: 25px;
+  font-size: 12px;
+  background: var(--header_menu);
+}
+
+.header-menu .menu-item
+{
+  height: 25px;
+  line-height: 25px;
+  background: var(--header_menu);
+  min-width: 50px;
+}
+
+.header-menu .menu-item
+{
+  color: var(--font);
+}
+
+.header-menu .menu-item:hover
+{
+  background: var(--primary);
+}
+
+/* window content */
+.section-con
+{
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-top: 2px solid var(--border);
+  background: var(--background);
+  padding-bottom: 500px;
+}
+
+.section-con-left
+{
+  border-right: 2px solid var(--border);
+}
+
+.section-con-right
+{
+  border-left: 2px solid var(--border);
+}
+
+.section-con-middle
+{
+  overflow: hidden;
+  padding-bottom: 100px;
+}
+
+/* scroll bar */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background:var(--background);
+  border-left: 1px solid var(--border);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+.toast-con
+{
+  position: fixed;
+  bottom: 0;
+  left: 25;
+  height: auto;
+}
+
+canvas
+{
+  width: 100%;
+  height: 100%;
+}
+
+input[type="submit"], input[type="text"], input[type="number"]{
+  width: 300px;
+  font-size: 16px;
+  padding: 6px 4px;
+  margin: 3px 2px;
+  border: 1px solid var(--border);
+}
+
+input[type="submit"]
+{
+  float: right;
+  padding: 10px 4px;
+  cursor: pointer;
+  color: var(--font);
+  background: var(--menu_item_background);
+  border: 1px solid var(--border);
+}
+
+input[type="submit"]:hover
+{
+  background: var(--menu_item_hover);
+  border-color: var(--primary);
+}
+
+.new-project-modal
+{
+  width: 400px;
+  height: auto;
+  padding: 40px 80px;
+  position: fixed;
+  top: 25px;
+  left: 0px;
+  display: none;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
+.new-project-modal div
+{
+  height: 50px;
+}
+
+.new-project-modal label
+{
+  line-height: 50px;
+}
+
+.new-project-modal input
+{
+  float: right;
+  width: 100px;
+}
+
+.close-modal
+{
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 30px;
+  cursor: pointer;
+}
+.close-modal:hover
+{
+  color: var(--primary);
+}
+
+.notification-con{
+  position: fixed;
+  bottom: 0;
+  left: 25;
+  height: auto;
+}
+
+.notification{
+  background: #333;
+  min-width: 250px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 18px;
+  border: 2px solid #3aa;
+}
+
+.notification-err{
+  background: #e33;
+  border-color: black;
+}
+
+/*
+old
+-----------------------------------
 
 select{
   min-width: 300px;
@@ -119,7 +410,7 @@ hr{
   background: #777;
   color: white;
   padding: 40px 60px;
-  padding-top: 60px
+  padding-top: 60px;
   border: 2px solid #38c;
   display: none;
 }
@@ -199,3 +490,10 @@ input[type="submit"]{
 .tileset-editor{
   display: none;
 }
+
+canvas
+{
+  width:  100%;
+  height: 100%;
+}
+*/

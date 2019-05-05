@@ -1,8 +1,11 @@
 
-class Notification{
-  static add(text, isErr){
+class Notification
+{
+  static add(text, isErr)
+  {
     let id = Notification.count;
-    if(isErr === undefined){
+    if(isErr === undefined)
+    {
       isErr = false;
     }
     Notification.list[id] = {
@@ -10,7 +13,8 @@ class Notification{
       isErr : isErr
     };
 
-    if(Object.keys(Notification.list).length > Notification.maxNotifications){
+    if(Object.keys(Notification.list).length > Notification.maxNotifications)
+    {
       delete Notification.list[Object.keys(Notification.list)[0]];
     }
 
@@ -26,16 +30,20 @@ class Notification{
     Notification.count++;
   }
 
-  static updateNotificationDOM(){
+  static updateNotificationDOM()
+  {
     let parent = document.getElementsByClassName("notification-con")[0];
-    while (parent.firstChild) {
+    while (parent.firstChild)
+    {
       parent.removeChild(parent.firstChild);
     }
 
-    for(let i in Notification.list){
+    for(let i in Notification.list)
+    {
       let item = document.createElement("div");
       item.className = "notification";
-      if(Notification.list[i].isErr){
+      if(Notification.list[i].isErr)
+      {
         item.className += " notification-err";
       }
       item.innerText = Notification.list[i].text;

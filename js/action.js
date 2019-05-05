@@ -1,10 +1,12 @@
-class Action{
+class Action
+{
   //creates a new set tile action
-  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layer){
+  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layer)
+  {
     return ({
       type : "setTile",
-      chunkX : chunk.position.x,
-      chunkY : chunk.position.y,
+      chunkX : chunk.x,
+      chunkY : chunk.y,
       tileX : tilePos.x,
       tileY : tilePos.y,
       layer : layer,
@@ -14,8 +16,10 @@ class Action{
   }
 
   //undo the last action
-  static undo(){
-    if(Action.stack.length == 0){
+  static undo()
+  {
+    if(Action.stack.length == 0)
+    {
       return;
     }
 
@@ -29,8 +33,10 @@ class Action{
   }
 
   //revert the last undo
-  static redo(){
-    if(Action.popped.length == 0){
+  static redo()
+  {
+    if(Action.popped.length == 0)
+    {
       return;
     }
     let lastUndo = Action.popped.pop();
@@ -40,10 +46,11 @@ class Action{
   }
 
   //executes an action
-  static executeAction(a, isPoppedAction){
+  static executeAction(a, isPoppedAction)
+  {
     if(a.type == "setTile"){
-      let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = chunk.getLayerByName(a.layer);
+      let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
+      let layer = MapQuery.getChunkLayerByID(chunk, a.layer);
       layer.map[a.tileY][a.tileX] = a.newTileID;
     }
 
@@ -59,7 +66,8 @@ class Action{
   }
 
   //executes the reverse of an action
-  static undoAction(a){
+  static undoAction(a)
+  {
     if(a.type == "setTile"){
       let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
       let layer = chunk.getLayerByName(a.layer);
