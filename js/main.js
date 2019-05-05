@@ -9,6 +9,8 @@ order of coordinate systems:
 
 let mapViewport, tileSelector;
 
+const resDir = "res/";
+
 var CollisionType =
 {
   none : 0,
@@ -52,7 +54,7 @@ function toggleModal(sel, hide)
 
 function createProject()
 {
-  let projectName = "new-project";//document.querySelector("#new-project-name").value;
+  let projectName = "rework";//document.querySelector("#new-project-name").value;
   let tileSize = document.querySelector("#new-project-tile").value;
   let chunkSize = document.querySelector("#new-project-chunk").value;
 
@@ -87,6 +89,7 @@ function createProject()
     }
     mapViewport.draw();
     tileSelector.draw();
+    Explorer.setRoot();
     Notification.add("Created Project: " + MapData.project_name);
   });
   //refreshImages();
@@ -210,36 +213,42 @@ function loadImagesFirstTime(onComplete)
     let newTextureIDs = [];
 
     for(let i in files){
-      let src = files[i].replace(/\\/g, "/").split("/res/")[1];
-      let existingImg = null;//Store.findImgObj(file);
-      if(existingImg == null)
+      if(Explorer.isImage(files[i]))
       {
-        let img = new Image();
-        img.onload = function()
+        let src = files[i].replace(/\\/g, "/").split("/"+resDir)[1];
+        let existingImg = null;//Store.findImgObj(file);
+        if(existingImg == null)
         {
-          img.tex_id = States.imgObjs.length;
-          States.imgObjs.push(this);
-          MapData.textures.push({
-            id : img.tex_id,
-            src : src
-          });
-
-          newTextureIDs.push(img.tex_id);
-
-          if(src.startsWith("tilesets/"))
+          let img = new Image();
+          img.onload = function()
           {
-            MapData.tilesets.push(img.tex_id);
-          }
+            img.tex_id = States.imgObjs.length;
+            States.imgObjs.push(this);
+            MapData.textures.push({
+              id : img.tex_id,
+              src : src
+            });
 
-          Notification.add("New image loaded: " + src);
+            newTextureIDs.push(img.tex_id);
 
-          filesLeftToLoad--;
-          if(filesLeftToLoad == 0)
-          {
-            onComplete(newTextureIDs);
+            if(src.startsWith("tilesets/"))
+            {
+              MapData.tilesets.push(img.tex_id);
+            }
+
+            Notification.add("New image loaded: " + src);
+
+            filesLeftToLoad--;
+            if(filesLeftToLoad == 0)
+            {
+              onComplete(newTextureIDs);
+            }
           }
+          img.src = MapData.dir + "res/" + src;
         }
-        img.src = MapData.dir + "res/" + src;
+      }
+      else {
+        filesLeftToLoad--;
       }
     }
   });
@@ -265,14 +274,9 @@ function refreshImages()
             id : img.tex_id,
             src : file
           });
-          console.log(file);
-          // if(file.indexOf("tilesets/") == 0){
-          //   addPaletteOption("/res/" + file);
-          //   genTilesFromNewFile(file);
-          // }
           Notification.add("New image loaded: " + file);
         }
-        img.src = MapData.dir + "res/" + file;
+        img.src = MapData.dir + resDir + file;
       }
     }
 

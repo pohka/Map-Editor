@@ -63,7 +63,7 @@ class TileSelector extends Viewport
     if(States.current.tileset > -1)
     {
       let texture = MapQuery.findTextureByID(States.current.tileset);
-      let path = MapData.dir + "res/"+ texture.src;
+      let path = MapData.dir + resDir + texture.src;
       let img = States.findImgObjBySrc(path);
       if(img != null)
       {

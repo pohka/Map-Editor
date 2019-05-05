@@ -48,9 +48,29 @@
   <!--left section-->
   <div class="grid-left">
     <div class="menu section-menu">
-      <div class="menu-item" active="true">Scene</div>
+      <div class="menu-item" active="false">Scene</div>
+      <div class="menu-item" active="true">Explorer</div>
     </div>
-    <div class="section-con section-con-left"></div>
+    <div class="section-con section-con-left">
+      <div class="file-system-dir">
+        <div class="file-system-dir-btn" onclick=Explorer.prevDir()>
+          <i class="fas fa-reply"></i>
+        </div>
+        <div id="file-system-dir-val">/res/</div>
+      </div>
+      <div class="file-system" id="file-system">
+        <!--
+        <div class="file">
+          <i class="fas fa-folder"></i>
+          <div class="file-name">tilesets</div>
+        </div>
+        <div class="file">
+          <img src="./projects/rework/res/pepe.png"/>
+          <div class="file-name">pepe.png</div>
+        </div>
+      -->
+      </div>
+    </div>
   </div>
 
 
@@ -182,4 +202,5 @@
   <script src="./js/map_viewport.js"></script>
 
   <script src="./js/tile_selector.js"></script>
+  <script src="./js/explorer.js"></script>
 </html>

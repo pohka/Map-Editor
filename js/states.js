@@ -6,7 +6,7 @@ const States =
     tool : "brush",
     layer : "0",
     tileID : 0,
-    tileset : -1 //id
+    tileset : -1, //id
   },
 
 //ui based variables
