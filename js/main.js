@@ -75,17 +75,31 @@ function createProject()
 //  Chunk.tileSize = parseInt(tileSize);
 //  Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
-  refreshImages();
-  States.current.tileset = "tilesets/cave.png";
-  //SectionLayer.addLayer("abc");
-  mapViewport.draw();
-  tileSelector.draw();
-  //todo, uncomment: only draw the current visible canvas
-  //tilesetEditor.draw();
-  Notification.add("Created Project: " + MapData.projectName);
+  loadImagesFirstTime(function(newTextureIDs){
+    if(MapData.tilesets.length > 0)
+    {
+      States.current.tileset = MapData.tilesets[0];
+    }
 
-
-  toggleModal('.new-project-modal', true);
+    for(let i=0; i<newTextureIDs.length; i++)
+    {
+      generateTiles(newTextureIDs[i]);
+    }
+    mapViewport.draw();
+    tileSelector.draw();
+    Notification.add("Created Project: " + MapData.project_name);
+  });
+  //refreshImages();
+  //
+  // //SectionLayer.addLayer("abc");
+  // mapViewport.draw();
+  // tileSelector.draw();
+  // //todo, uncomment: only draw the current visible canvas
+  // //tilesetEditor.draw();
+  // Notification.add("Created Project: " + MapData.projectName);
+  //
+  //
+   toggleModal('.new-project-modal', true);
 }
 
 
@@ -149,21 +163,86 @@ function sampleChunks()
 //preload images
 function loadImages(err, files, completed)
 {
-  let loadedCount = 0;
-//  console.log(completed);
-  for(let i=0; i<files.length; i++)
+//   let loadedCount = 0;
+// //  console.log(completed);
+//   for(let i=0; i<files.length; i++)
+//   {
+//     let img = new Image();
+//     img.onload = function(){
+//       loadedCount++;
+//       States.imgObjs.push(this);
+//       if(loadedCount == files.length)
+//       {
+//         completed(files);
+//       }
+//     }
+//     img.src = files[i];
+//   }
+}
+
+
+
+function generateTiles(textureID)
+{
+  let img = States.findImgObj(textureID);
+  const tileW = Math.floor(img.width/MapData.tile_size);
+  const tileH = Math.floor(img.height/MapData.tile_size);
+  if(img != null)
   {
-    let img = new Image();
-    img.onload = function(){
-      loadedCount++;
-      States.imgObjs.push(this);
-      if(loadedCount == files.length)
+    for(let y=0; y<tileH; y++)
+    {
+      for(let x=0; x<tileW; x++)
       {
-        completed(files);
+        MapQuery.addTile(textureID, x, y);
       }
     }
-    img.src = files[i];
   }
+  else {
+    console.log("failed to generate tiles for texID", textureID);
+  }
+
+}
+
+function loadImagesFirstTime(onComplete)
+{
+  walk(MapData.dir, function(err, files){
+    let filesLeftToLoad = files.length;
+    let newTextureIDs = [];
+
+    for(let i in files){
+      let src = files[i].replace(/\\/g, "/").split("/res/")[1];
+      let existingImg = null;//Store.findImgObj(file);
+      if(existingImg == null)
+      {
+        let img = new Image();
+        img.onload = function()
+        {
+          img.tex_id = States.imgObjs.length;
+          States.imgObjs.push(this);
+          MapData.textures.push({
+            id : img.tex_id,
+            src : src
+          });
+
+          newTextureIDs.push(img.tex_id);
+
+          if(src.startsWith("tilesets/"))
+          {
+            MapData.tilesets.push(img.tex_id);
+          }
+
+          Notification.add("New image loaded: " + src);
+
+          filesLeftToLoad--;
+          if(filesLeftToLoad == 0)
+          {
+            onComplete(newTextureIDs);
+          }
+        }
+        img.src = MapData.dir + "res/" + src;
+      }
+    }
+  });
 }
 
 //------------------------------
@@ -179,7 +258,13 @@ function refreshImages()
 
         let img = new Image();
         img.onload = function(){
+          img.tex_id = States.imgObjs.length;
+          console.log("imgTEX", img.tex_id);
           States.imgObjs.push(this);
+          MapData.textures.push({
+            id : img.tex_id,
+            src : file
+          });
           console.log(file);
           // if(file.indexOf("tilesets/") == 0){
           //   addPaletteOption("/res/" + file);

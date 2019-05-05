@@ -121,12 +121,13 @@ class MapViewport extends Viewport
           let tile = MapQuery.findTileByID(tileID);
           if(tile != null)
           {
-            let texture = MapQuery.findTextureByName(tile.tex_name);
+            let texture = MapQuery.findTextureByID(tile.tex_id);
             if(texture != null)
             {
-              let img = States.findImgObj(texture.name);
+              let img = States.findImgObj(texture.id);
               if(img != null)
               {
+                //console.log("drawing tile:", img.src);
                 let srcX = tile.tex_x * MapData.tile_size;
                 let srcY = tile.tex_y * MapData.tile_size;
                 let destX = camFocus.x + (j*MapData.tile_size) + chunkOffset.x;
@@ -138,11 +139,11 @@ class MapViewport extends Viewport
                 );
               }
               else {
-                console.log("image not found for texture", texture.name);
+                console.log("image not found for textureID", texture.id);
               }
             }
             else {
-              console.log("texture name not found", tile.tex_name);
+              console.log("texture ID not found", tile.tex_id);
             }
           }
           else{

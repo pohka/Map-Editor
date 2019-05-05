@@ -17,6 +17,16 @@ class TileSelector extends Viewport
     vp.canvas.addEventListener("mousedown",function(e){
       //left mouse button
       if(e.button == 0){
+        let mousePos = vp.getCursorWorldPos(e.clientX, e.clientY);
+        let tileCoor = new Vector(
+          Math.floor(mousePos.x/MapData.tile_size),
+          -Math.ceil(mousePos.y/MapData.tile_size),
+        );
+
+        let tileID = MapQuery.findTileID(States.current.tileset, tileCoor.x, tileCoor.y);
+        if(tileID > -1){
+          States.current.tileID = tileID;
+        }
         vp.draw();
       }
     });
@@ -49,11 +59,16 @@ class TileSelector extends Viewport
   {
     super.clear();
     let camFocus = this.getWorldFocus();
-    let path = MapData.dir + "res/"+ States.current.tileset;
-    let img = States.findImgObjBySrc(path);
-    if(img != null)
+
+    if(States.current.tileset > -1)
     {
-      this.ctx.drawImage(img, camFocus.x, camFocus.y);
+      let texture = MapQuery.findTextureByID(States.current.tileset);
+      let path = MapData.dir + "res/"+ texture.src;
+      let img = States.findImgObjBySrc(path);
+      if(img != null)
+      {
+        this.ctx.drawImage(img, camFocus.x, camFocus.y);
+      }
     }
 
     if(States.isRulersVisible)

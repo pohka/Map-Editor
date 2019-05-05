@@ -6,7 +6,7 @@ const States =
     tool : "brush",
     layer : "0",
     tileID : 0,
-    tileset : ""
+    tileset : -1 //id
   },
 
 //ui based variables
@@ -29,30 +29,39 @@ States.findImgObjBySrc = function(src){
 
 //find the image object with the matching path in /res/ folder
 //e.g. findImgObj("sample.png") will find image in /res/sample.png
-States.findImgObj = function(texName){
-  if(texName == null){
+States.findImgObj = function(texID){
+  if(texID == null){
     return null;
   }
 
-  let texture = MapQuery.findTextureByName(texName);
-  if(texture == null)
+  for(let i=0; i<States.imgObjs.length; i++)
   {
-    return;
-  }
-  let src = texture.src;
-
-  let loc = window.location.href.split("/");
-  loc.splice(-1,1);
-  let rootpath = loc.join("/");
-  let fullpath  = MapData.dir + "res/tilesets/" + src;
-
-  for(let i=0; i<States.imgObjs.length; i++){
-    if(States.imgObjs[i].getAttribute("src") == fullpath){
+    if(States.imgObjs[i].tex_id == texID)
+    {
       return States.imgObjs[i];
     }
   }
-  console.log("warning: img not found ", texName);
- return null;
+  return null;
+
+ //  let texture = MapQuery.findTextureByID(id);
+ //  if(texture == null)
+ //  {
+ //    return;
+ //  }
+ //  let src = texture.src;
+ //
+ //  let loc = window.location.href.split("/");
+ //  loc.splice(-1,1);
+ //  let rootpath = loc.join("/");
+ //  let fullpath  = MapData.dir + "res/tilesets/" + src;
+ //
+ //  for(let i=0; i<States.imgObjs.length; i++){
+ //    if(States.imgObjs[i].getAttribute("src") == fullpath){
+ //      return States.imgObjs[i];
+ //    }
+ //  }
+ //  console.log("warning: img not found ", texName);
+ // return null;
 }
 
 // //returns a chunk with a matching chunk coordinate

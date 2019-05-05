@@ -4,6 +4,7 @@ const MapData = {
   tile_size : 0, //tile size in pixels
   chunk_size : 0, //tiles per chunk
   chunk_total_size : 1,
+  tile_count : 0,
 
   //layers for draw order of tiles and sprites
   draw_layers :
@@ -13,28 +14,33 @@ const MapData = {
 
   textures :
   [
-    { //tex id = 0
-      name : "img_1",
-      id : 0,
-      src : "cave.png",
-    }
+    // { //tex id = 0
+    //   //name : "img_1",
+    //   id : 0,
+    //   src : "tilesets/cave.png",
+    // }
+  ],
+
+  tilesets : //texture ids which are tilesets
+  [
+  //  0 //texture ids
   ],
 
   //tiles ordered by texture key
   tiles :
   [
-    {
-      id : 0,
-      tex_name : "img_1",
-      tex_x : 0,
-      tex_y : 0
-    },
-    {
-      id : 1,
-      tex_name : "img_1",
-      tex_x : 1,
-      tex_y : 1
-    }
+    // {
+    //   id : 0,
+    //   tex_id : 0,
+    //   tex_x : 0,
+    //   tex_y : 0
+    // },
+    // {
+    //   id : 1,
+    //   tex_id : 0,
+    //   tex_x : 1,
+    //   tex_y : 1
+    // }
   ],
 
   chunks:
@@ -52,7 +58,19 @@ const MapData = {
 };
 
 
+
 var MapQuery = {};
+
+MapQuery.addTile = function(texID, texX, texY)
+{
+  MapData.tiles.push({
+    id : MapData.tile_count,
+    tex_id : texID,
+    tex_x : texX,
+    tex_y : texY
+  });
+  MapData.tile_count++;
+}
 
 //returns a chunk with a matching chunk coordinate
 //returns null if no match is found
@@ -78,16 +96,16 @@ MapQuery.findChunkAtWorldPos = function(vp, worldX, worldY)
 
 //find a tile with the matching coordintates and src img
 //returns -1 if not found
-MapQuery.findTileID = function(texName, texX, texY)
+MapQuery.findTileID = function(texID, texX, texY)
 {
   for(let i in MapData.tiles)
   {
     if(
-      Store.tiles[i].tex_x == texX &&
-      Store.tiles[i].tex_y == texY &&
-      Store.tiles[i].tex_name == texName
+      MapData.tiles[i].tex_x == texX &&
+      MapData.tiles[i].tex_y == texY &&
+      MapData.tiles[i].tex_id == texID
     ){
-      return Store.tiles[i].id;
+      return MapData.tiles[i].id;
     }
   }
   return -1;
@@ -147,11 +165,12 @@ MapQuery.findTileByID = function(id)
   return null;
 }
 
-MapQuery.findTextureByName = function(name)
+MapQuery.findTextureByID = function(texID)
 {
+
   for(let i=0; i<MapData.textures.length; i++)
   {
-    if(MapData.textures[i].name == name)
+    if(MapData.textures[i].id == texID)
     {
       return MapData.textures[i];
     }
