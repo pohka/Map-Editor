@@ -5,9 +5,9 @@ class TileSelector extends Viewport
   {
     super(id);
     this.addInput();
-    let camOffset = this.VPCoorToWorldCoor(this.width/2, this.height/2);
-    this.camPos.x -= camOffset.x;
-    this.camPos.y -= camOffset.y;
+    this.camOffset = this.VPCoorToWorldCoor(this.width/2, this.height/2);
+    this.camPos.x -= this.camOffset.x;
+    this.camPos.y -= this.camOffset.y;
     this.ruler.useThickLines = false;
   }
 
@@ -78,5 +78,12 @@ class TileSelector extends Viewport
 
 
     this.drawTileHighligher(camFocus);
+  }
+
+  centerCam()
+  {
+    this.camPos.x = -this.camOffset.x;
+    this.camPos.y = -this.camOffset.y;
+    this.zoom = 1.5;
   }
 }

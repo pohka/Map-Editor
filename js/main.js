@@ -25,6 +25,7 @@ Object.freeze(CollisionType);
 window.onload = () => {
   mapViewport = new MapViewport("map-viewport");
   tileSelector = new TileSelector("tile-selector");
+  States.loadMenus();
 
   //find all the images and preload them
   //walk("./projects/"+Store.projectName+"/res/", loadImages);

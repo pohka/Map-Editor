@@ -20,7 +20,6 @@ class Viewport
     this.zoom = 1.5;
     this.ruler = new Ruler();
     this.fillStyle = "#777";
-
     //used for input
     this.camPos = new Vector(0,0);
     this.isPanning = false;

@@ -17,6 +17,18 @@
   --header_menu: rgb(58, 58, 58);
 }
 
+/* disable text highlighing */
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+input, button, textarea, :focus {
+    outline: none;
+}
+
 *
 {
   box-sizing: border-box;

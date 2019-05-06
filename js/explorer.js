@@ -147,12 +147,12 @@ class Explorer
         case Explorer.type.image:
           let src = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir + Explorer.items[i].name;
 
+          //extra for tilesets changing explorer
           let extra = "";
           if(Explorer.currentDir == "tilesets/")
           {
             let imgPath = Explorer.currentDir + Explorer.items[i].name;
             let tex = MapQuery.findTextureBySrc(imgPath);
-
             if(tex != null)
             {
               extra='onclick=States.setTileSet('+tex.id+')';
