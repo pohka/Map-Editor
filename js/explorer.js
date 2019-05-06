@@ -146,8 +146,24 @@ class Explorer
           break;
         case Explorer.type.image:
           let src = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir + Explorer.items[i].name;
+
+          let extra = "";
+          if(Explorer.currentDir == "tilesets/")
+          {
+            let imgPath = Explorer.currentDir + Explorer.items[i].name;
+            let tex = MapQuery.findTextureBySrc(imgPath);
+
+            if(tex != null)
+            {
+              extra='onclick=States.setTileSet('+tex.id+')';
+            }
+            else {
+              console.log("texture not found", imgPath);
+            }
+          }
+
           rootDOM.innerHTML +=
-            '<div class="file">' +
+            '<div class="file" '+extra+'>' +
               '<img src="' + src + '"/>' +
               '<div class="file-name">' + Explorer.items[i].name +'</div>' +
             '</div>';

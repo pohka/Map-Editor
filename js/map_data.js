@@ -177,3 +177,15 @@ MapQuery.findTextureByID = function(texID)
   }
   return null;
 }
+
+MapQuery.findTextureBySrc = function(src)
+{
+  for(let i=0; i<MapData.textures.length; i++)
+  {
+    if(MapData.textures[i].src == src)
+    {
+      return MapData.textures[i];
+    }
+  }
+  return null;
+}
