@@ -9,6 +9,8 @@ const States =
     tileset : -1, //id
   },
 
+  prevTileID : -1,
+
 //ui based variables
   isCollisionVisible : true,
   isRulersVisible : true,
@@ -171,6 +173,15 @@ States.setTileSet = function(texID)
   States.current.tileset = texID;
   tileSelector.centerCam();
   tileSelector.draw();
+}
+
+States.setTileID = function(id)
+{
+  if(States.current.tileID > -1)
+  {
+    States.prevTileID = States.current.tileID;
+  }
+  States.current.tileID = id;
 }
 
 

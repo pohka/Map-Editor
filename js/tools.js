@@ -64,8 +64,13 @@ class Tools
   {
     if(name == "eraser")
     {
-      States.current.tileID = -1;
+      States.setTileID(-1);
     }
+    else if(name == "brush")
+    {
+      States.current.tileID = States.prevTileID;
+    }
+    
     States.current.tool = name;
     let toolsDOM = document.getElementById("tools");
     let btns = toolsDOM.getElementsByClassName("tile-tools-item");
