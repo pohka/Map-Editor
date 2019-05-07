@@ -62,7 +62,19 @@ class Tools
 
   static selectTool(name)
   {
+    if(name == "eraser")
+    {
+      States.current.tileID = -1;
+    }
     States.current.tool = name;
+    let toolsDOM = document.getElementById("tools");
+    let btns = toolsDOM.getElementsByClassName("tile-tools-item");
+    for(let i=0; i<btns.length; i++)
+    {
+      let toolName = btns[i].getAttribute("tool-name");
+      let isActive = (toolName !== undefined && toolName == name);
+      btns[i].setAttribute("active", isActive);
+    }
   }
 }
 

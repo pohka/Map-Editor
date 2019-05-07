@@ -7,6 +7,7 @@
   /* fonts */
   --font : rgb(241, 241, 241);
   --font_inactive : rgba(238, 238, 238, 0.5);
+  --font_btn: rgb(241, 241, 241, 0.9);
 
   /* menus */
   --menu_item: rgb(45, 45, 45);
@@ -15,6 +16,7 @@
   --menu_item_hover: rgb(34, 34, 34);
 
   --header_menu: rgb(58, 58, 58);
+  --header_hover: rgb(150, 150, 150);
 }
 
 /* disable text highlighing */
@@ -164,7 +166,7 @@ body
 
 .header-menu .menu-item:hover
 {
-  background: var(--primary);
+  background: var(--header_hover);
 }
 
 /* window content */
@@ -175,7 +177,7 @@ body
   overflow-y: scroll;
   border-top: 2px solid var(--border);
   background: var(--background);
-  padding-bottom: 500px;
+  padding-bottom: 300px;
 }
 
 .section-con-left
@@ -321,7 +323,6 @@ input[type="submit"]:hover
 {
   display: inline-grid;
   grid-template-columns: 50% 50%;
-  grid-gap: 50px;
   grid-row-gap: 0px;
   grid-column-gap: 0px;
   width: 100%;
@@ -381,13 +382,52 @@ input[type="submit"]:hover
 
 .file-system-dir-btn
 {
-  cursor: pointer;
   border-right: 2px solid var(--border);
 }
 
-.file-system-dir-btn:hover
+.tile-tools-con
 {
-  background: var(--primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.tile-tools-item
+{
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 32px;
+  border: 1px solid var(--border);
+  
+}
+
+.btn
+{
+  color: var(--font_btn);
+  background: var(--menu_item);
+  cursor: pointer;
+}
+
+.btn::before
+{
+  cursor: pointer;
+}
+
+.btn:hover
+{
+  color: white;
+  background: var(--menu_item_hover);
+}
+
+.btn[active="true"]
+{
+  border-color: var(--primary);
+  background: var(--menu_item_active);
 }
 
 /*

@@ -15,7 +15,7 @@ class MapViewport extends Viewport
       //left mouse button
       if(e.button == 0){
         vp.isPainting = true;
-        if(States.current.tool == "brush"){
+        if(States.current.tool == "brush" && States.current.tileID > -1){
           Tools.setTileAtCursor(e, vp, States.current.tileID);
         }
         else if(States.current.tool == "eraser"){
@@ -31,7 +31,7 @@ class MapViewport extends Viewport
       let isOverViewport = vp.isCursorOverViewport(e.clientX, e.clientY);
 
       if(vp.isPainting && isOverViewport){
-        if(States.current.tool == "brush"){
+        if(States.current.tool == "brush" && States.current.tileID > -1){
           Tools.setTileAtCursor(e, vp, States.current.tileID);
         }
         else if(States.current.tool == "eraser"){

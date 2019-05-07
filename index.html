@@ -53,39 +53,15 @@
     </div>
     <div class="section-con section-con-left">
       <div class="file-system-dir">
-        <div class="file-system-dir-btn" onclick=Explorer.prevDir()>
-          <i class="fas fa-reply"></i>
+        <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
+         
         </div>
         <div id="file-system-dir-val">/res/</div>
       </div>
-      <div class="file-system" id="file-system">
-        <!--
-        <div class="file">
-          <i class="fas fa-folder"></i>
-          <div class="file-name">tilesets</div>
-        </div>
-        <div class="file">
-          <img src="./projects/rework/res/pepe.png"/>
-          <div class="file-name">pepe.png</div>
-        </div>
-      -->
-      </div>
+      <!--file explorer content-->
+      <div class="file-system" id="file-system"></div>
     </div>
   </div>
-
-
-  <!--
-    <div class="col middle-col">
-      <div class="view-menu">
-        <div id="view-menu-scene" class="active" onclick="setView('scene')">Scene</div>
-        <div id="view-menu-tileset" onclick="setView('tileset')">Tileset</div>
-        <div id="view-menu-object" onclick="setView('object')">Object</div>
-      </div>
-      <canvas class="scene-editor" id="scene-editor"></canvas>
-      <canvas class="tileset-editor" id="tileset-editor"></canvas>
-      <canvas class="object-editor"></canvas>
-    </div>
-  -->
 
   <!--middle section-->
   <div class="grid-middle">
@@ -96,59 +72,48 @@
     </div>
     <div class="section-con section-con-middle">
         <canvas id="map-viewport"></canvas>
-        <!--
-        <canvas id="tileset-editor"></canvas>
-        <canvas id="object-editor"></canvas>
-      -->
     </div>
   </div>
-
-  <!--
-    <div class="col right-col">
-      <div class="section layers-section">
-        <h2>Layers</h2>
-        <input type="text" placeholder="layer name" id="layer-name"></input>
-        <button onclick="SectionLayer.addLayer()"><i class="fas fa-plus"></i> Layer</button>
-        <hr>
-        <div id="layer-list"></div>
-      </div>
-      <div class="section palette-section">
-        <h2>Palette</h2>
-        <select id="palette-select"></select>
-        <canvas id="tile-selector"></canvas>
-      </div>
-    </div>
-  -->
   <!--right section-->
   <div class="grid-right">
-      <div class="menu section-menu"  id="menu-right">
+      <div class="menu section-menu" id="menu-right">
           <div class="menu-item" name="tile-selector">Tile Selector</div>
         </div>
       <div class="section-con section-con-right">
         <div>
           <canvas id="tile-selector"></canvas>
         </div>
+        <div class="tile-tools-con" id="tools">
+          <div class="tile-tools-item btn fas fa-paint-brush"
+            active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
+          </div>
+          <div class="tile-tools-item btn fas fa-eraser"
+            tool-name="eraser"  onclick="Tools.selectTool('eraser');">
+          </div>
+          <div class="tile-tools-item btn fas fa-undo" alt="undo"></div>
+          <div class="tile-tools-item btn fas fa-redo" alt="redo"></div>
+        </div>
       </div>
   </div>
 </div>
 
-    <div class="notification-con"></div>
+<div class="notification-con"></div>
 
-    <div class="new-project-modal">
-      <div>
-      <label>Tile Pixel Size:</label>
-      <input type="number" id="new-project-tile"  value="16">
-      </div>
-      <div>
-        <label>Chunk Size:</label>
-        <input type="number" id="new-project-chunk" value="32">
-      </div>
-      <input type="submit" onclick="createProject()">
+<div class="new-project-modal">
+  <div>
+  <label>Tile Pixel Size:</label>
+  <input type="number" id="new-project-tile"  value="16">
+  </div>
+  <div>
+    <label>Chunk Size:</label>
+    <input type="number" id="new-project-chunk" value="32">
+  </div>
+  <input type="submit" onclick="createProject()">
 
-      <div class="close-modal" onclick="toggleModal('.new-project-modal', true);">
-        <i class="fas fa-window-close"></i>
-      </div>
-    </div>
+  <div class="close-modal" onclick="toggleModal('.new-project-modal', true);">
+    <i class="fas fa-window-close"></i>
+  </div>
+</div>
     <!--New Project Modal-->
     <!--
     <div class="new-project-modal">

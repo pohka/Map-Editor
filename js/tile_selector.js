@@ -25,6 +25,7 @@ class TileSelector extends Viewport
 
         let tileID = MapQuery.findTileID(States.current.tileset, tileCoor.x, tileCoor.y);
         if(tileID > -1){
+          Tools.selectTool("brush");
           States.current.tileID = tileID;
         }
         vp.draw();
