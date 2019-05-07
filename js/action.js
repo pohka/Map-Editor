@@ -29,7 +29,7 @@ class Action
 
     Notification.add("Undo: " + lastAction.type);
 
-    sceneEditor.draw();
+    mapViewport.draw();
   }
 
   //revert the last undo
@@ -42,7 +42,7 @@ class Action
     let lastUndo = Action.popped.pop();
     Action.executeAction(lastUndo, true);
     Notification.add("Redo: " + lastUndo.type);
-    sceneEditor.draw();
+    mapViewport.draw();
   }
 
   //executes an action
@@ -69,8 +69,8 @@ class Action
   static undoAction(a)
   {
     if(a.type == "setTile"){
-      let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = chunk.getLayerByName(a.layer);
+      let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
+      let layer = MapQuery.getChunkLayerByID(chunk, a.layer);
       layer.map[a.tileY][a.tileX] = a.oldTileID;
     }
   }

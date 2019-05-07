@@ -145,7 +145,7 @@ function sampleChunks()
   }
 
   let layer = {
-    id : 0,
+    id : States.current.layer,
     map : []
   }
 

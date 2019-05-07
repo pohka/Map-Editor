@@ -90,8 +90,12 @@
           <div class="tile-tools-item btn fas fa-eraser"
             tool-name="eraser"  onclick="Tools.selectTool('eraser');">
           </div>
-          <div class="tile-tools-item btn fas fa-undo" alt="undo"></div>
-          <div class="tile-tools-item btn fas fa-redo" alt="redo"></div>
+          <div class="tile-tools-item btn fas fa-undo"
+            alt="undo" onclick="Action.undo()">
+          </div>
+          <div class="tile-tools-item btn fas fa-redo"
+            alt="redo" onclick="Action.redo()">
+          </div>
         </div>
       </div>
   </div>

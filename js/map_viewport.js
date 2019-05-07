@@ -88,7 +88,7 @@ class MapViewport extends Viewport
 
     for(let a=0; a<MapData.draw_layers.length; a++)
     {
-      let layerID = a;
+      let layerID = MapData.draw_layers[a];
 
       for(let b=0; b<visibleChunkIndexes.length; b++)
       {
