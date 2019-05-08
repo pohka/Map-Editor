@@ -7,7 +7,7 @@
   /* fonts */
   --font : rgb(241, 241, 241);
   --font_inactive : rgba(238, 238, 238, 0.5);
-  --font_btn: rgb(241, 241, 241, 0.9);
+  --font_btn: rgb(241, 241, 241, 0.85);
 
   /* menus */
   --menu_item: rgb(45, 45, 45);
@@ -192,9 +192,15 @@ body
 
 .section-con-middle
 {
-  overflow: hidden;
-  padding-bottom: 100px;
+  overflow-y: hidden;
+  display: grid;
+  grid-template-columns: auto 40px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
+  padding-bottom: 0px;
 }
+
+
 
 /* scroll bar */
 *::-webkit-scrollbar {
@@ -216,6 +222,11 @@ body
   bottom: 0;
   left: 25;
   height: auto;
+}
+
+.canvas-col
+{
+  padding-bottom: 70px;
 }
 
 canvas
@@ -334,12 +345,11 @@ input[type="submit"]:hover
   height: 100px;
   text-align: center;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .file:hover
 {
-
-  cursor: pointer;
   border-color: var(--border);
 }
 
@@ -355,6 +365,7 @@ input[type="submit"]:hover
   position: relative;
   font-size: 14px;
   margin-top: 5px;
+  cursor: pointer;
 }
 
 .file img
@@ -363,6 +374,12 @@ input[type="submit"]:hover
   margin-top: 10px;
   width: 55px;
   height: 45px;
+  cursor: pointer;
+}
+
+.file-icon::before
+{
+  cursor: pointer;
 }
 
 .file-system-dir
@@ -385,26 +402,32 @@ input[type="submit"]:hover
   border-right: 2px solid var(--border);
 }
 
+.tools-col
+{
+  border-left: 1px solid var(--border);
+
+}
+
 .tile-tools-con
 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 10px 14px;
   width: 100%;
 }
 
 .tile-tools-item
 {
-  width: 70px;
-  height: 70px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  line-height: 70px;
-  font-size: 32px;
-  border: 1px solid var(--border);
+  line-height: 40px;
+  font-size: 20px;
+  border-bottom: 3px solid var(--border);
   
 }
+
 
 .btn
 {
@@ -427,6 +450,7 @@ input[type="submit"]:hover
 .btn[active="true"]
 {
   border-color: var(--primary);
+  color: var(--font);
   background: var(--menu_item_active);
 }
 

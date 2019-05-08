@@ -79,7 +79,8 @@ class TileSelector extends Viewport
     }
 
 
-    this.drawTileHighligher(camFocus);
+    //this.drawTileHighligher(camFocus);
+    this.drawHUD(camFocus);
   }
 
   centerCam()
@@ -87,5 +88,35 @@ class TileSelector extends Viewport
     this.camPos.x = -this.camOffset.x;
     this.camPos.y = -this.camOffset.y;
     this.zoom = 1.5;
+  }
+
+  drawHUD(camFocus){
+    this.drawTileHighligher(camFocus);
+    
+    //selected tile
+    if(States.current.tileID > -1)
+    {
+      let tile = MapQuery.findTileByID(States.current.tileID);
+
+      if(tile != null)
+      {
+        //tile selector is displaying the same tileset
+        if(tile.tex_id == States.current.tileset)
+        {
+          this.ctx.fillStyle = "#f335";
+          this.ctx.strokeStyle="#f00";
+
+
+          let x = tile.tex_x * MapData.tile_size + camFocus.x;
+          let y = tile.tex_y * MapData.tile_size + camFocus.y;
+
+          this.ctx.fillRect(x, y, MapData.tile_size, MapData.tile_size);
+          this.ctx.beginPath();;
+          this.ctx.rect(x,y, MapData.tile_size, MapData.tile_size);
+          this.ctx.stroke();
+        }
+        
+      }
+    }
   }
 }

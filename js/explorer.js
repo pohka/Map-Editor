@@ -140,7 +140,7 @@ class Explorer
         case Explorer.type.folder:
           rootDOM.innerHTML +=
             '<div class="file" onclick=Explorer.nextDir("'+Explorer.items[i].name+'")>' +
-              '<i class="fas fa-folder"></i>' +
+              '<i class="fas fa-folder file-icon"></i>' +
               '<div class="file-name">' + Explorer.items[i].name +'</div>' +
             '</div>';
           break;
@@ -171,7 +171,7 @@ class Explorer
         case Explorer.type.file:
           rootDOM.innerHTML +=
             '<div class="file">' +
-              '<i class="fas fa-file"></i>' +
+              '<i class="fas fa-file file-icon"></i>' +
               '<div class="file-name">' + Explorer.items[i].name +'</div>' +
             '</div>';
           break;

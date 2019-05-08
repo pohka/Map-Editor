@@ -46,114 +46,85 @@
   -->
 
   <!--left section-->
-  <div class="grid-left">
-    <div class="menu section-menu" id="menu-left">
-      <div class="menu-item" name="scene">Scene</div>
-      <div class="menu-item" name="explorer">Explorer</div>
-    </div>
-    <div class="section-con section-con-left">
-      <div class="file-system-dir">
-        <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
-         
+      <div class="grid-left">
+        <div class="menu section-menu" id="menu-left">
+          <div class="menu-item" name="scene">Scene</div>
+          <div class="menu-item" name="explorer">Explorer</div>
         </div>
-        <div id="file-system-dir-val">/res/</div>
-      </div>
-      <!--file explorer content-->
-      <div class="file-system" id="file-system"></div>
-    </div>
-  </div>
-
-  <!--middle section-->
-  <div class="grid-middle">
-    <div class="menu section-menu" id="menu-middle">
-      <div class="menu-item" name="map">Map</div>
-      <div class="menu-item" name="object">Object</div>
-      <div class="menu-item" name="palette">Palette</div>
-    </div>
-    <div class="section-con section-con-middle">
-        <canvas id="map-viewport"></canvas>
-    </div>
-  </div>
-  <!--right section-->
-  <div class="grid-right">
-      <div class="menu section-menu" id="menu-right">
-          <div class="menu-item" name="tile-selector">Tile Selector</div>
-        </div>
-      <div class="section-con section-con-right">
-        <div>
-          <canvas id="tile-selector"></canvas>
-        </div>
-        <div class="tile-tools-con" id="tools">
-          <div class="tile-tools-item btn fas fa-paint-brush"
-            active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
+        <div class="section-con section-con-left">
+          <div class="file-system-dir">
+            <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
+            
+            </div>
+            <div id="file-system-dir-val">/res/</div>
           </div>
-          <div class="tile-tools-item btn fas fa-eraser"
-            tool-name="eraser"  onclick="Tools.selectTool('eraser');">
-          </div>
-          <div class="tile-tools-item btn fas fa-undo"
-            alt="undo" onclick="Action.undo()">
-          </div>
-          <div class="tile-tools-item btn fas fa-redo"
-            alt="redo" onclick="Action.redo()">
-          </div>
+          <!--file explorer content-->
+          <div class="file-system" id="file-system"></div>
         </div>
       </div>
-  </div>
-</div>
 
-<div class="notification-con"></div>
+      <!--middle section-->
+      <div class="grid-middle">
+        <div class="menu section-menu" id="menu-middle">
+          <div class="menu-item" name="map">Map</div>
+          <div class="menu-item" name="object">Object</div>
+          <div class="menu-item" name="palette">Palette</div>
+        </div>
+        <div class="section-con section-con-middle">
+            <div class="canvas-col">
+              <canvas id="map-viewport"></canvas>
+            </div>
+            <div class="tools-col">
+              <div class="tile-tools-con" id="tools">
+                  <div class="tile-tools-item btn fas fa-paint-brush"
+                    active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
+                  </div>
+                  <div class="tile-tools-item btn fas fa-eraser"
+                    tool-name="eraser"  onclick="Tools.selectTool('eraser');">
+                  </div>
+                  <div class="tile-tools-item btn fas fa-undo"
+                    alt="undo" onclick="Action.undo()">
+                  </div>
+                  <div class="tile-tools-item btn fas fa-redo"
+                    alt="redo" onclick="Action.redo()">
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!--right section-->
+      <div class="grid-right">
+          <div class="menu section-menu" id="menu-right">
+              <div class="menu-item" name="tile-selector">Tile Selector</div>
+            </div>
+          <div class="section-con section-con-right">
+            <div>
+              <canvas id="tile-selector"></canvas>
+            </div>
+            
+          </div>
+      </div>
+    </div>
 
-<div class="new-project-modal">
-  <div>
-  <label>Tile Pixel Size:</label>
-  <input type="number" id="new-project-tile"  value="16">
-  </div>
-  <div>
-    <label>Chunk Size:</label>
-    <input type="number" id="new-project-chunk" value="32">
-  </div>
-  <input type="submit" onclick="createProject()">
+    <!--notifcations-->
+    <div class="notification-con"></div>
 
-  <div class="close-modal" onclick="toggleModal('.new-project-modal', true);">
-    <i class="fas fa-window-close"></i>
-  </div>
-</div>
-    <!--New Project Modal-->
-    <!--
+    <!--new project modal-->
     <div class="new-project-modal">
       <div>
-        <label>Project Name:</label>
-        <input type="text" id="new-project-name">
-      </div>
-      <div>
-        <label>Tile Pixel Size:</label>
-        <input type="number" id="new-project-tile">
+      <label>Tile Pixel Size:</label>
+      <input type="number" id="new-project-tile"  value="16">
       </div>
       <div>
         <label>Chunk Size:</label>
-        <input type="number" id="new-project-chunk">
+        <input type="number" id="new-project-chunk" value="32">
       </div>
-      <div class="new-project-submit-con">
-        <input type="submit" onclick="createProject()">
-      </div>
-      <div class="close-modal" onclick="toggleModal('.new-project-modal', true)">
-        <i class="fas fa-window-close"></i>
-      </div>
-    </div>
+      <input type="submit" onclick="createProject()">
 
-    <div class="load-project-modal">
-      <div>
-        <label>Project Name:</label>
-        <input type="text" id="load-project-name">
-      </div>
-      <div class="close-modal" onclick="toggleModal('.load-project-modal', true)">
+      <div class="close-modal" onclick="toggleModal('.new-project-modal', true);">
         <i class="fas fa-window-close"></i>
       </div>
-      <div>
-        <input type="submit" onclick="loadProject()">
-      </div>
     </div>
-  -->
   </body>
 
 <script src="./js/main.js"></script>
