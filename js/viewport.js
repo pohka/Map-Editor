@@ -123,20 +123,23 @@ class Viewport
       vp.lastCursorPos.set(e.clientX, e.clientY);
       let isOverViewport = vp.isCursorOverViewport(e.clientX, e.clientY);
 
-      if(vp.isPanning)
+      if(isOverViewport)
       {
-        let xDiff = e.x - vp.panLastPos.x;
-        let yDiff = e.y - vp.panLastPos.y;
+        if(vp.isPanning)
+        {
+          let xDiff = e.x - vp.panLastPos.x;
+          let yDiff = e.y - vp.panLastPos.y;
 
-        let diff = vp.VPCoorToWorldCoor(xDiff, yDiff);
+          let diff = vp.VPCoorToWorldCoor(xDiff, yDiff);
 
-        vp.camPos.moveBy(diff.x, diff.y);
+          vp.camPos.moveBy(diff.x, diff.y);
 
-        vp.panLastPos.x = e.x;
-        vp.panLastPos.y = e.y;
+          vp.panLastPos.x = e.x;
+          vp.panLastPos.y = e.y;
+        }
+
+        vp.draw();
       }
-
-      vp.draw();
     });
 
     document.addEventListener('mouseup',function(e){

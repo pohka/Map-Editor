@@ -27,31 +27,7 @@ class TileSelector extends Viewport
         if(tileID > -1){
           Tools.selectTool("brush");
           States.setTileID(tileID);
-          //States.current.tileID = tileID;
         }
-        vp.draw();
-      }
-    });
-
-    document.addEventListener("mousemove", function(e){
-      vp.lastCursorPos.set(e.clientX, e.clientY);
-      let isOverViewport = vp.isCursorOverViewport(e.clientX, e.clientY);
-
-      if(isOverViewport)
-      {
-        if(vp.isPanning)
-        {
-          let xDiff = e.x - vp.panLastPos.x;
-          let yDiff = e.y - vp.panLastPos.y;
-
-          let diff = vp.VPCoorToWorldCoor(xDiff, yDiff);
-
-          vp.camPos.moveBy(diff.x, diff.y);
-
-          vp.panLastPos.x = e.x;
-          vp.panLastPos.y = e.y;
-        }
-
         vp.draw();
       }
     });
@@ -78,8 +54,6 @@ class TileSelector extends Viewport
       this.ruler.draw(this);
     }
 
-
-    //this.drawTileHighligher(camFocus);
     this.drawHUD(camFocus);
   }
 
