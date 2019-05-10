@@ -46,13 +46,16 @@ const MapData = {
   chunks:
   [
     // {
-    //   "x" : 0,
-    //   "y" : 0  ,
-    //   "map" :
+    //   x : 0,
+    //   y : 0,
+    //   layers : 
     //   [
-    //     { "text_id" : 0, "tile_id" : 0, "h" : 0},
-    //     { "text_id" : 0, "tile_id" : 0, "h" : 0}
-    //   ]
+    //     {
+    //       id : "base", //layer id
+    //       map : Array(32)
+    //     }
+    //   ],
+    //   textures_used : [ 0 ] // array of texture ids
     // }
   ]
 };

@@ -101,8 +101,18 @@
             <div>
               <canvas id="tile-selector"></canvas>
             </div>
-            
+
+            <div class="menu section-menu" id="menu-right-bottom">
+              <div class="menu-item" name="draw-layers">Draw Layers</div>
+            </div>
+            <div class="draw-layers-toolbar">
+              <div class="btn" onclick="Layers.addLayerClick()">Add Layer <i class="fas fa-plus"></i></div>
+              <input type="text" id="add-layer-input" placeholder="layer_name" oninput="Layers.onInput(this)"/>
+            </div>
+            <ul class="draw-layers-list" id="draw-layers-list">
+            </ul>
           </div>
+          
       </div>
     </div>
 
@@ -144,4 +154,5 @@
   <script src="./js/tile_selector.js"></script>
   <script src="./js/explorer.js"></script>
   <script src="./js/keyboard_shortcuts.js"></script>
+  <script src="./js/layers.js"></script>
 </html>

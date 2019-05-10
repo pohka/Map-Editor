@@ -86,18 +86,21 @@ class MapViewport extends Viewport
       }
     }
 
-    for(let a=0; a<MapData.draw_layers.length; a++)
+    for(let a=MapData.draw_layers.length-1; a>=0; a--)
     {
       let layerID = MapData.draw_layers[a];
-
-      for(let b=0; b<visibleChunkIndexes.length; b++)
+      let isVisible = States.visibleLayers[layerID];
+      if(isVisible !== undefined && isVisible)
       {
-        let index = visibleChunkIndexes[b];
-        let chunk = MapData.chunks[index];
-        let layer = MapQuery.getChunkLayerByID(chunk, layerID);
-        if(layer != null)
+        for(let b=0; b<visibleChunkIndexes.length; b++)
         {
-          this.drawLayer(mapViewport, layer, chunk.x, chunk.y);
+          let index = visibleChunkIndexes[b];
+          let chunk = MapData.chunks[index];
+          let layer = MapQuery.getChunkLayerByID(chunk, layerID);
+          if(layer != null)
+          {
+            this.drawLayer(mapViewport, layer, chunk.x, chunk.y);
+          }
         }
       }
     }

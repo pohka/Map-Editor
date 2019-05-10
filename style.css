@@ -31,6 +31,11 @@ input, button, textarea, :focus {
     outline: none;
 }
 
+ul
+{
+  margin: 0px 0px;
+}
+
 *
 {
   box-sizing: border-box;
@@ -235,12 +240,21 @@ canvas
   height: 100%;
 }
 
-input[type="submit"], input[type="text"], input[type="number"]{
+input[type="submit"], input[type="number"]{
   width: 300px;
   font-size: 16px;
   padding: 6px 4px;
   margin: 3px 2px;
-  border: 1px solid var(--border);
+  border: 0px solid var(--border);
+}
+
+input[type="text"]
+{
+  font-size: 16px;
+  padding: 4px 6px;
+  margin: 5px 5px;
+  border: none;
+  border: 1px solid transparent;
 }
 
 input[type="submit"]
@@ -436,7 +450,7 @@ input[type="submit"]:hover
   cursor: pointer;
 }
 
-.btn::before
+.btn::before, .btn i::before
 {
   cursor: pointer;
 }
@@ -452,6 +466,77 @@ input[type="submit"]:hover
   border-color: var(--primary);
   color: var(--font);
   background: var(--menu_item_active);
+}
+
+#menu-right-bottom
+{
+  border-bottom: 2px solid var(--border);
+}
+
+/* draw layers */
+.draw-layers-list
+{
+  text-indent: none;
+  list-style-type: none;
+  padding: 0px 0px;
+  border-top: 1px solid var(--border);
+}
+
+.draw-layers-list li
+{
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+}
+
+.draw-layers-list li[active="true"]
+{
+  background: var(--menu_item_active);
+  border-color: var(--primary);
+}
+
+.draw-layers-list span
+{
+  padding-left: 20px;
+}
+
+.draw-layers-list .btn
+{
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.draw-layer-name
+{
+  padding-left: 15px;
+  width: 100%;
+}
+
+.draw-layers-toolbar
+{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.draw-layers-toolbar .btn
+{
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 14px;
+}
+
+.draw-layers-toolbar input
+{
+  flex-basis: fit-content;
+  width: 100%;
 }
 
 /*

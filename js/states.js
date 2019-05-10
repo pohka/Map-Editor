@@ -9,6 +9,8 @@ const States =
     tileset : -1, //id
   },
 
+  isProjectLoaded : false,
+
   prevTileID : -1,
 
 //ui based variables
@@ -32,8 +34,18 @@ const States =
       
       id : "menu-right",
       active : "tile-selector"
+    },
+    {
+      
+      id : "menu-right-bottom",
+      active : "draw-layers"
     }
-  ]
+  ],
+
+  visibleLayers :
+  {
+    "base" : true
+  }
 }
 
 States.loadMenus = function()

@@ -23,6 +23,7 @@ var CollisionType =
 Object.freeze(CollisionType);
 
 window.onload = () => {
+  disableMiddleBtnScroll();
   mapViewport = new MapViewport("map-viewport");
   tileSelector = new TileSelector("tile-selector");
   States.loadMenus();
@@ -30,6 +31,19 @@ window.onload = () => {
   //find all the images and preload them
   //walk("./projects/"+Store.projectName+"/res/", loadImages);
 
+}
+
+//disables scrolling when middle mouse button is held down
+function disableMiddleBtnScroll()
+{
+  document.addEventListener("mousedown", function(e){
+    if(e.button==1)
+    {
+      console.log("here");
+      e.preventDefault();  
+      return false
+    }
+  });
 }
 
 function toggleModal(sel, hide)
@@ -78,6 +92,7 @@ function createProject()
 //  Chunk.tileSize = parseInt(tileSize);
 //  Chunk.totalSize = Chunk.size * Chunk.tileSize;
   sampleChunks();
+  Layers.init();
   loadImagesFirstTime(function(newTextureIDs){
     if(MapData.tilesets.length > 0)
     {
@@ -91,6 +106,7 @@ function createProject()
     mapViewport.draw();
     tileSelector.draw();
     Explorer.setRoot();
+    States.isProjectLoaded = true;
     Notification.add("Created Project: " + MapData.project_name);
   });
   //refreshImages();
