@@ -1,6 +1,11 @@
 
 class Layers
 {
+  static init()
+  {
+    Layers.updateList();
+  }
+
   static toggleVisibility(el)
   {
     let name = el.parentNode.getAttribute("name");
@@ -65,11 +70,6 @@ class Layers
         }
       }
     }
-  }
-
-  static init()
-  {
-    Layers.updateList();
   }
 
   static validateLayerName(val)
@@ -177,7 +177,7 @@ class Layers
 
           //order doesnt matter
           MapData.chunks[i].layers.push({
-            id : name,
+            name : name,
             map : emptyMap
           });
         }
@@ -211,7 +211,7 @@ class Layers
         let isFound = false;
         for(let b=0; b<MapData.chunks[a].layers.length && !isFound; b++)
         {
-          if(MapData.chunks[a].layers[b].id == name)
+          if(MapData.chunks[a].layers[b].name == name)
           {
             MapData.chunks[a].layers.splice(b, 1);
             isFound = true;
@@ -235,7 +235,7 @@ class Layers
     Layers.updateList();
     mapViewport.draw();
 
-    console.log("Delete layer successfully '"+name+"'");
+    console.log("Deleted layer successfully '"+name+"'");
   }
 }
 

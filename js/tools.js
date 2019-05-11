@@ -11,7 +11,7 @@ class Tools
     if(chunk != null)
     {
       let tilePos = MapQuery.findTileCoorAtWorldPos(chunk, mousePos.x, mousePos.y);
-      let layer = MapQuery.getChunkLayerByID(chunk, States.current.layer);
+      let layer = MapQuery.getChunkLayerByName(chunk, States.current.layer);
       if(tilePos != null && layer != null)
       {
         let curTileID = layer.map[tilePos.y][tilePos.x];

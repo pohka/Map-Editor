@@ -88,15 +88,15 @@ class MapViewport extends Viewport
 
     for(let a=MapData.draw_layers.length-1; a>=0; a--)
     {
-      let layerID = MapData.draw_layers[a];
-      let isVisible = States.visibleLayers[layerID];
+      let layerName = MapData.draw_layers[a];
+      let isVisible = States.visibleLayers[layerName];
       if(isVisible !== undefined && isVisible)
       {
         for(let b=0; b<visibleChunkIndexes.length; b++)
         {
           let index = visibleChunkIndexes[b];
           let chunk = MapData.chunks[index];
-          let layer = MapQuery.getChunkLayerByID(chunk, layerID);
+          let layer = MapQuery.getChunkLayerByName(chunk, layerName);
           if(layer != null)
           {
             this.drawLayer(mapViewport, layer, chunk.x, chunk.y);

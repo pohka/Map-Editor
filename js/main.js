@@ -163,7 +163,7 @@ function sampleChunks()
   MapData.draw_layers.push("base");
   States.current.layer = MapData.draw_layers[0];
   let layer = {
-    id : States.current.layer,
+    name : States.current.layer,
     map : []
   }
 

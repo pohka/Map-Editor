@@ -51,7 +51,7 @@ const MapData = {
     //   layers : 
     //   [
     //     {
-    //       id : "base", //layer id
+    //       name : "base", //layer id
     //       map : Array(32)
     //     }
     //   ],
@@ -144,11 +144,11 @@ MapQuery.findTileCoorAtWorldPos = function(chunk, worldX, worldY){
   return new Vector(tileX, tileY);
 }
 
-MapQuery.getChunkLayerByID = function(chunk, id)
+MapQuery.getChunkLayerByName = function(chunk, name)
 {
   for(let i=0; i<chunk.layers.length; i++)
   {
-    if(chunk.layers[i].id == id)
+    if(chunk.layers[i].name == name)
     {
       return chunk.layers[i];
     }

@@ -1,7 +1,7 @@
 class Action
 {
   //creates a new set tile action
-  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layer)
+  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layerName)
   {
     return ({
       type : "setTile",
@@ -9,7 +9,7 @@ class Action
       chunkY : chunk.y,
       tileX : tilePos.x,
       tileY : tilePos.y,
-      layer : layer,
+      layerName : layerName,
       oldTileID : oldTileID,
       newTileID : newTileID
     });
@@ -50,7 +50,7 @@ class Action
   {
     if(a.type == "setTile"){
       let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = MapQuery.getChunkLayerByID(chunk, a.layer);
+      let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.newTileID;
     }
 
@@ -70,7 +70,7 @@ class Action
   {
     if(a.type == "setTile"){
       let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = MapQuery.getChunkLayerByID(chunk, a.layer);
+      let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.oldTileID;
     }
   }
