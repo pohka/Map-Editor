@@ -13,7 +13,7 @@
   --menu_item: rgb(45, 45, 45);
   --menu_item_active: rgb(20, 20, 20);
   --menu_background: rgb(37, 37, 38);
-  --menu_item_hover: rgb(34, 34, 34);
+  --menu_item_hover: rgb(26, 26, 26);
 
   --header_menu: rgb(58, 58, 58);
   --header_hover: rgb(150, 150, 150);
@@ -501,7 +501,7 @@ input[type="submit"]:hover
   padding-left: 20px;
 }
 
-.draw-layers-list .btn
+.layer-btn
 {
   height: 50px;
   width: 50px;
@@ -517,7 +517,16 @@ input[type="submit"]:hover
 {
   padding-left: 15px;
   width: 100%;
+  cursor: pointer;
 }
+
+.draw-layers-list li[active="false"] .draw-layer-name:hover
+{
+  background: var(--menu_item_hover);
+}
+
+
+
 
 .draw-layers-toolbar
 {

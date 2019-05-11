@@ -6,26 +6,13 @@ class Layers
     Layers.updateList();
   }
 
-  static toggleVisibility(el)
+  //onclick for layer visiblity
+  static toggleVisibilityClick(el)
   {
     let name = el.parentNode.getAttribute("name");
-
-    //change icon
-    let isVisible = States.visibleLayers[name];
-    if(isVisible)
-    {
-      el.classList.remove("fa-eye");
-      el.classList.add("fa-eye-slash");
-    }
-    else
-    {
-      el.classList.remove("fa-eye-slash");
-      el.classList.add("fa-eye");
-    }
-
-    isVisible = !isVisible
-    States.visibleLayers[name] = isVisible;
-    mapViewport.draw();
+    let nextIsVisible = !States.visibleLayers[name];
+    let action = Action.newLayerVisiblilityAction(name, nextIsVisible);
+    Action.executeAction(action);
   }
 
   static moveUp(el)
@@ -40,11 +27,8 @@ class Layers
         isFound = true;
         if(i > 0)
         {
-          let temp = MapData.draw_layers[i];
-          MapData.draw_layers[i] = MapData.draw_layers[i-1];
-          MapData.draw_layers[i-1] = temp;
-          Layers.updateList();
-          mapViewport.draw();
+          let a = Action.newMoveLayerAction(name, i, i-1);
+          Action.executeAction(a);
         }
       }
     }
@@ -62,11 +46,8 @@ class Layers
         isFound = true;
         if(i < MapData.draw_layers.length-1)
         {
-          let temp = MapData.draw_layers[i];
-          MapData.draw_layers[i] = MapData.draw_layers[i+1];
-          MapData.draw_layers[i+1] = temp;
-          Layers.updateList();
-          mapViewport.draw();
+          let a = Action.newMoveLayerAction(name, i, i+1);
+          Action.executeAction(a);
         }
       }
     }
@@ -111,12 +92,12 @@ class Layers
 
       let item =
       '<li name="'+name+'" active="'+isActive+'">' +
-        '<div class="btn far '+visibleClass+'" onclick="Layers.toggleVisibility(this)"></div>' +
-        '<div class="btn fas fa-arrow-up" onclick="Layers.moveUp(this)"></div>' +
-        '<div class="btn fas fa-arrow-down" onclick="Layers.moveDown(this)"></div>' +
+        '<div class="layer-btn btn far '+visibleClass+'" onclick="Layers.toggleVisibilityClick(this)"></div>' +
+        '<div class="layer-btn btn fas fa-arrow-up" onclick="Layers.moveUp(this)"></div>' +
+        '<div class="layer-btn btn fas fa-arrow-down" onclick="Layers.moveDown(this)"></div>' +
         '<div class="draw-layer-name" onclick="Layers.layerNameClick(this)">'+name+'</div>' +
       '</li>';
-
+      
       list.innerHTML += item;
     }
   }
@@ -131,12 +112,41 @@ class Layers
     }
   }
 
+  //onclick function
   static addLayerClick()
   {
     if(States.isProjectLoaded)
     {
       let input = document.getElementById("add-layer-input");
-      Layers.addLayer(input.value);
+      //Layers.addLayer(input.value);
+
+      //validate input
+      let name = Layers.validateLayerName(input.value);
+      //length > 0
+      if(name.length <= 0)
+      {
+        Notification.add("Invalid layer name", true);
+      }
+      else
+      {
+        //check to see if the name is unique
+        let hasMatch = false;
+        for(let i=0; i<MapData.draw_layers.length && !hasMatch; i++)
+        {
+          if(MapData.draw_layers[i] == name)
+          {
+            hasMatch = true;
+            Notification.add("A layer already exists with this name", true);
+          }
+        }
+
+        //success: layerName is a unique name
+        if(!hasMatch)
+        {
+          let action = Action.newAddLayerAction(name);
+          Action.executeAction(action);
+        }
+      }
     }
   }
 

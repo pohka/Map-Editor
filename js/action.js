@@ -15,6 +15,33 @@ class Action
     });
   }
 
+  static newAddLayerAction(layerName)
+  {
+    return ({
+      type : "addLayer",
+      layerName : layerName
+    });
+  }
+
+  static newMoveLayerAction(layerName, prevPos, nextPos)
+  {
+    return ({
+      type : "moveLayer",
+      layerName : layerName,
+      prevPos : prevPos,
+      nextPos : nextPos
+    });
+  }
+
+  static newLayerVisiblilityAction(layerName, nextIsVisible)
+  {
+    return ({
+      type : "layerVisiblity",
+      layerName : layerName,
+      nextIsVisible : nextIsVisible
+    });
+  }
+
   //undo the last action
   static undo()
   {
@@ -53,6 +80,24 @@ class Action
       let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.newTileID;
     }
+    else if(a.type == "moveLayer")
+    {
+      let temp = MapData.draw_layers[a.prevPos];
+      MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
+      MapData.draw_layers[a.nextPos] = temp;
+      Layers.updateList();
+      mapViewport.draw();
+    }
+    else if(a.type == "layerVisiblity")
+    {
+      States.visibleLayers[a.layerName] = a.nextIsVisible;
+      Layers.updateList();
+      mapViewport.draw();
+    }
+    else if(a.type == "addLayer")
+    {
+      Layers.addLayer(a.layerName);
+    }
 
     Action.stack.push(a);
     if(Action.stack.length > Action.maxActions){
@@ -72,6 +117,24 @@ class Action
       let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
       let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.oldTileID;
+    }
+    else if(a.type == "moveLayer")
+    {
+      let temp = MapData.draw_layers[a.prevPos];
+      MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
+      MapData.draw_layers[a.nextPos] = temp;
+      Layers.updateList();
+      mapViewport.draw();
+    }
+    else if(a.type == "layerVisiblity")
+    {
+      States.visibleLayers[a.layerName] = !a.nextIsVisible;
+      Layers.updateList();
+      mapViewport.draw();
+    }
+    else if(a.type == "addLayer")
+    {
+      Layers.deleteLayer(a.layerName);
     }
   }
 }

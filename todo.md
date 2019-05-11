@@ -1,5 +1,3 @@
--delete draw layers from console
--layer buttons should use actions so undo and redo can work with them
 -navigation mesh layer
 -save
 -load
