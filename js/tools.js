@@ -64,6 +64,12 @@ class Tools
 
   static selectTool(name)
   {
+    //no nothing if re-selecting the same tool
+    if(name == States.current.tool)
+    {
+      return;
+    }
+
     if(name == "eraser")
     {
       States.setTileID(-1);
