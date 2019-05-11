@@ -4,7 +4,7 @@ const States =
   current :
   {
     tool : "brush",
-    layer : "base",
+    layer : null,
     tileID : -1,
     tileset : -1, //id
   },

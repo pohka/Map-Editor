@@ -23,8 +23,10 @@ class Tools
         }
         return true;
       }
-      console.log("layer or tile not found", layer);
-      console.log(chunk);
+      else if(layer == null)
+      {
+        console.log("No layer selected");
+      }
     }
 
     return false;

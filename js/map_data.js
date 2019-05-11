@@ -9,7 +9,7 @@ const MapData = {
   //layers for draw order of tiles and sprites
   draw_layers :
   [
-    "base"
+  //  "base"
   ],
 
   textures :

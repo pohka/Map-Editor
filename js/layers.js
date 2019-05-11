@@ -183,12 +183,59 @@ class Layers
         }
 
         States.visibleLayers[name] = true;
-
+        States.current.layer = name;
         Notification.add("Added layer '"+name+"'");
 
         Layers.updateList();
       }
     }
+  }
+
+  static deleteLayer(name)
+  {
+    let hasMatch = false;
+    for(let i=0; i<MapData.draw_layers.length && !hasMatch; i++)
+    {
+      if(MapData.draw_layers[i] == name)
+      {
+        hasMatch = true;
+        MapData.draw_layers.splice(i, 1);
+      }
+    }
+
+    if(hasMatch)
+    {
+      //delete layer in chunks
+      for(let a=0; a<MapData.chunks.length; a++)
+      {
+        let isFound = false;
+        for(let b=0; b<MapData.chunks[a].layers.length && !isFound; b++)
+        {
+          if(MapData.chunks[a].layers[b].id == name)
+          {
+            MapData.chunks[a].layers.splice(b, 1);
+            isFound = true;
+          }
+        }
+      }
+
+      //delete visible state
+      if (name in States.visibleLayers)
+      {
+        delete States.visibleLayers[name];
+      }
+
+      //if current layer, set the current layer to null
+      if(States.current.layer == name)
+      {
+        States.current.layer = null;
+      }
+    }
+
+    Layers.updateList();
+    mapViewport.draw();
+
+    console.log("Delete layer successfully '"+name+"'");
   }
 }
 

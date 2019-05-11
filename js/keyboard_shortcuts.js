@@ -1,6 +1,8 @@
 //keyboard shortcuts
 document.onkeydown = function(e)
 {
+  
+
   // ctrl+z
   if (e.ctrlKey)
   {
@@ -21,6 +23,12 @@ document.onkeydown = function(e)
         Action.redo();
       }
     }
+  }
+
+  //dont do any 1 key commands if currently typing input
+  if(document.activeElement.tagName == "INPUT")
+  {
+    return;
   }
 
   // B
