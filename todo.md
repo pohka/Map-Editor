@@ -1,20 +1,19 @@
+-load from 1 function (new and load)
+-display loaded file name on top bar
+-save to same file if States.projectFileName is set
+-save as opens dialog and ignores current States.projectFileNmae value
+-tidy up some global functions from states.js and main.js
+-add jsDoc comments for project
+
 -navigation mesh layer
--save
--load
--create new when project is opened
 -markers (point in space)
 -objects
 -multiple chunks (auto create chunks based on usage of mapdata)
 
-
--tiles generated for non-tileset images
--project dir
 
 
 ------------------------
 -object layer
 -undo when painting
 -brush size
-
-Bugs
 -painting skips blocks with fast moving cursor
