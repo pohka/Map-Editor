@@ -1,6 +1,4 @@
 const MapData = {
-  project_name : "", //project file name
-  dir : "./projects/rework/", //directory of project
   tile_size : 0, //tile size in pixels
   chunk_size : 0, //tiles per chunk
   chunk_total_size : 1,

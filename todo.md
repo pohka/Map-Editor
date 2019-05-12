@@ -4,7 +4,12 @@
 -create new when project is opened
 -markers (point in space)
 -objects
--multiple chunks
+-multiple chunks (auto create chunks based on usage of mapdata)
+
+
+-tiles generated for non-tileset images
+-project dir
+
 
 ------------------------
 -object layer

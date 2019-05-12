@@ -12,8 +12,8 @@
       <div class="grid-header">
           <div class="menu header-menu">
             <div class="menu-item" id="header-menu-file-new" onclick="toggleModal('.new-project-modal', false)">New</div>
-            <div class="menu-item" id="header-menu-file-load">Load</div>
-            <div class="menu-item" id="header-menu-file-save">Save</div>
+            <div class="menu-item" id="header-menu-file-load" onclick="File.load()">Load</div>
+            <div class="menu-item" id="header-menu-file-save" onclick="File.save()">Save</div>
             <div class="menu-item" id="header-menu-file-save-as">Save as</div>
           </div>
       </div>
@@ -123,11 +123,20 @@
     <div class="new-project-modal">
       <div>
       <label>Tile Pixel Size:</label>
-      <input type="number" id="new-project-tile"  value="16">
+      <input type="number" id="new-project-tile"  value="16"/>
       </div>
       <div>
         <label>Chunk Size:</label>
-        <input type="number" id="new-project-chunk" value="32">
+        <input type="number" id="new-project-chunk" value="32"/>
+      </div>
+      <div>
+        <label>Project path:</label>
+        <textarea type="text" 
+          id="new-project-set-path" 
+          onclick="modalSetPath(this)"
+          readonly="readonly"
+          placeholder="click to set"
+        ></textarea>
       </div>
       <input type="submit" onclick="createProject()">
 
@@ -155,4 +164,5 @@
   <script src="./js/explorer.js"></script>
   <script src="./js/keyboard_shortcuts.js"></script>
   <script src="./js/layers.js"></script>
+  <script src="./js/file.js"></script>
 </html>

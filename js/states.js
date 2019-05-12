@@ -45,7 +45,10 @@ const States =
   visibleLayers :
   {
     "base" : true
-  }
+  },
+
+  projectPath : null,
+  projectFileName : ""
 }
 
 States.loadMenus = function()
@@ -157,6 +160,7 @@ States.findImgObj = function(texID){
       return States.imgObjs[i];
     }
   }
+  
   return null;
 
  //  let texture = MapQuery.findTextureByID(id);

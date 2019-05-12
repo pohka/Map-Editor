@@ -7,6 +7,8 @@ order of coordinate systems:
 -tile
 */
 
+const {dialog} = require('electron').remote;
+
 let mapViewport, tileSelector;
 
 const resDir = "res/";
@@ -39,7 +41,6 @@ function disableMiddleBtnScroll()
   document.addEventListener("mousedown", function(e){
     if(e.button==1)
     {
-      console.log("here");
       e.preventDefault();  
       return false
     }
@@ -67,24 +68,50 @@ function toggleModal(sel, hide)
 }
 
 
+function modalSetPath(el)
+{
+  let options = {
+    properties: ['openDirectory']
+  };
+
+  dialog.showOpenDialog(
+    options, (result) => {
+      if(
+        result !== undefined && result.length > 0 && 
+        result[0] !== undefined && result[0].length > 0
+        )
+      {
+        let path = result[0].replace(/\\/g,"/");
+        el.value = path;
+      }
+  });
+}
+
 function createProject()
 {
-  let projectName = "rework";//document.querySelector("#new-project-name").value;
+  let projectPath = document.querySelector("#new-project-set-path").value;
+  //let projectName = "rework";//document.querySelector("#new-project-name").value;
   let tileSize = document.querySelector("#new-project-tile").value;
   let chunkSize = document.querySelector("#new-project-chunk").value;
 
-  if(projectName.length > 0){
-    projectName = projectName.trim().replace(/\s+/g, "-");
-  }
+  //if(projectName.length > 0){
+  //  projectName = projectName.trim().replace(/\s+/g, "-");
+  //}
 
   //validate input
-  if(projectName.length == 0 || tileSize <= 0 || chunkSize <= 0)
+  if(
+    projectPath === undefined || projectPath.length <= 0 || 
+    tileSize === undefined || tileSize <= 0 || 
+    chunkSize === undefined || chunkSize <= 0
+    )
   {
     Notification.add("Input not valid", true);
     return;
   }
 
-  MapData.project_name = projectName;
+  States.projectPath = projectPath + "/";
+  States.projectFileName = "";
+  //MapData.project_name = projectName;
   MapData.chunk_size = parseInt(chunkSize);
   MapData.tile_size = parseInt(tileSize);
   MapData.chunk_total_size = MapData.chunk_size * MapData.tile_size;
@@ -107,7 +134,7 @@ function createProject()
     tileSelector.draw();
     Explorer.setRoot();
     States.isProjectLoaded = true;
-    Notification.add("Created Project: " + MapData.project_name);
+    Notification.add("Created New Project");
   });
   //refreshImages();
   //
@@ -227,15 +254,16 @@ function generateTiles(textureID)
 
 function loadImagesFirstTime(onComplete)
 {
-  walk(MapData.dir, function(err, files){
+  walk(States.projectPath, function(err, files){
     let filesLeftToLoad = files.length;
     let newTextureIDs = [];
 
     for(let i in files){
       if(Explorer.isImage(files[i]))
       {
+        
         let src = files[i].replace(/\\/g, "/").split("/"+resDir)[1];
-        let existingImg = null;//Store.findImgObj(file);
+        let existingImg = null;
         if(existingImg == null)
         {
           let img = new Image();
@@ -263,7 +291,7 @@ function loadImagesFirstTime(onComplete)
               onComplete(newTextureIDs);
             }
           }
-          img.src = MapData.dir + "res/" + src;
+          img.src = States.projectPath + Explorer.resFolder + src;
         }
       }
       else {

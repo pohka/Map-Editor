@@ -55,8 +55,9 @@ class Explorer
       rootDOM.removeChild(rootDOM.firstChild);
     }
 
-    let dir = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir;
-
+    //let dir = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir;
+    let dir = States.projectPath + Explorer.resFolder + Explorer.currentDir;
+ 
     Explorer.items = [];
 
     var list = [];
@@ -145,8 +146,9 @@ class Explorer
             '</div>';
           break;
         case Explorer.type.image:
-          let src = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir + Explorer.items[i].name;
-
+          //let src = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir + Explorer.items[i].name;
+          let src = States.projectPath + Explorer.resFolder + Explorer.currentDir + Explorer.items[i].name;
+          
           //extra for tilesets changing explorer
           let extra = "";
           if(Explorer.currentDir == "tilesets/")

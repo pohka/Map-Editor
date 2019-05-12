@@ -273,9 +273,17 @@ input[type="submit"]:hover
   border-color: var(--primary);
 }
 
+#new-project-set-path
+{
+  cursor: pointer;
+  width: 300px;
+  height: 40px;
+  float: right;
+}
+
 .new-project-modal
 {
-  width: 400px;
+  width: 600px;
   height: auto;
   padding: 40px 80px;
   position: fixed;
@@ -298,8 +306,9 @@ input[type="submit"]:hover
 
 .new-project-modal input
 {
+  margin-top: 10px;
   float: right;
-  width: 100px;
+  width: 300px;
 }
 
 .close-modal
@@ -327,6 +336,7 @@ input[type="submit"]:hover
   min-width: 250px;
   padding: 10px 16px;
   margin-bottom: 8px;
+  margin-left: 8px;
   color: white;
   font-size: 18px;
   border: 2px solid #3aa;
