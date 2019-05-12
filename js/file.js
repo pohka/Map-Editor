@@ -44,7 +44,6 @@ class File
     dialog.showOpenDialog(
       options,
       (result) => {
-      console.log(result);
 
       if(
         result !== undefined && result.length > 0 &&
@@ -55,10 +54,24 @@ class File
         var fs = require('fs');
         fs.readFile(path, (err, data) => {
           if (!err) {
-            console.log();
             let dataStr = data.toString();
-            let obj = JSON.parse(dataStr);
-            console.log(obj);
+            try
+            {
+              let obj = JSON.parse(dataStr);
+              if(obj.version != VERSION)
+              {
+                Notification.add("Warning different version", true);
+              }
+              States.isProjectLoaded = false;
+              MapData = obj;
+              States.setFromLoad(path, true);
+            }
+            catch(err)
+            {
+              Notification.add("Failed to load file");
+              console.log("FAILED TO LOAD FILE ", path, err);
+            }
+            
           }
           else
           {

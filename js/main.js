@@ -13,6 +13,8 @@ let mapViewport, tileSelector;
 
 const resDir = "res/";
 
+const VERSION = "0.1";
+
 var CollisionType =
 {
   none : 0,
@@ -118,7 +120,7 @@ function createProject()
 //  Chunk.size = parseInt(chunkSize);
 //  Chunk.tileSize = parseInt(tileSize);
 //  Chunk.totalSize = Chunk.size * Chunk.tileSize;
-  MapData.version = States.version;
+  MapData.version = VERSION;
   sampleChunks();
   Layers.init();
   loadImagesFirstTime(function(newTextureIDs){
@@ -279,7 +281,6 @@ function loadImagesFirstTime(onComplete)
     for(let i in files){
       if(Explorer.isImage(files[i]))
       {
-        
         let src = fullPathToResPath(files[i]);
         let existingImg = null;
         if(existingImg == null)
@@ -287,12 +288,14 @@ function loadImagesFirstTime(onComplete)
           let img = new Image();
           img.onload = function()
           {
-            img.tex_id = States.imgObjs.length;
-            States.imgObjs.push(this);
+            img.tex_id = MapData.texture_count;
+            States.imgObjs[img.tex_id] = this;
             MapData.textures.push({
               id : img.tex_id,
               src : src
             });
+
+            MapData.texture_count++;
 
             newTextureIDs.push(img.tex_id);
 
