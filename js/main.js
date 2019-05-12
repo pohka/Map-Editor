@@ -118,6 +118,7 @@ function createProject()
 //  Chunk.size = parseInt(chunkSize);
 //  Chunk.tileSize = parseInt(tileSize);
 //  Chunk.totalSize = Chunk.size * Chunk.tileSize;
+  MapData.version = States.version;
   sampleChunks();
   Layers.init();
   loadImagesFirstTime(function(newTextureIDs){
@@ -128,7 +129,15 @@ function createProject()
 
     for(let i=0; i<newTextureIDs.length; i++)
     {
-      generateTiles(newTextureIDs[i]);
+      let img = States.findImgObj(newTextureIDs[i]);
+      if(img != null)
+      {
+        let path = fullPathToResPath(img.getAttribute("src"));
+        if(path.startsWith("tilesets/"))
+        {
+          generateTiles(newTextureIDs[i]);
+        }
+      }
     }
     mapViewport.draw();
     tileSelector.draw();
@@ -252,6 +261,15 @@ function generateTiles(textureID)
 
 }
 
+function fullPathToResPath(fullPath)
+{
+  let els = fullPath.replace(/\\/g, "/").split("/"+Explorer.resFolder);
+  if(els.length == 2)
+  {
+    return els[1];
+  }
+}
+
 function loadImagesFirstTime(onComplete)
 {
   walk(States.projectPath, function(err, files){
@@ -262,7 +280,7 @@ function loadImagesFirstTime(onComplete)
       if(Explorer.isImage(files[i]))
       {
         
-        let src = files[i].replace(/\\/g, "/").split("/"+resDir)[1];
+        let src = fullPathToResPath(files[i]);
         let existingImg = null;
         if(existingImg == null)
         {

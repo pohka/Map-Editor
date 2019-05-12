@@ -9,6 +9,8 @@ const States =
     tileset : -1, //id
   },
 
+  version : "0.1",
+
   isProjectLoaded : false,
 
   prevTileID : -1,

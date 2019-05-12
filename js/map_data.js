@@ -1,4 +1,5 @@
 const MapData = {
+  version : "0.1",
   tile_size : 0, //tile size in pixels
   chunk_size : 0, //tiles per chunk
   chunk_total_size : 1,
