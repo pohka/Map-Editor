@@ -1,8 +1,4 @@
 
--display loaded file name on top bar
--save to same file if States.projectFileName is set
--save as opens dialog and ignores current States.projectFileNmae value
--tidy up some global functions from states.js and main.js
 -add jsDoc comments for project
 
 -refresh images when file has been added to directory

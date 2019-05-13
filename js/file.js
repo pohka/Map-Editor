@@ -4,34 +4,62 @@ class File
 {
   static save()
   {
-    const options = {
-      defaultPath: "./",
-      filters : [{ name: 'json', extensions: ['json']}]
-    }
-
-    dialog.showSaveDialog(null, options, (path) => {
-      if(path !== undefined && path.length > 0)
+    if(States.isProjectLoaded)
+    {
+      if(States.projectFileName.length == 0)
       {
-        let extention = ".json";
-        if(path.endsWith(extention) == false)
-        {
-          path += extention;
-        }
-
-        var fs = require('fs');
-        try
-        {
-          let content = JSON.stringify(MapData);
-          fs.writeFileSync(path, content, 'utf-8'); 
-          Notification.add("Saved!");
-        }
-        catch(e)
-        {
-          Notification.add("Failed to save", true);
-          console.log("FILE FAILED TO SAVE", e);
-        }
+        File.saveAs();
       }
-    });
+      else
+      {
+        File.write(States.projectPath + States.projectFileName);
+      }
+    }
+  }
+
+  static saveAs()
+  {
+    if(States.isProjectLoaded)
+    {
+      const options = {
+        defaultPath: "./",
+        filters : [{ name: 'json', extensions: ['json']}]
+      }
+
+      dialog.showSaveDialog(null, options, (path) => {
+        if(path !== undefined && path.length > 0)
+        {
+          let extention = ".json";
+          if(path.endsWith(extention) == false)
+          {
+            path += extention;
+          }
+
+
+          let els = path.replace(/\\/g, "/").split("/");
+          States.projectFileName = els.pop();
+          States.projectPath = els.join("/") + "/";
+          Project.updateProjectName();
+          File.write(States.projectPath + States.projectFileName);
+        }
+      });
+    }
+  }
+
+  static write(fullPath)
+  {
+    var fs = require('fs');
+    try
+    {
+      let content = JSON.stringify(MapData);
+      fs.writeFileSync(fullPath, content, 'utf-8');
+      Notification.add("Saved '" + States.projectFileName + "'");
+    }
+    catch(err)
+    {
+      Notification.add("Failed to save", true);
+      console.log("FILE FAILED TO SAVE", err);
+    }
   }
 
   static load()

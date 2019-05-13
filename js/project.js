@@ -39,6 +39,12 @@ class Project
     }
   }
 
+  static updateProjectName()
+  {
+    let projectNameEl = document.getElementById("project-name-text");
+    projectNameEl.textContent = States.projectFileName;
+  }
+
   //path is project path, isFile = false if path is a directory
   static set(path, isFile)
   {
