@@ -1,12 +1,15 @@
-
+/** Draw Layers window, which does manipulation of layers in MapData */
 class Layers
 {
+  /** initalize */
   static init()
   {
     Layers.updateList();
   }
 
-  //onclick for layer visiblity
+  /** onclick event for layer visiblity 
+   * @param {HTMLElement} el
+  */
   static toggleVisibilityClick(el)
   {
     let name = el.parentNode.getAttribute("name");
@@ -15,6 +18,9 @@ class Layers
     Action.executeAction(action);
   }
 
+  /** onclick event for move layer up
+   * @param {HTMLElement} el
+  */
   static moveUp(el)
   {
     let name = el.parentNode.getAttribute("name");
@@ -34,6 +40,9 @@ class Layers
     }
   }
 
+  /** onclick event for move layer down
+   * @param {HTMLElement} el
+  */
   static moveDown(el)
   {
     let name = el.parentNode.getAttribute("name");
@@ -53,6 +62,11 @@ class Layers
     }
   }
 
+  /** returns a valid layerName from a string value
+   * @param {string} val
+   * 
+   * @return {string}
+  */
   static validateLayerName(val)
   {
     //all lowercase alphanumberic and a single underscore for spaces e.g. my_layer
@@ -62,6 +76,9 @@ class Layers
     return val.replace(/\_+/g, "_");
   }
 
+  /** onInput event for layer name input field, it validates the input as it is entered
+   * @param {HTMLElement} el
+   */
   static onInput(el)
   {
     //validate characters on input
@@ -69,6 +86,7 @@ class Layers
     el.value = val;
   }
 
+  /** Update the draw layers DOM */
   static updateList()
   {
     let list = document.getElementById("draw-layers-list");
@@ -102,6 +120,9 @@ class Layers
     }
   }
 
+  /** click event for selecting a layer
+   * @param {HTMLElement} el
+   */
   static layerNameClick(el)
   {
     let name = el.parentNode.getAttribute("name");
@@ -112,7 +133,8 @@ class Layers
     }
   }
 
-  //onclick function
+  /** click event for 'add layer' button
+   */
   static addLayerClick()
   {
     if(States.isProjectLoaded)
@@ -150,6 +172,9 @@ class Layers
     }
   }
 
+  /** Adds a layer by name, must be unique
+   * @param {string} name
+   */
   static addLayer(name)
   {
     name = Layers.validateLayerName(name);
@@ -201,6 +226,9 @@ class Layers
     }
   }
 
+  /** deletes a layer by name
+   * @param {string} name
+   */
   static deleteLayer(name)
   {
     let hasMatch = false;

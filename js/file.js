@@ -1,15 +1,18 @@
-//const {dialog} = require('electron').remote;
 
+/** Saving and loading of files */
 class File
 {
+  /** save project */
   static save()
   {
     if(States.isProjectLoaded)
     {
+      //if new project use saveAs for first save
       if(States.projectFileName.length == 0)
       {
         File.saveAs();
       }
+      //save to same location as the file was loaded from
       else
       {
         File.write(States.projectPath + States.projectFileName);
@@ -17,15 +20,18 @@ class File
     }
   }
 
+  /** save to a new file */
   static saveAs()
   {
     if(States.isProjectLoaded)
     {
+      
       const options = {
         defaultPath: "./",
         filters : [{ name: 'json', extensions: ['json']}]
       }
 
+      //open dialog window to select file name and directory
       dialog.showSaveDialog(null, options, (path) => {
         if(path !== undefined && path.length > 0)
         {
@@ -46,6 +52,10 @@ class File
     }
   }
 
+  /** write MapData to file
+   * 
+   * @param {string} fullPath
+   */
   static write(fullPath)
   {
     var fs = require('fs');
@@ -62,6 +72,8 @@ class File
     }
   }
 
+  /** loads MapData from file using a dialog window
+   */
   static load()
   {
     let options = { 
@@ -86,6 +98,8 @@ class File
             try
             {
               let obj = JSON.parse(dataStr);
+
+              //check version and issue warning if version of app and file are different
               if(obj.version != VERSION)
               {
                 Notification.add("Warning different version", true);

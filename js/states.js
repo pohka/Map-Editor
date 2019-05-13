@@ -1,4 +1,4 @@
-//stores temporary states for UI in the app
+/** stores temporary data for UI in the app */
 var States =
 {
   current :
@@ -55,6 +55,11 @@ var States =
   projectFileName : ""
 };
 
+//e.g. findImgObjBySrc("sample.png") will find image in /res/sample.png
+/** find image object by src, returns null if not found
+  * @param {string} src - path to image relative to the resource folder
+  * @return {Image|null}
+  */
 States.findImgObjBySrc = function(src){
   for(let id in States.imgObjs)
   {
@@ -66,8 +71,10 @@ States.findImgObjBySrc = function(src){
   return null;
 }
 
-//find the image object with the matching path in /res/ folder
-//e.g. findImgObj("sample.png") will find image in /res/sample.png
+/** find image object by texture id, returns null if not found
+ * @param {number} texID - texture id
+ * @return {Image|null}
+ */
 States.findImgObj = function(texID){
   if(texID == null){
     return null;
@@ -84,6 +91,9 @@ States.findImgObj = function(texID){
   }
 }
 
+/** set States.current.tileset
+ * @param {number} texID - texture id
+ */
 States.setTileSet = function(texID)
 {
   States.current.tileset = texID;
@@ -91,6 +101,9 @@ States.setTileSet = function(texID)
   tileSelector.draw();
 }
 
+/** set States.current.tile
+ * @param {number} id - tile ID
+ */
 States.setTileID = function(id)
 {
   if(States.current.tileID > -1)

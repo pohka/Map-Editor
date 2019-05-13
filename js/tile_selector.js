@@ -1,6 +1,9 @@
-
+/** tile selector viewport */
 class TileSelector extends Viewport
 {
+  /**
+   * @param {string} id - DOM id 
+   */
   constructor(id)
   {
     super(id);
@@ -11,6 +14,7 @@ class TileSelector extends Viewport
     this.ruler.useThickLines = false;
   }
 
+  //add input controls for viewport
   addInput()
   {
     let vp = this;
@@ -33,6 +37,7 @@ class TileSelector extends Viewport
     });
   }
 
+  /** clear and draw viewport */
   draw()
   {
     super.clear();
@@ -57,6 +62,7 @@ class TileSelector extends Viewport
     this.drawHUD(camFocus);
   }
 
+  /** center the camera so the texture is justified to the top left */
   centerCam()
   {
     this.camPos.x = -this.camOffset.x;
@@ -64,6 +70,9 @@ class TileSelector extends Viewport
     this.zoom = 1.5;
   }
 
+  /** draw HUD
+   * @param {Vector} camFocus - current focus point of the camera
+   */
   drawHUD(camFocus){
     this.drawTileHighligher(camFocus);
     

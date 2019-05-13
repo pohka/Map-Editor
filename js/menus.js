@@ -1,7 +1,8 @@
 
-//window menus
+/** window menus */
 class Menus
 {
+  /** inital load of the menus */
   static load()
   {
     for(let i=0; i<States.menus.length; i++)
@@ -27,8 +28,17 @@ class Menus
     }
   }
 
+  /** sets the current active menu item and updates the DOM
+   * @param {string} menuID - name of the menu
+   * @param {string} activeName - next active menu item
+   * @param {boolean} [isFirstTime] - set to true if first time setting menu
+   */
   static update(menuID, activeName, isFirstTime)
   {
+    if(isFirstTime === undefined)
+    {
+      isFirstTime = false;
+    }
     let hasFoundMenuID = false;
     for(let i=0; i<States.menus.length && !hasFoundMenuID; i++)
     {
@@ -81,6 +91,10 @@ class Menus
     }
   }
 
+  /** menu item on click event
+  * @param {string} itemName - name of a the menu item
+  * @param {string} menuID - id of the menu the item belongs to
+  */
   static itemClicked(itemName, menuID)
   {
     Menus.update(menuID, itemName, false);

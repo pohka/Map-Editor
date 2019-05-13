@@ -9,10 +9,19 @@ order of coordinate systems:
 
 const {dialog} = require('electron').remote;
 
-let mapViewport, tileSelector;
+/** map viewport
+ * @type MapViewport
+*/
+let mapViewport
 
-const resDir = "res/";
+/** tile selector viewport
+ * @type TileSelector
+*/
+let tileSelector;
 
+/** current version of the app 
+ * @type {string}
+*/
 const VERSION = "0.1";
 
 var CollisionType =
@@ -28,6 +37,7 @@ Object.freeze(CollisionType);
 
 var newProjectModal;
 
+//called when the electron window is loaded
 window.onload = () => {
   disableMiddleBtnScroll();
   mapViewport = new MapViewport("map-viewport");
@@ -36,7 +46,7 @@ window.onload = () => {
   Menus.load();
 }
 
-//disables scrolling when middle mouse button is held down
+/**disables scrolling when middle mouse button is held down*/
 function disableMiddleBtnScroll()
 {
   document.addEventListener("mousedown", function(e){

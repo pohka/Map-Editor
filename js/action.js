@@ -1,6 +1,19 @@
+
+/** stores actions in a stack for undo and redo functionality
+* , all events which change MapData should use an action
+*/
 class Action
 {
-  //creates a new set tile action
+  /**
+   * Creates and returns a new set tile action
+   * @param {Chunk} chunk - chunk being changed
+   * @param {Vector} tilePos - position the tile in the chunk
+   * @param {number} oldTileID - id of the current tile
+   * @param {number} newTileID - id of the next tile
+   * @param {string} layerName - name of layer
+   * 
+   * @return {Object}
+   */
   static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layerName)
   {
     return ({
@@ -15,6 +28,12 @@ class Action
     });
   }
 
+  /**
+   * Creates and returns a new add layer action
+   * @param {string} layerName - name of layer
+   * 
+   * @return {object} - return
+   */
   static newAddLayerAction(layerName)
   {
     return ({
@@ -23,6 +42,14 @@ class Action
     });
   }
 
+  /**
+   * Creates and returns a new move layer action
+   * @param {string} layerName - name of layer
+   * @param {number} prevPos - current draw order position
+   * @param {number} nextPos - next draw order position
+   * 
+   * @return {?}
+   */
   static newMoveLayerAction(layerName, prevPos, nextPos)
   {
     return ({
@@ -33,6 +60,13 @@ class Action
     });
   }
 
+  /**
+   * Creates and returns a new layer visibility action
+   * @param {string} layerName - name of layer
+   * @param {boolean} nextIsVisible - next state of visibility, true = visible
+   * 
+   * @return {Object}
+   */
   static newLayerVisiblilityAction(layerName, nextIsVisible)
   {
     return ({
@@ -42,7 +76,9 @@ class Action
     });
   }
 
-  //undo the last action
+  /**
+   * Undo the last action
+   */
   static undo()
   {
     if(Action.stack.length == 0)
@@ -59,7 +95,9 @@ class Action
     mapViewport.draw();
   }
 
-  //revert the last undo
+  /**
+   * Revert the last undo
+   */
   static redo()
   {
     if(Action.popped.length == 0)
@@ -72,7 +110,13 @@ class Action
     mapViewport.draw();
   }
 
-  //executes an action
+  /**
+   * executes an action
+   * 
+   * @param {Action} a
+   * @param {boolean} [isPoppedAction] - set to true if action has been popped from the stack
+   * 
+   */
   static executeAction(a, isPoppedAction)
   {
     if(a.type == "setTile"){
@@ -110,7 +154,11 @@ class Action
     }
   }
 
-  //executes the reverse of an action
+    /**
+   * executes the reverse of an action
+   * 
+   * @param {Action} a
+   */
   static undoAction(a)
   {
     if(a.type == "setTile"){
@@ -139,10 +187,17 @@ class Action
   }
 }
 
-//maximum number of actions to track
+/** maximum number of actions to track 
+ * @type {number}
+*/
 Action.maxActions = 50;
 
-//list of the recent actions
+/** list of the recent actions 
+ * @type {array}
+*/
 Action.stack = [];
-//tracking popped actions for redo
+
+/** tracking popped actions from Action.stack for redo 
+ * @type {array}
+*/
 Action.popped = [];

@@ -1,6 +1,10 @@
-
+/** Notifications */
 class Notification
 {
+  /** create a new notification
+   * @param {string} text - text content
+   * @param {boolean} [isErr]  - set to true to display error themed notification
+   */
   static add(text, isErr)
   {
     let id = Notification.count;
@@ -30,6 +34,7 @@ class Notification
     Notification.count++;
   }
 
+  /** Updates notification DOM */
   static updateNotificationDOM()
   {
     let parent = document.getElementsByClassName("notification-con")[0];
@@ -51,6 +56,12 @@ class Notification
     }
   }
 }
+
+/** maximum number of notifications */
 Notification.maxNotifications = 5;
+
+/** current notification count */
 Notification.count = 0;
+
+/** current active notifications */
 Notification.list = {};

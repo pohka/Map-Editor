@@ -1,10 +1,16 @@
-//ruler lines for the editor viewport
+/** ruler lines for a viewport */
 class Ruler{
-  constructor(useThickLines )
+  /**
+   * @param {boolean} useThickLines 
+   */
+  constructor(useThickLines)
   {
     this.useThickLines = true;
   }
 
+  /** draw
+   * @param {Viewport} vp
+   */
   draw(vp)
   {
     let camFocus = vp.getWorldFocus();

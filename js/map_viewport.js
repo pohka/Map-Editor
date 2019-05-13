@@ -1,6 +1,9 @@
 
 class MapViewport extends Viewport
 {
+  /**
+   * @param {string} id - DOM id
+   */
   constructor(id)
   {
     super(id);
@@ -8,6 +11,7 @@ class MapViewport extends Viewport
     this.addInput();
   }
 
+  //adds the input controls for this viewport
   addInput()
   {
     let vp = this;
@@ -47,7 +51,11 @@ class MapViewport extends Viewport
     });
   }
 
-  //converts world coordinates to chunk coordinates
+  /**converts world coordinates to chunk coordinates 
+   * @param {number} worldX - x position in world coordinates
+   * @param {number} worldY - y position in world coordinates
+   * @return {Vector}
+  */
   worldCoorToChunkCoor(worldX, worldY)
   {
     return new Vector(
@@ -56,6 +64,7 @@ class MapViewport extends Viewport
     );
   }
 
+  /** clear and draw the viewport */
   draw()
   {
     super.clear();
@@ -72,7 +81,7 @@ class MapViewport extends Viewport
     this.drawHUD();
   }
 
-  //draws all the chunks
+  /** draws all the chunks */
   drawChunks()
   {
     let camFocus = this.getWorldFocus();
@@ -106,6 +115,12 @@ class MapViewport extends Viewport
     }
   }
 
+  /** draws a layer of a chunk
+   * @param {Viewport} vp 
+   * @param {Layer} layer 
+   * @param {number} chunkX 
+   * @param {number} chunkY 
+   */
   drawLayer(vp, layer, chunkX, chunkY)
   {
     let camFocus = this.getWorldFocus();
@@ -157,6 +172,7 @@ class MapViewport extends Viewport
     }
   }
 
+  //unused atm
   //draw collision
   drawCollision()
   {
@@ -171,7 +187,10 @@ class MapViewport extends Viewport
     }
   }
 
-  //returns true if a chunk is within the viewport
+  /** returns true if a chunk is within the viewport 
+   * @param {Chunk} chunk
+   * @return {boolean}
+  */
   isChunkInViewPort(chunk)
   {
     return this.isRectInViewPort(
@@ -181,7 +200,7 @@ class MapViewport extends Viewport
     );
   }
 
-  //draws the chunk position text
+  /** draws the chunk position text */
   drawChunkPositions()
   {
     let camFocus = this.getWorldFocus();
@@ -210,6 +229,7 @@ class MapViewport extends Viewport
     }
   }
 
+  /** draws the HUD for the viewport */
   drawHUD()
   {
     //cursor tile highlighter

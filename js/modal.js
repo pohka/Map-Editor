@@ -1,11 +1,17 @@
 
 class Modal
 {
+  /**
+   *  @param {string} id - DOM id
+   */
   constructor(id)
   {
     this.id = id;
   }
 
+  /** toggle visiblity of modal
+   * @param {boolean} nextIsVisible - next isVisible state 
+   */
   toggle(nextIsVisible)
   {
     let modal = document.getElementById(this.id);
@@ -30,6 +36,9 @@ class Modal
     }
   }
 
+  /** set path on click event
+   *  @param {HTMLElement} el
+   */
   static setPath(el)
   {
     let options = {

@@ -1,6 +1,7 @@
-
+/** loading and creation of a project */
 class Project
 {
+  /** Creates a new project */
   static createNew()
   {
     let projectPath = document.querySelector("#new-project-set-path").value;
@@ -34,17 +35,22 @@ class Project
       Project.addEmptyChunk(0, 0);
 
       Layers.init();
-      newProjectModal.toggle(false);
+      newProjectModal.toggle(false); //hide modal
       Project.set(projectPath, false);
     }
   }
 
+  /** updates project name in DOM */
   static updateProjectName()
   {
     let projectNameEl = document.getElementById("project-name-text");
     projectNameEl.textContent = States.projectFileName;
   }
 
+  /** loads a new/existing project, also resets States
+   * @param {string} path - full path to a file or directory
+   * @param {boolean} [isFile] - set to true if the path is a file and not a directory, default=false
+   */
   //path is project path, isFile = false if path is a directory
   static set(path, isFile)
   {
@@ -155,6 +161,10 @@ class Project
     });
   }
 
+  /** creates an empty chunk in MapData at chunk coordinate x, y
+   * @param {number} x - x position in chunk coordinates
+   * @param {number} y - y position in chunk coordinates
+   */
   static addEmptyChunk(x, y)
   {
     let chunk = {
@@ -187,6 +197,9 @@ class Project
   }
 
 
+  /** Generates tiles from a texture ID
+   * @param {number} textureID 
+   */
   static generateTiles(textureID)
   {
     let img = States.findImgObj(textureID);
@@ -208,7 +221,10 @@ class Project
     }
   }
 
-  //convert a fullPath to a file to the resource path
+  /** converts a fullPath to a file relative to the resources folder, returns undefined if invalid path
+    *  @param {string} fullPath
+    * @return {string|undefined}
+    */
   static fullPathToResPath(fullPath)
   {
     let els = fullPath.replace(/\\/g, "/").split("/"+Explorer.resFolder);
@@ -218,7 +234,11 @@ class Project
     }
   }
 
-  //finds all the files in a directory
+  /** finds all the files in a directory
+   * @param {string} dir - directory
+   * @param {function} done - callback function on completed
+   * @param {array} params - result
+   */
   static walk(dir, done, params) 
   {
     var fs = require('fs');
@@ -257,6 +277,9 @@ class Project
     });
   }
 
+  /** loads all the images in the directory from States.projectPath 
+   * @param {function} onCompleteCallback - callback on completed load
+   */
   static loadImages(onCompleteCallback)
   {
     Project.walk(States.projectPath, function(err, files){

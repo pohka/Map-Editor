@@ -1,19 +1,31 @@
-
+/** Project file explorer window */ 
 class Explorer
 {
+  /**
+   * Sets the current directroy to the root of the project i.e. resources folder
+   */
   static setRoot()
   {
     Explorer.currentDir = "";
     Explorer.set();
   }
 
-
+  /**
+   * Change directory to the next folder
+   * 
+   * @param {string} folderName - name of the folder
+   */
   static nextDir(folderName)
   {
     Explorer.currentDir += folderName + "/";
     Explorer.set();
   }
 
+  /**
+   * Change directory to the previous folder
+   * 
+   * @param {string} folderName - name of the folder
+   */
   static prevDir()
   {
     if(Explorer.currentDir.length == 0)
@@ -46,7 +58,7 @@ class Explorer
 
   }
 
-  //set folder once changed
+  /** Updates the explorer states and DOM based on Explorer.currentDir */
   static set()
   {
     let rootDOM = document.getElementById("file-system");
@@ -55,7 +67,6 @@ class Explorer
       rootDOM.removeChild(rootDOM.firstChild);
     }
 
-    //let dir = "./projects/" + MapData.project_name + "/" + Explorer.resFolder + Explorer.currentDir;
     let dir = States.projectPath + Explorer.resFolder + Explorer.currentDir;
  
     Explorer.items = [];
@@ -98,7 +109,7 @@ class Explorer
     });
   }
 
-  //sort items
+  /** sort items by type and then by name*/
   static sortItems()
   {
     //bubble sort
@@ -121,6 +132,7 @@ class Explorer
     }
   }
 
+  /** updates the DOM for the explorer */
   static updateDOM()
   {
     //clear dom
@@ -181,26 +193,35 @@ class Explorer
     }
   }
 
-  //returns true if string ends in .png, .jpg or .jpeg
+  /** returns true if string ends in .png, .jpg or .jpeg */
   static isImage(path)
   {
     return path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg");
   }
 }
 
+/** enum types for items in directory */
 Explorer.type =
 {
   folder : 0,
   image : 1,
   file : 2
 };
-// Explorer.type.folder = 0;
-// Explorer.type.image = 1;
-// Explorer.type.file = 2;
 
 
+/** resources folder 
+ * @type {string}
+*/
 Explorer.resFolder = "res/";
-Explorer.currentDir = ""; //directory of the explorer that is appened to States.projectPath + "res/"
+
+/** directory of the explorer that is appended the resources folder 
+ * @type {string}
+*/
+Explorer.currentDir = ""; 
+
+/** data for items in directory 
+ * @type {array}
+*/
 Explorer.items = [
   // {
   //   type : "folder",

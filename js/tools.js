@@ -1,8 +1,13 @@
-//functionality for tools
+/** functionality for tools */
 class Tools
 {
-  //sets the tileID at the cursor position
-  //returns true if the tile was found
+  /** sets the tileID at the cursor position, returns true if the tile was found
+   * @param {MouseEvent} evt - mouse event
+   * @param {Viewport} vp - viewport
+   * @param {number} tileID - tile id
+   * 
+   * @return {boolean}
+   */
   static setTileAtCursor(evt, vp, tileID)
   {
     let mousePos = vp.getCursorWorldPos(evt.clientX, evt.clientY);
@@ -32,7 +37,12 @@ class Tools
     return false;
   }
 
-  //gets the world position of the tile at the cursor position
+  /** returns top left corner of the tile world position from a picking position (x,y)
+   * 
+   * @param {Viewport} vp - viewport
+   * @param {number} x - x picking position in world coordinates
+   * @param {number} y - y picking position in world coordinates
+  */
   static getTileWorldPosAtCursor(vp, x, y)
   {
     let mousePos = vp.getCursorWorldPos(x, y);
@@ -62,6 +72,9 @@ class Tools
     return null;
   }
 
+  /** change the current tool
+   * @param {string} name 
+   */
   static selectTool(name)
   {
     //no nothing if re-selecting the same tool
@@ -91,4 +104,5 @@ class Tools
   }
 }
 
+/** size of the brush */
 Tools.brushSize = 1;
