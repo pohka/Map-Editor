@@ -18,6 +18,13 @@ class Project
     }
     else
     {
+      MapData.chunks = [];
+      MapData.tiles = [];
+      MapData.tilesets = [];
+      MapData.textures = [];
+      MapData.draw_layers = [];
+      MapData.texture_count = 0;
+      MapData.tile_count = 0;
       MapData.chunk_size = parseInt(chunkSize);
       MapData.tile_size = parseInt(tileSize);
       MapData.chunk_total_size = MapData.chunk_size * MapData.tile_size;
