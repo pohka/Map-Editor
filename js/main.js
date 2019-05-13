@@ -26,10 +26,13 @@ var CollisionType =
 };
 Object.freeze(CollisionType);
 
+var newProjectModal;
+
 window.onload = () => {
   disableMiddleBtnScroll();
   mapViewport = new MapViewport("map-viewport");
   tileSelector = new TileSelector("tile-selector");
+  newProjectModal = new Modal("new-project-modal");
   Menus.load();
 }
 
@@ -44,44 +47,3 @@ function disableMiddleBtnScroll()
     }
   });
 }
-
-function toggleModal(sel, hide)
-{
-  let modal = document.querySelector(sel);
-
-  if(hide !== undefined){
-    if(!hide){
-      modal.style.display = "block";
-    }
-    else{
-      modal.style.display = "none";
-    }
-  }
-  else if (modal.style.display == ""  || modal.style.display === "none" ) {
-        modal.style.display = "block";
-  }
-  else {
-      modal.style.display = "none";
-  }
-}
-
-
-function modalSetPath(el)
-{
-  let options = {
-    properties: ['openDirectory']
-  };
-
-  dialog.showOpenDialog(
-    options, (result) => {
-      if(
-        result !== undefined && result.length > 0 && 
-        result[0] !== undefined && result[0].length > 0
-        )
-      {
-        let path = result[0].replace(/\\/g,"/");
-        el.value = path;
-      }
-  });
-}
-

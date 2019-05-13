@@ -26,7 +26,7 @@ class Project
       Project.addEmptyChunk(0, 0);
 
       Layers.init();
-      toggleModal('.new-project-modal', true);
+      newProjectModal.toggle(false);
       Project.set(projectPath, false);
     }
   }
