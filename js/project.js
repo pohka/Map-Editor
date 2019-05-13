@@ -18,6 +18,7 @@ class Project
     }
     else
     {
+      //reset map data
       MapData.chunks = [];
       MapData.tiles = [];
       MapData.tilesets = [];
@@ -51,6 +52,8 @@ class Project
       }
     }
 
+    let projectNameEl = document.getElementById("project-name-text");
+
     //if path is a file
     if(isFile !== undefined && isFile)
     {
@@ -58,12 +61,14 @@ class Project
       let els = path.replace(/\\/g, "/").split("/");
       States.projectFileName = els.pop();
       States.projectPath = els.join("/") + "/";
+      projectNameEl.textContent = States.projectFileName;
     }
-    //if path is a directory
+    //if path is a directory i.e. a new project
     else
     {
       States.projectFileName = "";
       States.projectPath = path + "/";
+      projectNameEl.textContent = "unsaved project";
     }
 
     //delete old layers and set all new layers visible

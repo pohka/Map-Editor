@@ -1,4 +1,4 @@
--load from 1 function (new and load)
+
 -display loaded file name on top bar
 -save to same file if States.projectFileName is set
 -save as opens dialog and ignores current States.projectFileNmae value
