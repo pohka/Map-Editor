@@ -64,7 +64,7 @@ class File
               }
               States.isProjectLoaded = false;
               MapData = obj;
-              States.setFromLoad(path, true);
+              Project.set(path, true);
             }
             catch(err)
             {

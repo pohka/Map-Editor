@@ -5,6 +5,7 @@
 -tidy up some global functions from states.js and main.js
 -add jsDoc comments for project
 
+-refresh images when file has been added to directory
 -navigation mesh layer
 -markers (point in space)
 -objects
