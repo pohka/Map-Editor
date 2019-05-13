@@ -40,7 +40,7 @@ class Project
     {
       if(States.menus[i].starting != States.menus[i].active)
       {
-        States.updateMenu(States.menus[i].id, States.menus[i].starting, false);
+        Menus.update(States.menus[i].id, States.menus[i].starting, false);
       }
     }
 

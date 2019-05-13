@@ -30,7 +30,7 @@ window.onload = () => {
   disableMiddleBtnScroll();
   mapViewport = new MapViewport("map-viewport");
   tileSelector = new TileSelector("tile-selector");
-  States.loadMenus();
+  Menus.load();
 }
 
 //disables scrolling when middle mouse button is held down
@@ -84,31 +84,4 @@ function modalSetPath(el)
       }
   });
 }
-
-
-// //finds all the files in a directory
-// var walk = function(dir, done, params) {
-//   var fs = require('fs');
-//   var path = require('path');
-//   var results = [];
-//   fs.readdir(dir, function(err, list) {
-//     if (err) return done(err);
-//     var pending = list.length;
-//     if (!pending) return done(null, results, params);
-//     list.forEach(function(file) {
-//       file = path.resolve(dir, file);
-//       fs.stat(file, function(err, stat) {
-//         if (stat && stat.isDirectory()) {
-//           walk(file, function(err, res) {
-//             results = results.concat(res);
-//             if (!--pending) done(null, results, params);
-//           });
-//         } else {
-//           results.push(file);
-//           if (!--pending) done(null, results, params);
-//         }
-//       });
-//     });
-//   });
-// };
 
