@@ -55,14 +55,7 @@ class Project
   static set(path, isFile)
   {
     //reset States
-    //menus
-    for(let i=0; i<States.menus.length; i++)
-    {
-      if(States.menus[i].starting != States.menus[i].active)
-      {
-        Menus.update(States.menus[i].id, States.menus[i].starting, false);
-      }
-    }
+    Menus.resetAll();
 
     let projectNameEl = document.getElementById("project-name-text");
 

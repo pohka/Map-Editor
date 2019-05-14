@@ -1,5 +1,4 @@
 
--add jsDoc comments for project
 -css seperate files
 
 -refresh images when file has been added to directory

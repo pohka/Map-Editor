@@ -24,25 +24,51 @@ var States =
   [
     {
       id : "menu-left",
-      active : "explorer",
-      starting : "explorer"
+      active : "",
+      options : [
+        {
+          name : "explorer",
+          text : "Explorer"
+        }
+      ]
     },
     {
       id : "menu-middle",
-      active : "map",
-      starting : "map"
+      active : "",
+      options : [
+        {
+          name : "map",
+          text : "Map"
+        },
+        {
+          name : "tile-editor",
+          text : "Tile Editor"
+        },
+        {
+          name : "prefab",
+          text : "Prefab"
+        }
+      ]
     },
     {
-      
       id : "menu-right",
-      active : "tile-selector",
-      starting : "tile-selector"
+      active : "",
+      options : [
+        {
+          name : "palette",
+          text : "Palette"
+        }
+      ]
     },
     {
-      
       id : "menu-right-bottom",
-      active : "draw-layers",
-      starting : "draw-layers"
+      active : "",
+      options : [
+        {
+          name : "layers",
+          text : "Layers"
+        }
+      ]
     }
   ],
 
