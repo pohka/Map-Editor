@@ -56,14 +56,15 @@
         <div class="menu section-menu" id="menu-left">
         </div>
         <div class="section-con section-con-left">
-          <div class="file-system-dir">
-            <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
-            
+          <div class="window window-explorer" id="window-explorer">
+            <div class="file-system-dir">
+              <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
+              </div>
+              <div id="file-system-dir-val">/res/</div>
             </div>
-            <div id="file-system-dir-val">/res/</div>
+            <!--file explorer content-->
+            <div class="file-system" id="file-system"></div>
           </div>
-          <!--file explorer content-->
-          <div class="file-system" id="file-system"></div>
         </div>
       </div>
 
@@ -72,25 +73,29 @@
         <div class="menu section-menu" id="menu-middle">
         </div>
         <div class="section-con section-con-middle">
-            <div class="canvas-col">
-              <canvas id="map-viewport"></canvas>
+            <div class="window window-map" id="window-map">
+              <div class="canvas-col">
+                <canvas id="map-viewport"></canvas>
+              </div>
+              <div class="tools-col">
+                <div class="tile-tools-con" id="tools">
+                    <div class="tile-tools-item btn fas fa-paint-brush"
+                      active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-eraser"
+                      tool-name="eraser"  onclick="Tools.selectTool('eraser');">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-undo"
+                      alt="undo" onclick="Action.undo()">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-redo"
+                      alt="redo" onclick="Action.redo()">
+                    </div>
+                  </div>
+              </div>
             </div>
-            <div class="tools-col">
-              <div class="tile-tools-con" id="tools">
-                  <div class="tile-tools-item btn fas fa-paint-brush"
-                    active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
-                  </div>
-                  <div class="tile-tools-item btn fas fa-eraser"
-                    tool-name="eraser"  onclick="Tools.selectTool('eraser');">
-                  </div>
-                  <div class="tile-tools-item btn fas fa-undo"
-                    alt="undo" onclick="Action.undo()">
-                  </div>
-                  <div class="tile-tools-item btn fas fa-redo"
-                    alt="redo" onclick="Action.redo()">
-                  </div>
-                </div>
-            </div>
+            <div class="window-tile-nav" id="window-tile-nav"></div>
+            <div class="window-prefab" id="window-prefab"></div>
         </div>
       </div>
       <!--right section-->
@@ -98,20 +103,24 @@
           <div class="menu section-menu" id="menu-right">
             </div>
           <div class="section-con section-con-right">
-            <div>
-              <canvas id="tile-selector"></canvas>
-            </div>
+            <div class="window window-tile-palette" id = "window-tile-palette">
+              <div class="window-layers" id="window-layers">
+                <div>
+                  <canvas id="tile-selector"></canvas>
+                </div>
 
-            <div class="menu section-menu" id="menu-right-bottom">
+                <div class="menu section-menu" id="menu-right-bottom"></div>
+                <div class="window window-layers" id="window-layers">
+                  <div class="draw-layers-toolbar">
+                    <div class="btn" onclick="Layers.addLayerClick()">Add Layer <i class="fas fa-plus"></i></div>
+                    <input type="text" id="add-layer-input" placeholder="layer_name" oninput="Layers.onInput(this)"/>
+                  </div>
+                  <ul class="draw-layers-list" id="draw-layers-list">
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="draw-layers-toolbar">
-              <div class="btn" onclick="Layers.addLayerClick()">Add Layer <i class="fas fa-plus"></i></div>
-              <input type="text" id="add-layer-input" placeholder="layer_name" oninput="Layers.onInput(this)"/>
-            </div>
-            <ul class="draw-layers-list" id="draw-layers-list">
-            </ul>
           </div>
-          
       </div>
     </div>
 

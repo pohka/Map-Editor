@@ -214,11 +214,6 @@ body
 
 .section-con-middle
 {
-  overflow-y: hidden;
-  display: grid;
-  grid-template-columns: auto 40px;
-  grid-row-gap: 0px;
-  grid-column-gap: 0px;
   padding-bottom: 0px;
 }
 
@@ -573,4 +568,25 @@ input[type="submit"]:hover
 {
   flex-basis: fit-content;
   width: 100%;
+}
+
+.window[active="false"]
+{
+  display: none;
+}
+
+.window[active="true"]
+{
+  display: block;
+}
+
+.window-map
+{
+  overflow-y: hidden;
+  display: grid;
+  grid-template-columns: auto 40px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
+  padding-bottom: 0px;
+  height: 100%;
 }

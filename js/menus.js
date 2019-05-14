@@ -7,17 +7,19 @@ class Menus
   {
     for(let a=0; a<States.menus.length; a++)
     {
+      States.menus[a].active = States.menus[a].options[0].name;
       let menuID = States.menus[a].id;
       let menuDOM = document.getElementById(menuID);
       
-      for(let b=0; b< States.menus[a].options.length; b++)
+      for(let b=0; b<States.menus[a].options.length; b++)
       {
         let option = States.menus[a].options[b];
         let active = "";
         if(b == 0)
         {
-          States.menus[a].options.active = option.name;
           active  = " active='true' ";
+          let windowEl = document.getElementById(States.menus[a].options[b].id);
+          windowEl.setAttribute("active", true);
         }
         else
         {
@@ -61,6 +63,12 @@ class Menus
               console.log("no menu items found for menuID:", States.menus[i].id);
             }
 
+            let curOption = Menus.getOption(menuID, States.menus[i].active);
+            if(curOption != null)
+            {
+              let windowEl = document.getElementById(curOption.id);
+              windowEl.setAttribute("active", false);
+            }
             States.menus[i].active = nextActiveName;
 
             //set attribute for menu items, only 1 per menu can be active
@@ -68,24 +76,50 @@ class Menus
             let isFound = false;
             for(let a=0; a<menuItems.length; a++)
             {
-              if(isFound)
+              let isMatchingName = (menuItems[a].getAttribute("name") == States.menus[i].active);
+              let isActive = !isFound && isMatchingName;
+              
+              if(isActive)
               {
-                menuItems[a].setAttribute("active", false);
+                isFound = true;
               }
-              else
+
+              menuItems[a].setAttribute("active", isActive);
+            }
+
+            //update windows
+            for(let a=0; a<States.menus[i].options.length; a++)
+            {
+              let windowEl = document.getElementById(States.menus[i].options[a].id);
+              if(windowEl != null)
               {
-                let hasMatchingName = (menuItems[a].getAttribute("name") == States.menus[i].active);
-                menuItems[a].setAttribute("active", !isFound && hasMatchingName);
-                if(!isFound && hasMatchingName)
-                {
-                  isFound = true;
-                }
+                let isActive = (States.menus[i].options[a].name == States.menus[i].active);
+                windowEl.setAttribute("active",  isActive);
               }
             }
           }
         }
       }
     }
+  }
+
+  static getOption(menuID, optionName)
+  {
+    for(let a=0; a<States.menus.length; a++)
+    {
+      if(States.menus[a].id == menuID)
+      {
+        for(let b=0; b<States.menus[a].options.length; b++)
+        {
+          if(States.menus[a].options[b].name == optionName)
+          {
+            return States.menus[a].options[b];
+          }
+        }
+      }
+    }
+
+    return null;
   }
 
   /** menu item on click event

@@ -28,7 +28,8 @@ var States =
       options : [
         {
           name : "explorer",
-          text : "Explorer"
+          text : "Explorer",
+          id : "window-explorer"
         }
       ]
     },
@@ -38,15 +39,18 @@ var States =
       options : [
         {
           name : "map",
-          text : "Map"
+          text : "Map",
+          id : "window-map" //domID
         },
         {
-          name : "tile-editor",
-          text : "Tile Editor"
+          name : "tile-nav",
+          text : "Tile Nav",
+          id : "window-tile-nav"
         },
         {
           name : "prefab",
-          text : "Prefab"
+          text : "Prefab",
+          id : "window-prefab"
         }
       ]
     },
@@ -55,8 +59,9 @@ var States =
       active : "",
       options : [
         {
-          name : "palette",
-          text : "Palette"
+          name : "tile-palette",
+          text : "Tile Palette",
+          id : "window-tile-palette"
         }
       ]
     },
@@ -66,7 +71,8 @@ var States =
       options : [
         {
           name : "layers",
-          text : "Layers"
+          text : "Layers",
+          id : "window-layers"
         }
       ]
     }
