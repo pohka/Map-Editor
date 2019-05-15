@@ -1,5 +1,5 @@
 /** tile selector viewport */
-class TileSelector extends Viewport
+class TilePaletteViewport extends Viewport
 {
   /**
    * @param {string} id - DOM id 

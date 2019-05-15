@@ -34,7 +34,7 @@ var newProjectModal;
 window.onload = () => {
   disableMiddleBtnScroll();
   viewports["map"] = new MapViewport("map-viewport");
-  viewports["tilePalette"] = new TileSelector("tile-palette");
+  viewports["tilePalette"] = new TilePaletteViewport("tile-palette");
   viewports["tileNav"] = new TileNavViewport("tile-nav-viewport");
   
   newProjectModal = new Modal("new-project-modal");
