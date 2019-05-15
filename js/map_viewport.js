@@ -67,23 +67,27 @@ class MapViewport extends Viewport
   /** clear and draw the viewport */
   draw()
   {
-    super.clear();
-    this.drawChunks();
-    if(States.isCollisionVisible)
+    if(this.isActive)
     {
-      this.drawCollision();
+      super.clear();
+      this.drawChunks();
+      if(States.isCollisionVisible)
+      {
+        this.drawCollision();
+      }
+      if(States.isRulersVisible)
+      {
+        this.ruler.draw(this);
+        this.drawChunkPositions();
+      }
+      this.drawHUD();
     }
-    if(States.isRulersVisible)
-    {
-      this.ruler.draw(this);
-      this.drawChunkPositions();
-    }
-    this.drawHUD();
   }
 
   /** draws all the chunks */
   drawChunks()
   {
+    let vp = this;
     let camFocus = this.getWorldFocus();
     let visibleChunkIndexes = [];
 
@@ -108,7 +112,7 @@ class MapViewport extends Viewport
           let layer = MapQuery.getChunkLayerByName(chunk, layerName);
           if(layer != null)
           {
-            this.drawLayer(mapViewport, layer, chunk.x, chunk.y);
+            this.drawLayer(layer, chunk.x, chunk.y);
           }
         }
       }
@@ -116,13 +120,13 @@ class MapViewport extends Viewport
   }
 
   /** draws a layer of a chunk
-   * @param {Viewport} vp 
    * @param {Layer} layer 
    * @param {number} chunkX 
    * @param {number} chunkY 
    */
-  drawLayer(vp, layer, chunkX, chunkY)
+  drawLayer(layer, chunkX, chunkY)
   {
+    let vp = this;
     let camFocus = this.getWorldFocus();
     let chunkOffset = new Vector(
       chunkX * MapData.chunk_size,

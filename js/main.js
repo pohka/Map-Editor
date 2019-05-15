@@ -9,15 +9,8 @@ order of coordinate systems:
 
 const {dialog} = require('electron').remote;
 
-/** map viewport
- * @type MapViewport
-*/
-let mapViewport
-
-/** tile selector viewport
- * @type TileSelector
-*/
-let tileSelector;
+//all the existing viewports
+let viewports = {}
 
 /** current version of the app 
  * @type {string}
@@ -40,8 +33,10 @@ var newProjectModal;
 //called when the electron window is loaded
 window.onload = () => {
   disableMiddleBtnScroll();
-  mapViewport = new MapViewport("map-viewport");
-  tileSelector = new TileSelector("tile-selector");
+  viewports["map"] = new MapViewport("map-viewport");
+  viewports["tilePalette"] = new TileSelector("tile-palette");
+  viewports["tileNav"] = new TileNavViewport("tile-nav-viewport");
+  
   newProjectModal = new Modal("new-project-modal");
   Menus.load();
 }

@@ -92,7 +92,7 @@ class Action
 
     Notification.add("Undo: " + lastAction.type);
 
-    mapViewport.draw();
+    viewports["map"].draw();
   }
 
   /**
@@ -107,7 +107,7 @@ class Action
     let lastUndo = Action.popped.pop();
     Action.executeAction(lastUndo, true);
     Notification.add("Redo: " + lastUndo.type);
-    mapViewport.draw();
+    viewports.map.draw();
   }
 
   /**
@@ -130,13 +130,13 @@ class Action
       MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
       MapData.draw_layers[a.nextPos] = temp;
       Layers.updateList();
-      mapViewport.draw();
+      viewports.map.draw();
     }
     else if(a.type == "layerVisiblity")
     {
       States.visibleLayers[a.layerName] = a.nextIsVisible;
       Layers.updateList();
-      mapViewport.draw();
+      viewports.map.draw();
     }
     else if(a.type == "addLayer")
     {
@@ -172,13 +172,13 @@ class Action
       MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
       MapData.draw_layers[a.nextPos] = temp;
       Layers.updateList();
-      mapViewport.draw();
+      viewports.map.draw();
     }
     else if(a.type == "layerVisiblity")
     {
       States.visibleLayers[a.layerName] = !a.nextIsVisible;
       Layers.updateList();
-      mapViewport.draw();
+      viewports.map.draw();
     }
     else if(a.type == "addLayer")
     {

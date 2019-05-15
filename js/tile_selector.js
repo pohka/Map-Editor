@@ -40,26 +40,29 @@ class TileSelector extends Viewport
   /** clear and draw viewport */
   draw()
   {
-    super.clear();
-    let camFocus = this.getWorldFocus();
-
-    if(States.current.tileset > -1)
+    if(this.isActive)
     {
-      let texture = MapQuery.findTextureByID(States.current.tileset);
-      let path = States.projectPath + Explorer.resFolder + texture.src;
-      let img = States.findImgObjBySrc(path);
-      if(img != null)
+      super.clear();
+      let camFocus = this.getWorldFocus();
+
+      if(States.current.tileset > -1)
       {
-        this.ctx.drawImage(img, camFocus.x, camFocus.y);
+        let texture = MapQuery.findTextureByID(States.current.tileset);
+        let path = States.projectPath + Explorer.resFolder + texture.src;
+        let img = States.findImgObjBySrc(path);
+        if(img != null)
+        {
+          this.ctx.drawImage(img, camFocus.x, camFocus.y);
+        }
       }
-    }
 
-    if(States.isRulersVisible)
-    {
-      this.ruler.draw(this);
-    }
+      if(States.isRulersVisible)
+      {
+        this.ruler.draw(this);
+      }
 
-    this.drawHUD(camFocus);
+      this.drawHUD(camFocus);
+    }
   }
 
   /** center the camera so the texture is justified to the top left */

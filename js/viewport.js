@@ -33,8 +33,19 @@ class Viewport
     this.zoomMin = 0.5;
     this.zoomRate = 0.5;
     this.addCameraInput();
+    this.isActive = false;
 
     this.clear();
+  }
+
+  setIsActive(val)
+  {
+    this.isActive = val;
+  }
+
+  getIsActive()
+  {
+    return this.isActive;
   }
 
   /** converts viewport coordinates to world coordinates 

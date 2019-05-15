@@ -15,16 +15,18 @@ class Menus
       {
         let option = States.menus[a].options[b];
         let active = "";
-        if(b == 0)
+        let windowEl = document.getElementById(States.menus[a].options[b].id);
+
+        let isActive = (b == 0);
+        active  = " active='" + isActive + "' ";
+        windowEl.setAttribute("active", isActive);
+
+        //set state in viewport
+        if(option.viewport !== undefined)
         {
-          active  = " active='true' ";
-          let windowEl = document.getElementById(States.menus[a].options[b].id);
-          windowEl.setAttribute("active", true);
+          viewports[option.viewport].setIsActive(isActive);
         }
-        else
-        {
-          active = " active='false' ";
-        }
+
         menuDOM.innerHTML += "<div class=\"menu-item\" name=\"" + option.name + "\"" +
           active + 
           "onclick=\"Menus.itemClicked('"+option.name+"','"+menuID+"')\">" + 
@@ -68,6 +70,13 @@ class Menus
             {
               let windowEl = document.getElementById(curOption.id);
               windowEl.setAttribute("active", false);
+
+              //update state in viewport
+              if(curOption.viewport !== undefined)
+              {
+                let key = curOption.viewport;
+                viewports[key].setIsActive(false);
+              }
             }
             States.menus[i].active = nextActiveName;
 
@@ -90,11 +99,19 @@ class Menus
             //update windows
             for(let a=0; a<States.menus[i].options.length; a++)
             {
+              let isActive = (States.menus[i].options[a].name == States.menus[i].active);
+
               let windowEl = document.getElementById(States.menus[i].options[a].id);
               if(windowEl != null)
               {
-                let isActive = (States.menus[i].options[a].name == States.menus[i].active);
                 windowEl.setAttribute("active",  isActive);
+              }
+
+              //update state in viewport
+              if(States.menus[i].options[a].viewport !== undefined)
+              {
+                let key = States.menus[i].options[a].viewport;
+                viewports[key].setIsActive(isActive);
               }
             }
           }

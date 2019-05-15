@@ -138,8 +138,8 @@ class Project
         States.current.tileset = -1;
       }
 
-      mapViewport.draw();
-      tileSelector.draw();
+      viewports.map.draw();
+      viewports.tilePalette.draw();
       Layers.updateList();
       States.isProjectLoaded = true;
       

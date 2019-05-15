@@ -215,6 +215,7 @@ body
 .section-con-middle
 {
   padding-bottom: 0px;
+  overflow-y: hidden;
 }
 
 
@@ -360,7 +361,7 @@ input[type="submit"]:hover
 }
 
 
-#tile-selector
+#tile-palette
 {
   padding: 6px 6px;
   height: 450px;
@@ -578,6 +579,11 @@ input[type="submit"]:hover
 .window[active="true"]
 {
   display: block;
+}
+
+.window-map[active="true"]
+{
+  display: grid;
 }
 
 .window-map

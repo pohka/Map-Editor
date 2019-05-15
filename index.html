@@ -94,7 +94,11 @@
                   </div>
               </div>
             </div>
-            <div class="window-tile-nav" id="window-tile-nav"></div>
+            <div class="window window-tile-nav" id="window-tile-nav">
+              <div class="canvas-col">
+                  <canvas id="tile-nav-viewport"></canvas>
+                </div>
+            </div>
             <div class="window-prefab" id="window-prefab"></div>
         </div>
       </div>
@@ -106,7 +110,7 @@
             <div class="window window-tile-palette" id = "window-tile-palette">
               <div class="window-layers" id="window-layers">
                 <div>
-                  <canvas id="tile-selector"></canvas>
+                  <canvas id="tile-palette"></canvas>
                 </div>
 
                 <div class="menu section-menu" id="menu-right-bottom"></div>
@@ -176,4 +180,5 @@
   <script src="./js/project.js"></script>
   <script src="./js/menus.js"></script>
   <script src="./js/modal.js"></script>
+  <script src="./js/tile_nav_viewport.js"></script>
 </html>

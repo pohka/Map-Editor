@@ -40,12 +40,14 @@ var States =
         {
           name : "map",
           text : "Map",
-          id : "window-map" //domID
+          id : "window-map", //domID
+          viewport : "map" //key name of the viewport
         },
         {
           name : "tile-nav",
           text : "Tile Nav",
-          id : "window-tile-nav"
+          id : "window-tile-nav",
+          viewport : "tileNav" 
         },
         {
           name : "prefab",
@@ -61,7 +63,8 @@ var States =
         {
           name : "tile-palette",
           text : "Tile Palette",
-          id : "window-tile-palette"
+          id : "window-tile-palette",
+          viewport : "tilePalette"
         }
       ]
     },
@@ -129,8 +132,8 @@ States.findImgObj = function(texID){
 States.setTileSet = function(texID)
 {
   States.current.tileset = texID;
-  tileSelector.centerCam();
-  tileSelector.draw();
+  viewports.tilePalette.centerCam();
+  viewports.tilePalette.draw();
 }
 
 /** set States.current.tile
