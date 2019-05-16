@@ -1,16 +1,29 @@
 
-class Viewport{
-  constructor(id, width, height){
+/** Canvas viewport and camera */
+class Viewport
+{
+  /**
+   *  @param {string} id - DOM id
+   */
+  constructor(id)
+  {
     this.canvas = document.getElementById(id);
-    this.width = width;
-    this.height = height;
-    this.canvas.width = width;
-    this.canvas.height = height;
+    if(this.canvas == null)
+    {
+      console.log("Canvas element not found: " + id);
+    }
+    let computedStyle = window.getComputedStyle(this.canvas);
+    this.width = parseInt(computedStyle.width);
+    this.height = parseInt(computedStyle.height);
+
+    //set canvas size based on computed style
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+
     this.ctx = this.canvas.getContext("2d");
-    this.zoom = 1;
+    this.zoom = 1.5;
     this.ruler = new Ruler();
     this.fillStyle = "#777";
-
     //used for input
     this.camPos = new Vector(0,0);
     this.isPanning = false;
@@ -20,21 +33,50 @@ class Viewport{
     this.zoomMin = 0.5;
     this.zoomRate = 0.5;
     this.addCameraInput();
+    this.isActive = false;
+
+    this.clear();
   }
 
-  //converts viewport coordinates to world coordinates
-  VPCoorToWorldCoor(x,y){
+  setIsActive(val)
+  {
+    this.isActive = val;
+  }
+
+  getIsActive()
+  {
+    return this.isActive;
+  }
+
+  /** converts viewport coordinates to world coordinates 
+   * @param {number} x - x in viewport coordinates
+   * @param {number} y - y in viewport coordinates
+   * @return {Vector} - world coordinates
+  */
+  VPCoorToWorldCoor(x,y)
+  {
     return new Vector(x / this.zoom, y / this.zoom);
   }
 
-  //returns the focus point of the viewport in world coordinates
-  getWorldFocus(){
+  /** returns the focus point of the viewport in world coordinates
+   * @return {Vector}
+  */
+  getWorldFocus()
+  {
     let camOffset = this.VPCoorToWorldCoor(this.width/2, this.height/2);
-    return new Vector(this.camPos.x + camOffset.x, this.camPos.y + camOffset.y);
+    return new Vector(
+      this.camPos.x + camOffset.x,
+      this.camPos.y + camOffset.y
+    );
   }
 
-  //returns the cursors world position
-  getCursorWorldPos(cursorX, cursorY){
+  /** returns the cursors world position
+   * @param {number} cursorX
+   * @param {number} cursorY
+   * @return {Vector}
+   */
+  getCursorWorldPos(cursorX, cursorY)
+  {
     let rect = this.canvas.getBoundingClientRect();
     let cursorViewportPos = new Vector(
         cursorX - rect.left,
@@ -42,16 +84,15 @@ class Viewport{
       );
 
     let mousePos = this.VPCoorToWorldCoor(cursorViewportPos.x, cursorViewportPos.y);
-
     let camFocus = this.getWorldFocus();
-
     let mouseWorldPos = new Vector(mousePos.x - camFocus.x, -(mousePos.y - camFocus.y) );
 
     return mouseWorldPos;
   }
 
-  clear(){
-    //clears the canvas
+  /** clears the canvas */
+  clear()
+  {
     this.ctx.setTransform(1,0,0,1,0,0);
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = this.fillStyle;
@@ -59,7 +100,15 @@ class Viewport{
     this.ctx.scale(this.zoom, this.zoom);
   }
 
-  //returns true if a world coordinate rect lies within the current view of the viewport
+  /**returns true if a world coordinate rect lies within the current view of the viewport
+   * 
+   * @param {number} x - x position in world coordinates
+   * @param {number} y - y position in world coordinates
+   * @param {number} w - width
+   * @param {number} h - height
+   * 
+   * @return {boolean}
+   */
   isRectInViewPort(x, y, w, h){
     let vpSize = this.VPCoorToWorldCoor(this.width, this.height);
     let vpWorldPos = new Vector(-this.camPos.x - vpSize.x/2, -this.camPos.y - vpSize.y/2);
@@ -72,8 +121,12 @@ class Viewport{
     );
   }
 
-  //returns true if the cursor is over the canvas
-  isCursorOverViewport(clientX, clientY){
+  /** returns true if the cursor is over the canvas
+   * @param {number} clientX - x position from a mousemove event
+   * @param {number} clinetY - y position from a mousemove event
+   */
+  isCursorOverViewport(clientX, clientY)
+  {
     let rect = this.canvas.getBoundingClientRect();
     let x = clientX;
     let y= clientY;
@@ -84,11 +137,13 @@ class Viewport{
     );
   }
 
-  //zooming and panning input
-  addCameraInput(){
+  /** zooming and panning input */
+  addCameraInput()
+  {
     let vp = this;
     vp.canvas.addEventListener('mousedown',function(e){
-      if(e.button == 1){ //middle mouse button
+      if(e.button == 1) //middle mouse button
+      { 
         vp.isPanning=true;
         vp.panLastPos = new Vector(e.x,e.y);
         vp.draw();
@@ -100,23 +155,28 @@ class Viewport{
       vp.lastCursorPos.set(e.clientX, e.clientY);
       let isOverViewport = vp.isCursorOverViewport(e.clientX, e.clientY);
 
-      if(vp.isPanning){
-        let xDiff = e.x - vp.panLastPos.x;
-        let yDiff = e.y - vp.panLastPos.y;
+      if(isOverViewport)
+      {
+        if(vp.isPanning)
+        {
+          let xDiff = e.x - vp.panLastPos.x;
+          let yDiff = e.y - vp.panLastPos.y;
 
-        let diff = vp.VPCoorToWorldCoor(xDiff, yDiff);
+          let diff = vp.VPCoorToWorldCoor(xDiff, yDiff);
 
-        vp.camPos.moveBy(diff.x, diff.y);
+          vp.camPos.moveBy(diff.x, diff.y);
 
-        vp.panLastPos.x = e.x;
-        vp.panLastPos.y = e.y;
+          vp.panLastPos.x = e.x;
+          vp.panLastPos.y = e.y;
+        }
+
+        vp.draw();
       }
-
-      vp.draw();
     });
 
     document.addEventListener('mouseup',function(e){
-      if(e.button == 1){
+      if(e.button == 1)
+      {
         vp.isPanning=false;
       }
     });
@@ -128,13 +188,16 @@ class Viewport{
 
         vp.lastZoomTime = now;
 
-        if(e.deltaY > 0){ //scroll down
-          if(vp.zoom - vp.zoomRate >= vp.zoomMin){
+        if(e.deltaY > 0)
+        { //scroll down
+          if(vp.zoom - vp.zoomRate >= vp.zoomMin)
+          {
             vp.zoom -= vp.zoomRate;
           }
 
         }
-        else{ //scroll up
+        else
+        { //scroll up
           if(vp.zoom + vp.zoomRate <= vp.zoomMax){
             vp.zoom += vp.zoomRate;
           }
@@ -145,27 +208,34 @@ class Viewport{
     },false);
   }
 
-  drawTileHighligher(camFocus){
+  /** draws the tile cursor picker
+   * 
+   * @param {Vector} camFocus - current focus point of camera
+   */
+  drawTileHighligher(camFocus)
+  {
     let mousePos = this.getCursorWorldPos(this.lastCursorPos.x, this.lastCursorPos.y);
     let tileCoor = new Vector(
-      Math.floor(mousePos.x/Chunk.tileSize),
-      -Math.ceil(mousePos.y/Chunk.tileSize),
+      Math.floor(mousePos.x/MapData.tile_size),
+      -Math.ceil(mousePos.y/MapData.tile_size),
     );
 
     this.ctx.fillStyle = "#ccc6";
     this.ctx.strokeStyle="#fff";
 
-    let x = tileCoor.x * Chunk.tileSize + camFocus.x;
-    let y = tileCoor.y * Chunk.tileSize + camFocus.y;
+    let x = tileCoor.x * MapData.tile_size + camFocus.x;
+    let y = tileCoor.y * MapData.tile_size + camFocus.y;
 
-    this.ctx.fillRect(x, y, Chunk.tileSize, Chunk.tileSize);
+    this.ctx.fillRect(x, y, MapData.tile_size, MapData.tile_size);
     this.ctx.beginPath();;
-    this.ctx.rect(x,y, Chunk.tileSize, Chunk.tileSize);
+    this.ctx.rect(x,y, MapData.tile_size, MapData.tile_size);
     this.ctx.stroke();
   }
 
+  //unused atm
   //pass object with the x and y position of point a,b and c on the triangle
-  drawTriangle(points){
+  drawTriangle(points)
+  {
     this.ctx.beginPath();
     this.ctx.moveTo(points.ax, points.ay);
     this.ctx.lineTo(points.bx, points.by);
@@ -175,15 +245,19 @@ class Viewport{
     this.ctx.fill();
   }
 
+  //unused atm
   //draws collision in the viewport based on the collision type
-  drawCollisionShape(type, x, y, w, h){
-    if(type == CollisionType.box){
+  drawCollisionShape(type, x, y, w, h)
+  {
+    if(type == CollisionType.box)
+    {
       this.ctx.beginPath();
       this.ctx.fillRect(x, y, w, h);
       this.ctx.rect(x, y, w, h);
       this.ctx.stroke();
     }
-    else if(type == CollisionType.topLeft){
+    else if(type == CollisionType.topLeft)
+    {
       let points = {
         ax : x,
         ay : y,
@@ -195,7 +269,8 @@ class Viewport{
 
       this.drawTriangle(points);
     }
-    else if(type == CollisionType.topRight){
+    else if(type == CollisionType.topRight)
+    {
       let points = {
         ax : x,
         ay : y,
@@ -207,7 +282,8 @@ class Viewport{
 
       this.drawTriangle(points);
     }
-    else if(type == CollisionType.bottomRight){
+    else if(type == CollisionType.bottomRight)
+    {
       let points = {
         ax : x + w,
         ay : y,
@@ -219,7 +295,8 @@ class Viewport{
 
       this.drawTriangle(points);
     }
-    else if(type == CollisionType.bottomLeft){
+    else if(type == CollisionType.bottomLeft)
+    {
       let points = {
         ax : x + w,
         ay : y + h,

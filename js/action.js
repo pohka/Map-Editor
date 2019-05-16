@@ -1,21 +1,88 @@
-class Action{
-  //creates a new set tile action
-  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layer){
+
+/** stores actions in a stack for undo and redo functionality
+* , all events which change MapData should use an action
+*/
+class Action
+{
+  /**
+   * Creates and returns a new set tile action
+   * @param {Chunk} chunk - chunk being changed
+   * @param {Vector} tilePos - position the tile in the chunk
+   * @param {number} oldTileID - id of the current tile
+   * @param {number} newTileID - id of the next tile
+   * @param {string} layerName - name of layer
+   * 
+   * @return {Object}
+   */
+  static newSetTileAction(chunk, tilePos, oldTileID, newTileID, layerName)
+  {
     return ({
       type : "setTile",
-      chunkX : chunk.position.x,
-      chunkY : chunk.position.y,
+      chunkX : chunk.x,
+      chunkY : chunk.y,
       tileX : tilePos.x,
       tileY : tilePos.y,
-      layer : layer,
+      layerName : layerName,
       oldTileID : oldTileID,
       newTileID : newTileID
     });
   }
 
-  //undo the last action
-  static undo(){
-    if(Action.stack.length == 0){
+  /**
+   * Creates and returns a new add layer action
+   * @param {string} layerName - name of layer
+   * 
+   * @return {object} - return
+   */
+  static newAddLayerAction(layerName)
+  {
+    return ({
+      type : "addLayer",
+      layerName : layerName
+    });
+  }
+
+  /**
+   * Creates and returns a new move layer action
+   * @param {string} layerName - name of layer
+   * @param {number} prevPos - current draw order position
+   * @param {number} nextPos - next draw order position
+   * 
+   * @return {?}
+   */
+  static newMoveLayerAction(layerName, prevPos, nextPos)
+  {
+    return ({
+      type : "moveLayer",
+      layerName : layerName,
+      prevPos : prevPos,
+      nextPos : nextPos
+    });
+  }
+
+  /**
+   * Creates and returns a new layer visibility action
+   * @param {string} layerName - name of layer
+   * @param {boolean} nextIsVisible - next state of visibility, true = visible
+   * 
+   * @return {Object}
+   */
+  static newLayerVisiblilityAction(layerName, nextIsVisible)
+  {
+    return ({
+      type : "layerVisiblity",
+      layerName : layerName,
+      nextIsVisible : nextIsVisible
+    });
+  }
+
+  /**
+   * Undo the last action
+   */
+  static undo()
+  {
+    if(Action.stack.length == 0)
+    {
       return;
     }
 
@@ -25,26 +92,55 @@ class Action{
 
     Notification.add("Undo: " + lastAction.type);
 
-    sceneEditor.draw();
+    viewports["map"].draw();
   }
 
-  //revert the last undo
-  static redo(){
-    if(Action.popped.length == 0){
+  /**
+   * Revert the last undo
+   */
+  static redo()
+  {
+    if(Action.popped.length == 0)
+    {
       return;
     }
     let lastUndo = Action.popped.pop();
     Action.executeAction(lastUndo, true);
     Notification.add("Redo: " + lastUndo.type);
-    sceneEditor.draw();
+    viewports.map.draw();
   }
 
-  //executes an action
-  static executeAction(a, isPoppedAction){
+  /**
+   * executes an action
+   * 
+   * @param {Action} a
+   * @param {boolean} [isPoppedAction] - set to true if action has been popped from the stack
+   * 
+   */
+  static executeAction(a, isPoppedAction)
+  {
     if(a.type == "setTile"){
-      let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = chunk.getLayerByName(a.layer);
+      let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
+      let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.newTileID;
+    }
+    else if(a.type == "moveLayer")
+    {
+      let temp = MapData.draw_layers[a.prevPos];
+      MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
+      MapData.draw_layers[a.nextPos] = temp;
+      Layers.updateList();
+      viewports.map.draw();
+    }
+    else if(a.type == "layerVisiblity")
+    {
+      States.visibleLayers[a.layerName] = a.nextIsVisible;
+      Layers.updateList();
+      viewports.map.draw();
+    }
+    else if(a.type == "addLayer")
+    {
+      Layers.addLayer(a.layerName);
     }
 
     Action.stack.push(a);
@@ -58,20 +154,50 @@ class Action{
     }
   }
 
-  //executes the reverse of an action
-  static undoAction(a){
+    /**
+   * executes the reverse of an action
+   * 
+   * @param {Action} a
+   */
+  static undoAction(a)
+  {
     if(a.type == "setTile"){
-      let chunk = Store.findChunkByChunkCoor(a.chunkX, a.chunkY);
-      let layer = chunk.getLayerByName(a.layer);
+      let chunk = MapQuery.findChunkByChunkCoor(a.chunkX, a.chunkY);
+      let layer = MapQuery.getChunkLayerByName(chunk, a.layerName);
       layer.map[a.tileY][a.tileX] = a.oldTileID;
+    }
+    else if(a.type == "moveLayer")
+    {
+      let temp = MapData.draw_layers[a.prevPos];
+      MapData.draw_layers[a.prevPos] = MapData.draw_layers[a.nextPos];
+      MapData.draw_layers[a.nextPos] = temp;
+      Layers.updateList();
+      viewports.map.draw();
+    }
+    else if(a.type == "layerVisiblity")
+    {
+      States.visibleLayers[a.layerName] = !a.nextIsVisible;
+      Layers.updateList();
+      viewports.map.draw();
+    }
+    else if(a.type == "addLayer")
+    {
+      Layers.deleteLayer(a.layerName);
     }
   }
 }
 
-//maximum number of actions to track
+/** maximum number of actions to track 
+ * @type {number}
+*/
 Action.maxActions = 50;
 
-//list of the recent actions
+/** list of the recent actions 
+ * @type {array}
+*/
 Action.stack = [];
-//tracking popped actions for redo
+
+/** tracking popped actions from Action.stack for redo 
+ * @type {array}
+*/
 Action.popped = [];

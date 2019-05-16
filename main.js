@@ -11,8 +11,9 @@ function createWindow () {
 
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/favicon.ico'})
 
+  mainWindow.maximize();
   // and load the index.html of the app.
   mainWindow.loadFile('index.html');
 

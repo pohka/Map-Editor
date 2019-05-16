@@ -5,26 +5,26 @@
     <link defer rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Map Editor</title>
-    <script src="./js/main.js"></script>
-    <script src="./js/vector.js"></script>
-    <script src="./js/chunk.js"></script>
-    <script src="./js/store.js"></script>
-
-    <script src="./js/tools.js"></script>
-    <script src="./js/file.js"></script>
-    <script src="./js/action.js"></script>
-    <script src="./js/section-layer.js"></script>
-    <script src="./js/notification.js"></script>
-
-    <script src="./js/viewport.js"></script>
-    <script src="./js/tileset-editor.js"></script>
-    <script src="./js/ruler.js"></script>
-    <script src="./js/scene-editor.js"></script>
-    <script src="./js/tile-selector.js"></script>
   </head>
   <body>
 
-    <div class="grid">
+    
+    <div class="grid-container">
+      <div class="grid-header">
+          <div class="menu header-menu">
+            <div class="menu-item" id="header-menu-file-new" 
+              onclick="newProjectModal.toggle(true);"
+              >New</div>
+            <div class="menu-item" id="header-menu-file-load" onclick="File.load()">Load</div>
+            <div class="menu-item" id="header-menu-file-save" onclick="File.save()">Save</div>
+            <div class="menu-item" id="header-menu-file-save-as" onclick="File.saveAs()">Save as</div>
+            <div class="project-name">
+                <div id="project-name-text"></div>
+              </div>
+          </div>
+      </div>
+
+      <!--
     <div class="col left-col">
       <div class="section tool-section">
         <h2>Tools</h2>
@@ -49,67 +49,136 @@
 
       </div>
     </div>
-    <div class="col middle-col">
-      <div class="view-menu">
-        <div id="view-menu-scene" class="active" onclick="setView('scene')">Scene</div>
-        <div id="view-menu-tileset" onclick="setView('tileset')">Tileset</div>
-        <div id="view-menu-object" onclick="setView('object')">Object</div>
+  -->
+
+  <!--left section-->
+      <div class="grid-left">
+        <div class="menu section-menu" id="menu-left">
+        </div>
+        <div class="section-con section-con-left">
+          <div class="window window-explorer" id="window-explorer">
+            <div class="file-system-dir">
+              <div class="file-system-dir-btn btn fas fa-reply" onclick=Explorer.prevDir()>
+              </div>
+              <div id="file-system-dir-val">/res/</div>
+            </div>
+            <!--file explorer content-->
+            <div class="file-system" id="file-system"></div>
+          </div>
+        </div>
       </div>
-      <canvas class="scene-editor" id="scene-editor"></canvas>
-      <canvas class="tileset-editor" id="tileset-editor"></canvas>
-      <canvas class="object-editor"></canvas>
-    </div>
-    <div class="col right-col">
-      <div class="section layers-section">
-        <h2>Layers</h2>
-        <input type="text" placeholder="layer name" id="layer-name"></input>
-        <button onclick="SectionLayer.addLayer()"><i class="fas fa-plus"></i> Layer</button>
-        <hr>
-        <div id="layer-list"></div>
+
+      <!--middle section-->
+      <div class="grid-middle">
+        <div class="menu section-menu" id="menu-middle">
+        </div>
+        <div class="section-con section-con-middle">
+            <div class="window window-map" id="window-map">
+              <div class="canvas-col">
+                <canvas id="map-viewport"></canvas>
+              </div>
+              <div class="tools-col">
+                <div class="tile-tools-con" id="tools">
+                    <div class="tile-tools-item btn fas fa-paint-brush"
+                      active="true" tool-name="brush" onclick="Tools.selectTool('brush');">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-eraser"
+                      tool-name="eraser"  onclick="Tools.selectTool('eraser');">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-undo"
+                      alt="undo" onclick="Action.undo()">
+                    </div>
+                    <div class="tile-tools-item btn fas fa-redo"
+                      alt="redo" onclick="Action.redo()">
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="window window-tile-nav" id="window-tile-nav">
+              <div class="canvas-col">
+                  <canvas id="tile-nav-viewport"></canvas>
+                </div>
+            </div>
+            <div class="window-prefab" id="window-prefab"></div>
+        </div>
       </div>
-      <div class="section palette-section">
-        <h2>Palette</h2>
-        <select id="palette-select"></select>
-        <canvas id="tile-selector"></canvas>
+      <!--right section-->
+      <div class="grid-right">
+          <div class="menu section-menu" id="menu-right">
+            </div>
+          <div class="section-con section-con-right">
+            <div class="window window-tile-palette" id = "window-tile-palette">
+              <div class="window-layers" id="window-layers">
+                <div>
+                  <canvas id="tile-palette"></canvas>
+                </div>
+
+                <div class="menu section-menu" id="menu-right-bottom"></div>
+                <div class="window window-layers" id="window-layers">
+                  <div class="draw-layers-toolbar">
+                    <div class="btn" onclick="Layers.addLayerClick()">Add Layer <i class="fas fa-plus"></i></div>
+                    <input type="text" id="add-layer-input" placeholder="layer_name" oninput="Layers.onInput(this)"/>
+                  </div>
+                  <ul class="draw-layers-list" id="draw-layers-list">
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
 
+    <!--notifcations-->
     <div class="notification-con"></div>
 
-    <!--New Project Modal-->
-    <div class="new-project-modal">
+    <!--new project modal-->
+    <div class="new-project-modal" id="new-project-modal">
       <div>
-        <label>Project Name:</label>
-        <input type="text" id="new-project-name">
-      </div>
-      <div>
-        <label>Tile Pixel Size:</label>
-        <input type="number" id="new-project-tile">
+      <label>Tile Pixel Size:</label>
+      <input type="number" id="new-project-tile"  value="16"/>
       </div>
       <div>
         <label>Chunk Size:</label>
-        <input type="number" id="new-project-chunk">
+        <input type="number" id="new-project-chunk" value="32"/>
       </div>
-      <div class="new-project-submit-con">
-        <input type="submit" onclick="createProject()">
+      <div>
+        <label>Project path:</label>
+        <textarea type="text" 
+          id="new-project-set-path" 
+          onclick="Modal.setPath(this)"
+          readonly="readonly"
+          placeholder="click to set"
+        ></textarea>
       </div>
-      <div class="close-modal" onclick="toggleModal('.new-project-modal', true)">
+      <input type="submit" onclick="Project.createNew()">
+
+      <div class="close-modal" onclick="newProjectModal.toggle(false);">
         <i class="fas fa-window-close"></i>
       </div>
     </div>
-
-    <div class="load-project-modal">
-      <div>
-        <label>Project Name:</label>
-        <input type="text" id="load-project-name">
-      </div>
-      <div class="close-modal" onclick="toggleModal('.load-project-modal', true)">
-        <i class="fas fa-window-close"></i>
-      </div>
-      <div>
-        <input type="submit" onclick="loadProject()">
-      </div>
-    </div>
-
   </body>
+
+<script src="./js/main.js"></script>
+  <script src="./js/states.js"></script>
+  <script src="./js/map_data.js"></script>
+  <script src="./js/vector.js"></script>
+
+
+  <script src="./js/tools.js"></script>
+  <script src="./js/action.js"></script>
+  <script src="./js/notification.js"></script>
+
+  <script src="./js/viewport.js"></script>
+  <script src="./js/ruler.js"></script>
+  <script src="./js/map_viewport.js"></script>
+
+  <script src="./js/tile_palette_viewport.js"></script>
+  <script src="./js/explorer.js"></script>
+  <script src="./js/keyboard_shortcuts.js"></script>
+  <script src="./js/layers.js"></script>
+  <script src="./js/file.js"></script>
+  <script src="./js/project.js"></script>
+  <script src="./js/menus.js"></script>
+  <script src="./js/modal.js"></script>
+  <script src="./js/tile_nav_viewport.js"></script>
 </html>
