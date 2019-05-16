@@ -236,23 +236,65 @@ class MapViewport extends Viewport
   /** draws the HUD for the viewport */
   drawHUD()
   {
+    let camFocus = this.getWorldFocus();
     //cursor tile highlighter
     let tileWorldPos = Tools.getTileWorldPosAtCursor(this, this.lastCursorPos.x, this.lastCursorPos.y);
     if(tileWorldPos != null)
     {
-      let camFocus = this.getWorldFocus();
+      
       let x = tileWorldPos.x + camFocus.x;
       let y = -tileWorldPos.y + camFocus.y;
       this.ctx.fillStyle = "#ccc6";
       this.ctx.strokeStyle="#fff";
 
       this.ctx.fillRect(x, y, MapData.tile_size, MapData.tile_size);
-      this.ctx.beginPath();;
+      this.ctx.beginPath();
       this.ctx.rect(x,y, MapData.tile_size, MapData.tile_size);
       this.ctx.stroke();
     }
     else {
       //console.log("no tile found in at cursors position");
     }
+
+    this.drawNavMesh(camFocus);
+  }
+
+  drawNavMesh(camFocus)
+  {
+    this.ctx.beginPath;
+    for(let y=0; y<MapData.chunk_size; y++)
+    {
+      for(let x=0; x<MapData.chunk_size; x++)
+      {
+        let val = NavMesh.nodes[y][x];
+        if(NavMesh.chunks[0].map[y][x] == NavType.NONE && val != 0)
+        {
+          let posX = camFocus.x + x*MapData.tile_size
+          let posY = camFocus.y + y*MapData.tile_size;
+
+          if(val >> 3 & 1) // == 8, top
+          {
+            this.ctx.moveTo(posX, posY);
+            this.ctx.lineTo(posX + MapData.tile_size, posY);
+          }
+          if(val >> 2 & 1) // == 4, right
+          {
+            this.ctx.moveTo(posX + MapData.tile_size, posY);
+            this.ctx.lineTo(posX + MapData.tile_size, posY + MapData.tile_size);
+          }
+          if(val >> 1 & 1) // == 2, bottom
+          {
+            this.ctx.moveTo(posX, posY + MapData.tile_size);
+            this.ctx.lineTo(posX + MapData.tile_size, posY + MapData.tile_size);
+          }
+          if(val & 1) // == 1, left
+          {
+            this.ctx.moveTo(posX, posY);
+            this.ctx.lineTo(posX, posY + MapData.tile_size);
+          }
+        }
+      }
+    }
+    this.ctx.stroke();
   }
 }

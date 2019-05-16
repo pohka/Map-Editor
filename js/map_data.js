@@ -58,6 +58,10 @@ var MapData = {
     //   ],
     //   textures_used : [ 0 ] // array of texture ids
     // }
+  ],
+  navmesh :
+  [
+
   ]
 };
 
@@ -241,5 +245,26 @@ MapQuery.findTextureBySrc = function(src)
       return MapData.textures[i];
     }
   }
+  return null;
+}
+
+/** find a tile by ID, returns null if not found
+ * 
+ * @param {number} tileID
+ * @return {Tile|null}
+ */
+MapQuery.findTileByID = function(tileID)
+{
+  if(tileID > -1)
+  {
+    for(let i in MapData.tiles)
+    {
+      if(MapData.tiles[i].id == tileID)
+      {
+        return MapData.tiles[i];
+      }
+    }
+  }
+
   return null;
 }
