@@ -112,6 +112,10 @@ class Menus
               {
                 let key = States.menus[i].options[a].viewport;
                 viewports[key].setIsActive(isActive);
+                if(isActive)
+                {
+                  viewports[key].draw();
+                }
               }
             }
           }

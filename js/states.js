@@ -134,6 +134,8 @@ States.setTileSet = function(texID)
   States.current.tileset = texID;
   viewports.tilePalette.centerCam();
   viewports.tilePalette.draw();
+  viewports.tileNav.centerCam();
+  viewports.tileNav.draw();
 }
 
 /** set States.current.tile

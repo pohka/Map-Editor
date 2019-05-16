@@ -70,13 +70,14 @@ var MapQuery = {};
  * @param {number} texX - x position in tile coords
  * @param {number} texY - y position in tile coords
  */
-MapQuery.addTile = function(texID, texX, texY)
+MapQuery.addTile = function(texID, texX, texY, navType)
 {
   MapData.tiles.push({
     id : MapData.tile_count,
     tex_id : texID,
     tex_x : texX,
-    tex_y : texY
+    tex_y : texY,
+    nav : navType
   });
   MapData.tile_count++;
 }

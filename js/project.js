@@ -139,7 +139,10 @@ class Project
       }
 
       viewports.map.draw();
+      viewports.tilePalette.centerCam();
       viewports.tilePalette.draw();
+      viewports.tileNav.centerCam();
+      viewports.tileNav.draw();
       Layers.updateList();
       States.isProjectLoaded = true;
       
@@ -204,7 +207,7 @@ class Project
       {
         for(let x=0; x<tileW; x++)
         {
-          MapQuery.addTile(textureID, x, y);
+          MapQuery.addTile(textureID, x, y, NavType.NONE);
         }
       }
     }

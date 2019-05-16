@@ -15,7 +15,7 @@ let viewports = {}
 /** current version of the app 
  * @type {string}
 */
-const VERSION = "0.1";
+const VERSION = "0.2";
 
 var CollisionType =
 {
@@ -27,6 +27,12 @@ var CollisionType =
   bottomLeft : 5
 };
 Object.freeze(CollisionType);
+
+var NavType = {
+  NONE : 0,
+  WALKABLE : 1
+};
+Object.freeze(NavType);
 
 var newProjectModal;
 
