@@ -74,7 +74,7 @@ class NavMesh
         let val = 0;
         if(nav == NavType.WALKABLE)
         {
-          val = 15;
+          val = NavMesh.sides.all;
         }
         else if(nav == NavType.NONE)
         {
@@ -91,19 +91,19 @@ class NavMesh
           //top = 8, right = 4, bottom = 2, left = 1
           if(top)
           {
-            val += 8;
+            val += NavMesh.sides.top;
           }
           if(right)
           {
-            val+= 4;
+            val+= NavMesh.sides.right;
           }
           if(bottom)
           {
-            val += 2;
+            val += NavMesh.sides.bottom;
           }
           if(left)
           {
-            val += 1;
+            val += NavMesh.sides.left;
           }
         }
         nodes[y][x] = val;
@@ -112,78 +112,93 @@ class NavMesh
 
     console.log(nodes);
     NavMesh.nodes = nodes;
+
+    NavMesh.lines = [];
+
+    //todo, if has line at bottom and top in same iteration
+
+    //ignore sides of chunk
+    for(let y=1; y<MapData.chunk_size-1; y++)
+    {
+      let hasFoundMesh = false;
+      let line;
+      let side;
+      for(let x=1; x<MapData.chunk_size-1; x++)
+      {
+        let val = NavMesh.nodes[y][x];
+        let tileAbove = NavMesh.nodes[y-1][x];
+        let tileBelow = NavMesh.nodes[y+1][x]
+        let hasAboveTileBottomEdge = (tileAbove >> 1 & 1);
+        let hasBelowTileTopEdge = (tileBelow >> 3 & 1);
+
+        if(val == NavMesh.sides.all && !hasFoundMesh)
+        {
+          if(hasAboveTileBottomEdge && tileAbove != NavMesh.sides.all)
+          {
+            side = NavMesh.sides.top;
+            hasFoundMesh = true;
+            line = {
+              x1 : x,
+              y1 : y,
+              x2 : x+1,
+              y2 : y
+            };
+          }
+          else if(hasBelowTileTopEdge && tileBelow != NavMesh.sides.all)
+          {
+            side = NavMesh.sides.bottom;
+            hasFoundMesh = true;
+            line = {
+              x1 : x,
+              y1 : y+1,
+              x2 : x+1,
+              y2 : y+1
+            };
+          }
+        }
+
+        if(hasFoundMesh)
+        {
+          if(
+            (side == NavMesh.sides.top && (!hasAboveTileBottomEdge || tileAbove == NavMesh.sides.all)) || 
+            (side == NavMesh.sides.bottom && (!hasBelowTileTopEdge || tileBelow == NavMesh.sides.all))
+          )
+          {
+            line.x2 = x;
+            hasFoundMesh = false;
+            NavMesh.lines.push(line);
+          }
+        }
+      }
+    }
+
+    console.log("lines:", NavMesh.lines);
   }
-
-  // static test()
-  // {
-  //   let nodes = [];
-  //   for(let y=0; y<MapData.chunk_size+1; y++)
-  //   {
-  //     let row = [];
-  //     for(let x=0; x<MapData.chunk_size+1; x++)
-  //     {
-  //       row.push(0);
-  //     }
-  //     nodes.push(row);
-  //   }
-
-  //   for(let y=0; y<MapData.chunk_size; y++)
-  //   {
-  //     for(let x=0; x<MapData.chunk_size; x++)
-  //     {
-  //       let nav = NavMesh.chunks[0].map[y][x];
-  //       if(nav == NavType.WALKABLE)
-  //       {
-  //         nodes[y][x] = 1;
-  //         nodes[y][x+1] = 1;
-  //         nodes[y+1][x] = 1;
-  //         nodes[y+1][x+1] = 1;
-  //       }
-  //     }
-  //   }
-
-  //   console.log(nodes);
-
-  //   const NODE_COUNT = nodes.length;
-  //   let other = [];
-  //   for(let y=0; y<NODE_COUNT; y++)
-  //   {
-  //     let row = [];
-  //     for(let x=0; x<NODE_COUNT; x++)
-  //     {
-  //       if(nodes[y][x] == 1)
-  //       {
-  //         //find inner node i.e. surrounded by all walkable nodes
-  //         if(
-  //           (y-1 < 0 || nodes[y-1][x] == 1) && //up
-  //           (y+1 == NODE_COUNT || nodes[y+1][x] == 1) && //down
-  //           (x-1 < 0 || nodes[y][x-1] == 1) && //left
-  //           (x+1 == NODE_COUNT || nodes[y][x+1] == 1) && //right
-  //           (y-1 < 0 || x-1 < 0 || nodes[y-1][x-1] == 1) && //top left
-  //           (y-1 < 0 || x+1 == NODE_COUNT || nodes[y-1][x+1] == 1) && //top right
-  //           (y+1 == NODE_COUNT || x-1 < 0 || nodes[y+1][x-1] == 1) && //bototm left
-  //           (y+1 == NODE_COUNT || x+1 == NODE_COUNT || nodes[y+1][x+1] == 1) // bottom right
-  //         )
-  //         {
-  //           row.push(0);
-  //         }
-  //         else
-  //         {
-  //           row.push(1);
-  //         }
-  //       }
-  //       else
-  //       {
-  //         row.push(0);
-  //       }
-  //     }
-  //     other.push(row);
-  //   }
-
-  //   console.log(other);
-  //   NavMesh.nodes = other;
-  // }
 }
+
+NavMesh.sidesBitShift = {
+  top : 3,
+  right : 2,
+  bottom : 1,
+  left : 0
+}
+Object.freeze(NavMesh.sidesBit);
+
+NavMesh.sides = {
+  top : 8,
+  right : 4,
+  bottom : 2,
+  left : 1,
+  all : 15
+}
+
+
+
+Object.freeze(NavMesh.sides);
+
+
+
 
 NavMesh.chunks = [];
 NavMesh.nodes = [];
+NavMesh.lines = [];

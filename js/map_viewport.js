@@ -261,7 +261,8 @@ class MapViewport extends Viewport
 
   drawNavMesh(camFocus)
   {
-    this.ctx.beginPath;
+    this.ctx.strokeStyle="#fff";
+    this.ctx.beginPath();
     for(let y=0; y<MapData.chunk_size; y++)
     {
       for(let x=0; x<MapData.chunk_size; x++)
@@ -296,5 +297,42 @@ class MapViewport extends Viewport
       }
     }
     this.ctx.stroke();
+
+    //lines
+    this.ctx.strokeStyle="#0f0";
+    this.ctx.beginPath();
+    for(let i=0; i<NavMesh.lines.length; i++)
+    {
+      let line = NavMesh.lines[i];
+      this.ctx.moveTo(camFocus.x + (line.x1 * MapData.tile_size), camFocus.y + (line.y1 * MapData.tile_size));
+      this.ctx.lineTo(camFocus.x + (line.x2 * MapData.tile_size), camFocus.y + (line.y2 * MapData.tile_size));
+    }
+    this.ctx.stroke();
+
+    this.ctx.fillStyle = "#ff0000dd";
+    let size = 3;
+    for(let i =0; i<NavMesh.lines.length; i++)
+    {
+      this.ctx.beginPath();
+      this.ctx.arc(
+        camFocus.x + NavMesh.lines[i].x1 * MapData.tile_size,
+        camFocus.y + NavMesh.lines[i].y1 * MapData.tile_size,
+        size,
+        0,
+        2 * Math.PI
+      );
+      this.ctx.fill();
+
+      this.ctx.beginPath();
+      this.ctx.arc(
+        camFocus.x + NavMesh.lines[i].x2 * MapData.tile_size,
+        camFocus.y + NavMesh.lines[i].y2 * MapData.tile_size,
+        size,
+        0,
+        2 * Math.PI
+      );
+      this.ctx.fill();
+    }
+    
   }
 }
