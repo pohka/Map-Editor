@@ -115,14 +115,14 @@ class NavMesh
 
     NavMesh.lines = [];
 
-    //todo, if has line at bottom and top in same iteration
-
+    let checks = [];
     //ignore sides of chunk
     for(let y=1; y<MapData.chunk_size-1; y++)
     {
-      let hasFoundMesh = false;
-      let line;
-      let side;
+      checks = [];
+      let hasAboveCheck = false;
+      let hasBelowCheck = false;
+
       for(let x=1; x<MapData.chunk_size-1; x++)
       {
         let val = NavMesh.nodes[y][x];
@@ -131,42 +131,67 @@ class NavMesh
         let hasAboveTileBottomEdge = (tileAbove >> 1 & 1);
         let hasBelowTileTopEdge = (tileBelow >> 3 & 1);
 
-        if(val == NavMesh.sides.all && !hasFoundMesh)
+        if(val == NavMesh.sides.all)
         {
-          if(hasAboveTileBottomEdge && tileAbove != NavMesh.sides.all)
+          //top is edge of mesh
+          if(!hasAboveCheck && hasAboveTileBottomEdge && tileAbove != NavMesh.sides.all)
           {
-            side = NavMesh.sides.top;
-            hasFoundMesh = true;
-            line = {
-              x1 : x,
-              y1 : y,
-              x2 : x+1,
-              y2 : y
-            };
+            hasAboveCheck = true;
+            checks.push({
+              side : NavMesh.sides.top,
+              line : {
+                x1 : x,
+                y1 : y,
+                x2 : x+1,
+                y2 : y
+              }
+            });
           }
-          else if(hasBelowTileTopEdge && tileBelow != NavMesh.sides.all)
+          //bottom is edge of mesh
+          if(!hasBelowCheck && hasBelowTileTopEdge && tileBelow != NavMesh.sides.all)
           {
-            side = NavMesh.sides.bottom;
-            hasFoundMesh = true;
-            line = {
-              x1 : x,
-              y1 : y+1,
-              x2 : x+1,
-              y2 : y+1
-            };
+            hasBelowCheck = true;
+            checks.push({
+              side : NavMesh.sides.bottom,
+              line : {
+                x1 : x,
+                y1 : y+1,
+                x2 : x+1,
+                y2 : y+1
+              }
+            });
           }
         }
 
-        if(hasFoundMesh)
+        if(hasAboveCheck || hasBelowCheck)
         {
-          if(
-            (side == NavMesh.sides.top && (!hasAboveTileBottomEdge || tileAbove == NavMesh.sides.all)) || 
-            (side == NavMesh.sides.bottom && (!hasBelowTileTopEdge || tileBelow == NavMesh.sides.all))
-          )
+          for(let i=0; i<checks.length; i++)
           {
-            line.x2 = x;
-            hasFoundMesh = false;
-            NavMesh.lines.push(line);
+            //end of line on x-axis
+            if(
+              (hasAboveCheck && checks[i].side == NavMesh.sides.top && 
+              (!hasAboveTileBottomEdge || tileAbove == NavMesh.sides.all)) 
+              || 
+              (hasBelowCheck && checks[i].side == NavMesh.sides.bottom &&
+              (!hasBelowTileTopEdge || tileBelow == NavMesh.sides.all))
+            )
+            {
+              //set x2 and set flag to false
+              checks[i].line.x2 = x;
+              if(checks[i].side == NavMesh.sides.top)
+              {
+                hasAboveCheck = false;
+              }
+              else if(checks[i].side == NavMesh.sides.bottom)
+              {
+                hasBelowCheck = false;
+              }
+              
+              //add line
+              NavMesh.lines.push(checks[i].line);
+              checks.splice(i, 1);
+              i--;
+            }
           }
         }
       }
