@@ -299,7 +299,7 @@ class MapViewport extends Viewport
     this.ctx.stroke();
 
     //lines
-    this.ctx.strokeStyle="#0f0";
+    this.ctx.strokeStyle="#f00";
     this.ctx.beginPath();
     for(let i=0; i<NavMesh.lines.length; i++)
     {
@@ -309,7 +309,7 @@ class MapViewport extends Viewport
     }
     this.ctx.stroke();
 
-    this.ctx.fillStyle = "#ff0000dd";
+    this.ctx.fillStyle = "#ff000099";
     let size = 3;
     for(let i =0; i<NavMesh.lines.length; i++)
     {
